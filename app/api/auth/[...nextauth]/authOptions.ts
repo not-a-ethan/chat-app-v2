@@ -13,7 +13,7 @@ export const authOptions: AuthOptions = {
         })
     ],
     callbacks: {
-        async signIn({ user, account, profile, email, credentials}) {
+        async signIn({ user, account, profile, email, credentials}: any) {
             const id: number = Number(account?.providerAccountId);
             const username: string = profile?.login;
 

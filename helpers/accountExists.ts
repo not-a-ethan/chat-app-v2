@@ -1,4 +1,4 @@
-import { getAll } from "@/database/get";
+import { getAll } from "@/database/db";
 import { AccountExists } from "@/types";
 
 export async function accountExists(id: number, username: string): Promise<AccountExists> {

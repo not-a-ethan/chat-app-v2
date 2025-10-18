@@ -1,4 +1,4 @@
-import { changeDB } from "@/database/change";
+import { changeDB } from "@/database/db";
 import { accountExists } from "./accountExists";
 import { AccountExists } from "@/types";
 
