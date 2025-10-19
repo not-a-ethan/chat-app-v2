@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 
 import { getToken } from "next-auth/jwt";
+
 import { getRooms } from "../rooms/user/getRooms";
 import { changeDB, getAll } from "@/database/db";
 
