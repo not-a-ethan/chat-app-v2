@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json();
     const messageContent: string = body["content"];
-    const roomId: number = body["content"];
+    const roomId: number = body["roomId"];
 
     if (Number.isNaN(roomId) || roomId == null || roomId == 0) {
         return NextResponse.json(
