@@ -1,0 +1,84 @@
+'use client'
+
+import { useSession } from "next-auth/react";
+
+import { Avatar } from "@heroui/avatar";
+import { Card } from "@heroui/card";
+import { Button } from "@heroui/button";
+import { addToast } from "@heroui/toast";
+
+import { getAPI } from "@/helpers/getAPI";
+
+export function Message(props: any) {
+    const roomId = props.roomId;
+
+    const { json, jsonLoading, jsonError } = getAPI(`../api/message?roomId=${roomId}`, ["json", "jsonLoading", "jsonError"]);
+
+    function react(e: any) {
+        const type = e.target.id;
+    };
+
+    if (jsonLoading) {
+        // Add Skeltons
+        return (
+            <>
+                <p>Loading</p>
+            </>
+        )
+    };
+
+    if (jsonError && jsonError != "true") {
+        console.error(jsonError);
+        addToast({
+            color: "danger",
+            title: "Something went wrong getting the messages",
+            description: "More info in developer console"
+        });
+
+        // Add more Skeltons
+        return (
+            <>
+                <p>Error</p>
+            </>
+        )
+    };
+
+    const messages = json["messages"];
+    const users = json["users"];
+
+    if (messages.length === 0) {
+        return (
+            <>
+                <p>There are no messages as of now, how about you start the converatation?</p>
+            </>
+        );
+    };
+
+    return (
+        <>
+            {messages.map((message: any) => (
+                <Card>
+                    <Avatar src={users[message["userId"]]} />
+
+                    <p>{message["content"]}</p>
+
+                    <div>
+                        {/*Reactions*/}
+
+                        <Button id="+1" onPress={react}>
+                            👍
+                        </Button>
+
+                        <Button id="-1" onPress={react}>
+                            👎
+                        </Button>
+
+                        <Button id="love" onPress={react}>
+                            ♥️
+                        </Button>
+                    </div>
+                </Card>
+            ))}
+        </>
+    );
+};
