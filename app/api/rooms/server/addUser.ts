@@ -18,7 +18,7 @@ export async function addUser(roomId: number, newUserId: number, addingUserId: n
         );
     };
 
-    const currentRooms: number[]|null = await (await getAll(`SELECT rooms FROM users WHERE githubID=$i`, {"$i": user}))["rooms"].split(",");
+    const currentRooms: number[]|null = await (await getAll(`SELECT rooms FROM users WHERE githubID=$i`, {"$i": newUserId}))["rooms"].split(",");
     let newRooms: string;
 
     if (currentRooms == null) {
