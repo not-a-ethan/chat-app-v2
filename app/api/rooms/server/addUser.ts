@@ -4,26 +4,10 @@ import { getToken } from "next-auth/jwt";
 
 import { changeDB, getAll } from "@/database/db";
 import { getRooms } from "../user/getRooms";
+import { updateActvitiy } from "@/helpers/updateActivity";
 
-export async function PUT(req: NextRequest) {
-    const token = await getToken({ req });
-    
-    if (!token) {
-        return NextResponse.json(
-            {
-                "error": "Not authenticated"
-            },
-            { status: 403 }
-        );
-    };
-
-    const userId: number = Number(token.sub);
-
-    const body = await req.json();
-    const roomId = body["room"];
-    const user = body["userId"];
-
-    const adderRooms = await getRooms(userId);
+export async function addUser(roomId: number, newUserId: number, addingUserId: number) {
+    const adderRooms = await getRooms(newUserId);
     
     if (!adderRooms.includes(roomId)) {
         return NextResponse.json(
@@ -44,10 +28,33 @@ export async function PUT(req: NextRequest) {
         newRooms = currentRooms.join(",");
     };
     
-    changeDB(`UPDATE users SET rooms=${newRooms} WHERE githubID=$u`, { "$u": user });
+    changeDB(`UPDATE users SET rooms=${newRooms} WHERE githubID=$u`, { "$u": addingUserId });
 
     return NextResponse.json(
         {},
         { status: 200 }
     );
+};
+
+export async function PUT(req: NextRequest) {
+    const token = await getToken({ req });
+    
+    if (!token) {
+        return NextResponse.json(
+            {
+                "error": "Not authenticated"
+            },
+            { status: 403 }
+        );
+    };
+
+    const userId: number = Number(token.sub);
+
+    updateActvitiy(userId)
+
+    const body = await req.json();
+    const roomId = body["room"];
+    const user = body["userId"];
+
+    return addUser(roomId, user, userId);
 };

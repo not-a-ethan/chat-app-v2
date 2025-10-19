@@ -4,6 +4,7 @@ import { getToken } from "next-auth/jwt";
 
 import { changeDB, getAll } from "@/database/db";
 import { updateActvitiy } from "@/helpers/updateActivity";
+import { addUser } from "./addUser";
 
 /*
 API docs:
@@ -52,7 +53,7 @@ export async function POST(req: NextRequest) {
 
     const roomId = await (await getAll(`SELECT seq FROM sqlite_sequence WHERE name='rooms'`, {}))["0"]["seq"];
 
-    // [TODO] add creating user to room
+    addUser(roomId, userId, userId);
 
     updateActvitiy(userId);
 
