@@ -22,6 +22,15 @@ export async function GET(req: NextRequest) {
 
     const searchParams = req.nextUrl.searchParams;
     const roomId: number = Number(searchParams?.get("roomId"));
+
+    if (roomId <= 0) {
+        return NextResponse.json(
+            {
+                "error": "You need a valid room number"
+            },
+            { status: 400 }
+        );
+    };
     
     const sqlRooms = await getAll(`SELECT * FROM users WHERE githubID=${userId}`, {});
     const rooms: number[] = sqlRooms[0]["rooms"].split(",");

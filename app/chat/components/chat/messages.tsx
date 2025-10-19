@@ -1,7 +1,5 @@
 'use client'
 
-import { useSession } from "next-auth/react";
-
 import { Avatar } from "@heroui/avatar";
 import { Card } from "@heroui/card";
 import { Button } from "@heroui/button";
@@ -11,6 +9,12 @@ import { getAPI } from "@/helpers/getAPI";
 
 export function Message(props: any) {
     const roomId = props.roomId;
+
+    if (roomId <= 0) {
+        return (
+            <></>
+        );
+    };
 
     const { json, jsonLoading, jsonError } = getAPI(`../api/message?roomId=${roomId}`, ["json", "jsonLoading", "jsonError"]);
 
@@ -27,7 +31,7 @@ export function Message(props: any) {
         )
     };
 
-    if (jsonError && jsonError != "true") {
+    if (jsonError && jsonError !== true) {
         console.error(jsonError);
         addToast({
             color: "danger",
@@ -42,6 +46,21 @@ export function Message(props: any) {
             </>
         )
     };
+
+    if (json == undefined) {
+        addToast({
+            color: "danger",
+            title: "Something went wrong getting the messages",
+            description: "More info in developer console"
+        });
+
+        // Add more Skeltons
+        return (
+            <>
+                <p>Error</p>
+            </>
+        )
+    }
 
     const messages = json["messages"];
     const users = json["users"];

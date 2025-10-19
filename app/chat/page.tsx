@@ -6,7 +6,8 @@ import { useRouter } from "next/navigation";
 
 import { useSession } from "next-auth/react";
 
-import { SendMessage } from "./createMessage";
+import { Chat } from "./chat";
+import { Rooms } from "./rooms";
 
 export default function Page() {
     const { data: session, status } = useSession();
@@ -27,7 +28,9 @@ export default function Page() {
         <>
             <h1>Chat, this heading is temp</h1>
 
-            <SendMessage roomId={room} />
+            <Chat roomId={room} />
+
+            <Rooms room={room} setRoom={setRoom} />
         </>
     );
 };

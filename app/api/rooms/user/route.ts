@@ -1,3 +1,4 @@
 import { GET } from "./getRooms";
+import { PUT } from "./leaveRoom";
 
-export { GET };
+export { GET, PUT };
