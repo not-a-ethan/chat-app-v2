@@ -1,0 +1,19 @@
+.form { 
+    width: 95em;
+    height: 10%;
+
+    display: grid;
+    grid-template-columns: 19fr 1fr;
+    gap: .5%;
+
+    position: absolute;
+    bottom: 0;
+}
+
+.input {
+    grid-column: 1;
+}
+
+.button {
+    grid-column: 2;
+}

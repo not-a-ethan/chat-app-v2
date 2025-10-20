@@ -1,0 +1,63 @@
+.page {
+    width: 97.5%;
+    margin: 0 auto;
+
+    height: 100%;
+}
+
+.main {
+    display: grid;
+    gap: 2%;
+
+    width: 90%;
+    height: 93%;
+}
+
+.chat {
+    width: 90%;
+    height: max-content;
+
+    grid-column: 1;
+
+    position: absolute;
+    left: 0;
+}
+
+.members {
+    width: 10%;
+
+    grid-column: 2;
+
+    position: absolute;
+    right: 0;
+}
+
+.bottom {
+    display: grid;
+    gap: 2%;
+
+    height: 5%;
+
+    position: absolute;
+    bottom: 0;
+
+    margin-top: 2%;
+}
+
+.rooms {
+    width: 90%;
+
+    grid-column: 1;
+
+    position: absolute;
+    left: 0;
+}
+
+.managment {
+    width: 10%;
+
+    grid-column: 2;
+
+    position: absolute;
+    right: 0;
+}

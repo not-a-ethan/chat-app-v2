@@ -3,7 +3,7 @@ import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 import { addToast } from "@heroui/toast";
 
-import styles from "../../../../styles/chat/createMessage.module.css";
+import styles from "../../../../styles/chat/components/createMessage.module.css";
 
 export function SendMessage(props: any) {
     const roomId = props.roomId;

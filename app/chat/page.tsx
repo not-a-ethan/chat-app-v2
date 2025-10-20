@@ -9,6 +9,8 @@ import { useSession } from "next-auth/react";
 import { Chat } from "./chat";
 import { Rooms } from "./rooms";
 
+import styles from "../../styles/chat/page.module.css";
+
 export default function Page() {
     const { data: session, status } = useSession();
     const router = useRouter();
@@ -25,12 +27,25 @@ export default function Page() {
     };
 
     return (
-        <>
-            <h1>Chat, this heading is temp</h1>
+        <div className={`${styles.page}`}>
+            <div className={`${styles.main}`}>
+                <Chat roomId={room} className={`${styles.chat}`} />
 
-            <Chat roomId={room} />
+                <div className={`${styles.members}`}>
+                    <ul>
+                        <li>Person</li>
+                        <li>Person</li>
+                        <li>Person</li>
+                        <li>Person</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div className={`${styles.bottom}`}>
+                <Rooms room={room} setRoom={setRoom} className={`${styles.rooms}`} />
 
-            <Rooms room={room} setRoom={setRoom} />
-        </>
+                <div className={`${styles.managment}`}>hygmk</div>
+            </div>
+        </div>
     );
 };
