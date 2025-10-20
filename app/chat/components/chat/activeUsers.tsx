@@ -10,6 +10,13 @@ export function ActiveUsers(props: any) {
 
     const { json, jsonError, jsonLoading } = getAPI(`../api/rooms/server?roomId=${roomID}`, ["json", "jsonError", "jsonLoading"]);
 
+    if (roomID <= 0) {
+        return (
+            <>
+            </>
+        );
+    };
+
     if (jsonLoading) {
         // Spooky Scary Skeltons
         return (

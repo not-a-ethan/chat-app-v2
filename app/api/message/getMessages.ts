@@ -56,19 +56,13 @@ export async function GET(req: NextRequest) {
     const users: usersType = {};
 
     for (let i = 0; i < messages.length; i++) {
-        if (users[messages[i]["user"]] == null) {
+        if (users[messages[i]["user"]]) {
             continue;
         };
 
         const thisUserData: DatabaseUsers[] = await getAll(`SELECT * FROM users WHERE githubId=${messages[i]["user"]}`, {});
 
-        if (thisUserData[0]["pfp"] == null) {
-            // Set a default pfp for users HERE
-
-            continue;
-        };
-
-        users[messages[i]["user"]] = thisUserData[0]["pfp"];
+        users[messages[i]["user"]] = thisUserData;
     };
 
     return NextResponse.json(
