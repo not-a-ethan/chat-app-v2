@@ -39,6 +39,8 @@ export function ListRooms(props: any) {
 
     const rooms: DatabaseRooms[] = json["rooms"];
 
+    console.log(rooms);
+
     if (rooms.length === 0) {
         // Cant display rooms that do not exist
         return (<></>);
@@ -49,6 +51,8 @@ export function ListRooms(props: any) {
 
         setRoom(id);
     };
+
+    console.log(rooms)
 
     return (
         <>

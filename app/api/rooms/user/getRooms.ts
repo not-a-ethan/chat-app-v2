@@ -3,17 +3,24 @@ import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 import { getAll } from "@/database/db";
+import { DatabaseRooms } from "@/types";
 
 export async function getRooms(userId: number): Promise<number[]> {
     const roomSQL = await getAll(`SELECT rooms FROM users WHERE githubID=${userId}`, {});
 
-    const rooms: number[]|null = roomSQL["rooms"];
+    const rooms: string[]|null = roomSQL[0]["rooms"].split(",");
 
     if (rooms == null) {
         return [];
     };
 
-    return rooms;
+    const correctRoomArray = [];
+
+    for (let i = 0; i < rooms.length; i++) {
+        correctRoomArray.push(Number(rooms[i]));
+    };
+
+    return correctRoomArray;
 };            
 
 export async function GET(req: NextRequest) {
@@ -31,10 +38,16 @@ export async function GET(req: NextRequest) {
     const userId: number = Number(token.sub);
 
     const rooms = await getRooms(userId);
+    const roomsData: DatabaseRooms[] = [];
+
+    for (let i = 0; i < rooms.length; i++) {
+        const thisRoom: DatabaseRooms[] = await getAll(`SELECT * FROM rooms WHERE id=${rooms[i]}`, {});
+        roomsData.push(thisRoom[0]);
+    };
 
     return NextResponse.json(
         {
-            "rooms": rooms
+            "rooms": roomsData
         },
         { status: 200 }
     );
