@@ -4,6 +4,7 @@ import { getToken } from "next-auth/jwt";
 
 import { getAll } from "@/database/db";
 import { DatabaseRooms } from "@/types";
+import { updateActvitiy } from "@/helpers/updateActivity";
 
 export async function getRooms(userId: number): Promise<number[]> {
     const roomSQL = await getAll(`SELECT rooms FROM users WHERE githubID=${userId}`, {});
@@ -36,6 +37,8 @@ export async function GET(req: NextRequest) {
     };
 
     const userId: number = Number(token.sub);
+
+    updateActvitiy(userId);
 
     const rooms = await getRooms(userId);
     const roomsData: DatabaseRooms[] = [];

@@ -5,6 +5,7 @@ import { getToken } from "next-auth/jwt";
 import { getAll } from "@/database/db";
 
 import { DatabaseMessages, DatabaseUsers } from "@/types";
+import { updateActvitiy } from "@/helpers/updateActivity";
 
 export async function GET(req: NextRequest) {
     const token = await getToken({ req });
@@ -19,6 +20,8 @@ export async function GET(req: NextRequest) {
     };
 
     const userId: number = Number(token.sub);
+
+    updateActvitiy(userId);
 
     const searchParams = req.nextUrl.searchParams;
     const roomId: number = Number(searchParams?.get("roomId"));

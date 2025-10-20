@@ -50,7 +50,7 @@ export async function PUT(req: NextRequest) {
 
     const userId: number = Number(token.sub);
 
-    updateActvitiy(userId)
+    updateActvitiy(userId);
 
     const body = await req.json();
     const roomId = body["room"];

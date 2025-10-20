@@ -4,6 +4,7 @@ import { getToken } from "next-auth/jwt";
 
 import { getAll, changeDB } from "@/database/db";
 import { getRooms } from "../rooms/user/getRooms";
+import { updateActvitiy } from "@/helpers/updateActivity";
 
 export async function DELETE(req: NextRequest) {
     const token = await getToken({ req });
@@ -18,6 +19,8 @@ export async function DELETE(req: NextRequest) {
     };
 
     const userId: number = Number(token.sub);
+    
+    updateActvitiy(userId);
 
     const body = await req.json();
     const messageId = body["messageId"];

@@ -36,6 +36,8 @@ export async function POST(req: NextRequest) {
 
     const userId: number = Number(token.sub);
 
+    updateActvitiy(userId);
+
     const body = await req.json();
     const name: string = body["name"];
 

@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 import { changeDB } from "@/database/db";
+import { updateActvitiy } from "@/helpers/updateActivity";
 
 export async function PUT(req: NextRequest) {
     const token = await getToken({ req });
@@ -17,6 +18,8 @@ export async function PUT(req: NextRequest) {
     };
 
     const userId: number = Number(token.sub);
+
+    updateActvitiy(userId);
 
     const body = await req.json();
     const newPfp: string = body["pfp"];
