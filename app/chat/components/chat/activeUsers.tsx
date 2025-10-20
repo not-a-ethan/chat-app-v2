@@ -31,8 +31,6 @@ export function ActiveUsers(props: any) {
 
     const people: DatabaseUsers[] = json["people"];
 
-    console.log(people);
-
     return (
         <Listbox classNames={{
                 base: "max-w-xs",
