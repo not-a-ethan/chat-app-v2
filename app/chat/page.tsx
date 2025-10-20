@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 
 import { Chat } from "./chat";
 import { Rooms } from "./rooms";
+import { ActiveUsers } from "./components/chat/activeUsers";
 
 import styles from "../../styles/chat/page.module.css";
 
@@ -32,12 +33,7 @@ export default function Page() {
                 <Chat roomId={room} className={`${styles.chat}`} />
 
                 <div className={`${styles.members}`}>
-                    <ul>
-                        <li>Person</li>
-                        <li>Person</li>
-                        <li>Person</li>
-                        <li>Person</li>
-                    </ul>
+                    <ActiveUsers room={room} />
                 </div>
             </div>
             
