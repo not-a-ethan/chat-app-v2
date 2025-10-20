@@ -3,7 +3,7 @@ import { CreateRoom } from "./components/rooms/createRoom";
 
 export function Rooms(props: any) {
     const room = props["room"];
-    const setRoom = props["setRoom"];
+    const setRoom = props.setRoom;
 
     return (
         <span className={`flex flex-wrap gap-2`}>

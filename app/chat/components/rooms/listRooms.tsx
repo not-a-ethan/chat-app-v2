@@ -9,7 +9,7 @@ import styles from "../../../../styles/chat/components/rooms.module.css";
 
 export function ListRooms(props: any) {
     const currentRoom = props["roomId"];
-    const setRoom = props["setRoom"];
+    const setRoom = props.setRoom;
 
     const { json, jsonError, jsonLoading } = getAPI("../api/rooms/user", ["json", "jsonError", "jsonLoading"]);
 
@@ -40,8 +40,6 @@ export function ListRooms(props: any) {
     };
 
     const rooms: DatabaseRooms[] = json["rooms"];
-
-    console.log(rooms);
 
     if (rooms.length === 0) {
         // Cant display rooms that do not exist
