@@ -69,7 +69,7 @@ export function Message(props: any) {
     return (
         <>
             {messages.map((message: any) => (
-                <Card>
+                <Card key={message["id"]}>
                     <Avatar src={users[message["userId"]]} />
 
                     <p>{message["content"]}</p>
