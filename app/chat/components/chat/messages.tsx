@@ -9,14 +9,13 @@ import { getAPI } from "@/helpers/getAPI";
 
 export function Message(props: any) {
     const roomId = props.roomId;
+    const { json, jsonLoading, jsonError } = getAPI(`../api/message?roomId=${roomId}`, ["json", "jsonLoading", "jsonError"]);
 
     if (roomId <= 0) {
         return (
             <></>
         );
     };
-
-    const { json, jsonLoading, jsonError } = getAPI(`../api/message?roomId=${roomId}`, ["json", "jsonLoading", "jsonError"]);
 
     function react(e: any) {
         const type = e.target.id;
@@ -48,12 +47,6 @@ export function Message(props: any) {
     };
 
     if (json == undefined) {
-        addToast({
-            color: "danger",
-            title: "Something went wrong getting the messages",
-            description: "More info in developer console"
-        });
-
         // Add more Skeltons
         return (
             <>

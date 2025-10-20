@@ -35,8 +35,6 @@ export async function GET(req: NextRequest) {
     const sqlRooms = await getAll(`SELECT * FROM users WHERE githubID=${userId}`, {});
     const rooms: string[] = sqlRooms[0]["rooms"].split(",");
 
-    console.log(rooms);
-
     if (!rooms.includes(roomId.toString())) {
         return NextResponse.json(
             {
