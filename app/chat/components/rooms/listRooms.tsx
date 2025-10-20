@@ -5,6 +5,8 @@ import { getAPI } from "@/helpers/getAPI";
 
 import { DatabaseRooms } from "@/types";
 
+import styles from "../../../../styles/chat/components/rooms.module.css";
+
 export function ListRooms(props: any) {
     const currentRoom = props["roomId"];
     const setRoom = props["setRoom"];
@@ -52,15 +54,13 @@ export function ListRooms(props: any) {
         setRoom(id);
     };
 
-    console.log(rooms)
-
     return (
-        <>
+        <span className={`flex flex-wrap gap-1`}>
             {rooms.map((room: DatabaseRooms) => (
                 <Button key={room["id"]} onPress={handleClick} id={room["id"].toString()}>
                     {room["name"]}
                 </Button>
             ))}
-        </>
+        </span>
     );
 };

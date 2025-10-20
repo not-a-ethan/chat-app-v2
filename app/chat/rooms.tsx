@@ -6,9 +6,9 @@ export function Rooms(props: any) {
     const setRoom = props["setRoom"];
 
     return (
-        <>
+        <span className={`flex flex-wrap gap-2`}>
             <ListRooms roomId={room} setRoom={setRoom} />
             <CreateRoom />
-        </>
+        </span>
     );
 };
