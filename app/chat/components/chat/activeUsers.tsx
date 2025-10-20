@@ -43,7 +43,7 @@ export function ActiveUsers(props: any) {
             {people.map((person) => (
                 <ListboxItem key={person.githubId} textValue={person.name}>
                     <div className="flex gap-2 items-center">
-                    <Avatar alt={person.name} className="shrink-0" size="sm" src={person.pfp} />
+                    <Avatar alt={person.name} className="shrink-0" size="sm" src={person.pfp || ""} />
                     <div className="flex flex-col">
                         <span className="text-small">{person.name}</span>
                     </div>
