@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { Avatar } from "@heroui/avatar";
 import { Card } from "@heroui/card";
