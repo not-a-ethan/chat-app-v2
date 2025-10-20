@@ -33,9 +33,11 @@ export async function GET(req: NextRequest) {
     };
     
     const sqlRooms = await getAll(`SELECT * FROM users WHERE githubID=${userId}`, {});
-    const rooms: number[] = sqlRooms[0]["rooms"].split(",");
+    const rooms: string[] = sqlRooms[0]["rooms"].split(",");
 
-    if (!rooms.includes(roomId)) {
+    console.log(rooms);
+
+    if (!rooms.includes(roomId.toString())) {
         return NextResponse.json(
             {
                 "error": "You are not in that room"
