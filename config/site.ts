@@ -3,18 +3,6 @@ export type SiteConfig = typeof siteConfig;
 export const siteConfig = {
   name: "Chat App",
   description: "Make beautiful websites regardless of your design experience.",
-  navItems: [
-    {
-      label: "Home",
-      href: "/",
-    }
-  ],
-  navMenuItems: [
-    {
-      label: "Home again",
-      href: "/",
-    }
-  ],
   links: {
     /*
     github: "https://github.com/heroui-inc/heroui",

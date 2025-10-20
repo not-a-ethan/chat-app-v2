@@ -44,7 +44,7 @@ export default function Page() {
             <div className={`${styles.bottom}`}>
                 <Rooms room={room} setRoom={setRoom} className={`${styles.rooms}`} />
 
-                <div className={`${styles.managment}`}>hygmk</div>
+                <div className={`${styles.managment}`}></div>
             </div>
         </div>
     );
