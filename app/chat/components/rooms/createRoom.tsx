@@ -23,18 +23,15 @@ export function CreateRoom() {
             return;
         };
 
-        fetch("../api/rooms/server", {
-            method: "POST",
-            body: JSON.stringify({
-                "name": roomName
+        addToast({
+            title: "Creating room",
+            color: "primary",
+            promise: fetch("../api/rooms/server", {
+                method: "POST",
+                body: JSON.stringify({
+                    "name": roomName
+                })
             })
-        }).catch(e => {
-            console.error(e);
-            addToast({
-                color: "danger",
-                title: "Could not create the room",
-                description: "More info in the developer console"
-            });
         });
     };
 
@@ -49,7 +46,7 @@ export function CreateRoom() {
                             <ModalHeader>New Room</ModalHeader>
 
                             <ModalBody>
-                                <Form>
+                                <Form onSubmit={apiNewRoom}>
                                     <Input type="text" label="Room name" name="roomName" />
 
                                     <Button type="submit">Create room</Button>

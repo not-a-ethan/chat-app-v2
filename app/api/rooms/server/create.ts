@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
         );
     };
 
-    const query = `INSERT INTO rooms (name) VALUES $n`;
+    const query = `INSERT INTO rooms (name, owner) VALUES ($n, ${userId})`;
     changeDB(query, { "$n": name });
 
     const roomId = await (await getAll(`SELECT seq FROM sqlite_sequence WHERE name='rooms'`, {}))["0"]["seq"];
