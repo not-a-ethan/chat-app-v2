@@ -1,4 +1,4 @@
-import { changeDB } from "@/database/db";
+import { changeDB } from "@/app/database/db";
 import { getRooms } from "./user/getRooms";
 
 export async function removeUser(roomId: number, userId: number): Promise<boolean> {

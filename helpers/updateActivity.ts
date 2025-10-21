@@ -1,4 +1,4 @@
-import { changeDB } from "@/database/db";
+import { changeDB } from "@/app/database/db";
 
 export function updateActvitiy(id: number): void {
     const time = Date.now();

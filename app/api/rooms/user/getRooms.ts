@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { getToken } from "next-auth/jwt";
 
-import { getAll } from "@/database/db";
+import { getAll } from "@/app/database/db";
 import { DatabaseRooms } from "@/types";
 import { updateActvitiy } from "@/helpers/updateActivity";
 
