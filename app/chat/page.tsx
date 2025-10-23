@@ -18,30 +18,35 @@ export default function Page() {
 
     const [room, setRoom] = useState(0);
 
-    if (status === "loading") {
-        // return elements all with skeletons
-    };
+    try {
+        if (status === "loading") {
+            // return elements all with skeletons
+        };
 
-    if (status === "unauthenticated") {
+        if (status === "unauthenticated") {
+            router.replace("/api/auth/signin");
+            return( <p>Acess Denied, you need to be loged in to view this page</p>);
+        };
+
+        return (
+            <div className={`${styles.page}`}>
+                <div className={`${styles.main}`}>
+                    <Chat roomId={room} className={`${styles.chat}`} />
+
+                    <div className={`${styles.members}`}>
+                        <ActiveUsers room={room} />
+                    </div>
+                </div>
+                
+                <div className={`${styles.bottom}`}>
+                    <Rooms room={room} setRoom={setRoom} className={`${styles.rooms}`} />
+
+                    <div className={`${styles.managment}`}></div>
+                </div>
+            </div>
+        );
+    } catch (e) {
         router.replace("/api/auth/signin");
         return( <p>Acess Denied, you need to be loged in to view this page</p>);
     };
-
-    return (
-        <div className={`${styles.page}`}>
-            <div className={`${styles.main}`}>
-                <Chat roomId={room} className={`${styles.chat}`} />
-
-                <div className={`${styles.members}`}>
-                    <ActiveUsers room={room} />
-                </div>
-            </div>
-            
-            <div className={`${styles.bottom}`}>
-                <Rooms room={room} setRoom={setRoom} className={`${styles.rooms}`} />
-
-                <div className={`${styles.managment}`}></div>
-            </div>
-        </div>
-    );
 };
