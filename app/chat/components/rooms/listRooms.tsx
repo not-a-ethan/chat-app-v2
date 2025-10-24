@@ -52,6 +52,8 @@ export function ListRooms(props: any) {
         setRoom(id);
     };
 
+    setRoom(rooms[0]["id"]);
+
     return (
         <span className={`flex flex-wrap gap-1`}>
             {rooms.map((room: DatabaseRooms) => (
