@@ -54,6 +54,15 @@ export async function GET(req: NextRequest) {
 
     for (let i = 0; i < people.length; i++) {
         try {
+            if (!people[i]["rooms"]) {
+               return NextResponse.json(
+                    {
+                        "people": []
+                    },
+                    { status: 200 }
+                );
+            };
+
             const userRooms: string[] = people[i]["rooms"].split(",");
 
             if (userRooms.includes(roomId.toString())) {
