@@ -44,6 +44,15 @@ export async function GET(req: NextRequest) {
         );
     };
 
+    if (roomId === "0") {
+        return NextResponse.json(
+            {
+                "error": "You need a valud room ID"
+            },
+            { status: 400 }
+        );
+    };
+
     // Selects all users that were active in the past 5 min, in said room
     const now = Date.now();
     //const query = `SELECT * FROM users WHERE rooms LIKE CONCAT('%,', $room, ',%') AND lastActivity > ${now-300000}`;
