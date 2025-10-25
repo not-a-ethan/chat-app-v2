@@ -11,9 +11,15 @@ export function Message(props: any) {
     const roomId = props.roomId;
     const { json, jsonLoading, jsonError } = getAPI(`../api/message?roomId=${roomId}`, ["json", "jsonLoading", "jsonError"]);
 
-    if (roomId <= 0) {
+    console.log(roomId)
+
+    if (roomId < 0) {
         return (
             <></>
+        );
+    } else if (roomId == 0) {
+        return (
+            <p>Please select a room on the bottom</p>
         );
     };
 
