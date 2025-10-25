@@ -11,8 +11,6 @@ export function Message(props: any) {
     const roomId = props.roomId;
     const { json, jsonLoading, jsonError } = getAPI(`../api/message?roomId=${roomId}`, ["json", "jsonLoading", "jsonError"]);
 
-    console.log(roomId)
-
     if (roomId < 0) {
         return (
             <></>

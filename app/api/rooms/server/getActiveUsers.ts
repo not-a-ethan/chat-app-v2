@@ -53,10 +53,19 @@ export async function GET(req: NextRequest) {
     const peopleInRoom: DatabaseUsers[] = [];
 
     for (let i = 0; i < people.length; i++) {
-        const userRooms: string[] = people[i]["rooms"].split(",");
+        try {
+            const userRooms: string[] = people[i]["rooms"].split(",");
 
-        if (userRooms.includes(roomId.toString())) {
-            peopleInRoom.push(people[i]);
+            if (userRooms.includes(roomId.toString())) {
+                peopleInRoom.push(people[i]);
+            };
+        } catch (e) {
+            return NextResponse.json(
+                {
+                    "people": []
+                },
+                { status: 200 }
+            );
         };
     };
 

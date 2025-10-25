@@ -8,9 +8,14 @@ import { updateActvitiy } from "@/helpers/updateActivity";
 
 export async function getRooms(userId: number): Promise<number[]> {
     const roomSQL = await getAll(`SELECT rooms FROM users WHERE githubID=${userId}`, {});
+    let rooms: string[]|null;
 
-    const rooms: string[]|null = roomSQL[0]["rooms"].split(",");
-
+    try {
+        rooms = roomSQL[0]["rooms"].split(",");
+    } catch (e) {
+        return [];
+    };
+    
     if (rooms == null) {
         return [];
     };
