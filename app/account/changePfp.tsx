@@ -7,14 +7,20 @@ export function ChangePfp(props: any) {
     function handleChange(e: any) {
         e.preventDefault();
 
-        const newPfp: Blob = document.getElementById("newpfp")?.files[0];
+        const inputElm: HTMLInputElement = document.getElementById("newpfp") as HTMLInputElement;
+
+        if (!inputElm.files) {
+            return;
+        };
+
+        const newPfp: Blob = inputElm.files[0];
 
         const reader = new FileReader();
         reader.onload = function(e) {
             // Data URL
             const image = e.target?.result;
             
-            
+
         };
 
         reader.readAsDataURL(newPfp);
