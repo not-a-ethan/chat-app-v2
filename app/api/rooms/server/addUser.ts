@@ -9,8 +9,6 @@ import { updateActvitiy } from "@/helpers/updateActivity";
 export async function addUser(roomId: number, newUserId: number, addingUserId: number, createRoom: boolean) {
     const adderRooms = await getRooms(newUserId);
 
-    console.log(adderRooms);
-    
     if (!adderRooms.includes(roomId) && !createRoom) {
         return NextResponse.json(
             {
@@ -21,10 +19,8 @@ export async function addUser(roomId: number, newUserId: number, addingUserId: n
     };
 
     try {
-        const currentRooms: number[]|null = await (await getAll(`SELECT rooms FROM users WHERE githubID=$i`, {"$i": newUserId}))["rooms"].split(",");
+        const currentRooms: number[]|null = await (await getAll(`SELECT rooms FROM users WHERE githubID=$i`, {"$i": newUserId}))[0]["rooms"].split(",");
         let newRooms: string;
-
-        console.log(currentRooms);
 
         if (currentRooms == null) {
             newRooms = `${roomId}`;
@@ -33,9 +29,8 @@ export async function addUser(roomId: number, newUserId: number, addingUserId: n
             newRooms = currentRooms.join(",");
         };
 
-        console.log(newRooms);
         
-        changeDB(`UPDATE users SET rooms=${newRooms} WHERE githubID=$u`, { "$u": addingUserId });
+        changeDB(`UPDATE users SET rooms='${newRooms}' WHERE githubID=$u`, { "$u": addingUserId });
 
         return NextResponse.json(
             {},
@@ -50,11 +45,6 @@ export async function addUser(roomId: number, newUserId: number, addingUserId: n
             { status: 200 }
         );
     };
-    
-    return NextResponse.json(
-        {},
-        { status: 200 }
-    );
 };
 
 export async function PUT(req: NextRequest) {
