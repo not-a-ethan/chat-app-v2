@@ -1,0 +1,12 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/api/account/pfp/route": "/api/account/pfp",
+  "/api/account/name/route": "/api/account/name",
+  "/api/auth/[...nextauth]/route": "/api/auth/[...nextauth]",
+  "/api/message/route": "/api/message",
+  "/api/rooms/server/route": "/api/rooms/server",
+  "/api/rooms/user/route": "/api/rooms/user",
+  "/account/page": "/account",
+  "/chat/page": "/chat",
+  "/page": "/"
+}
