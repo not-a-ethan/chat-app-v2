@@ -6,10 +6,12 @@ import { changeDB, getAll } from "@/app/database/db";
 import { getRooms } from "../user/getRooms";
 import { updateActvitiy } from "@/helpers/updateActivity";
 
-export async function addUser(roomId: number, newUserId: number, addingUserId: number) {
+export async function addUser(roomId: number, newUserId: number, addingUserId: number, createRoom: boolean) {
     const adderRooms = await getRooms(newUserId);
+
+    console.log(adderRooms);
     
-    if (!adderRooms.includes(roomId)) {
+    if (!adderRooms.includes(roomId) && !createRoom) {
         return NextResponse.json(
             {
                 "error": "You can not add peopel to a room you are not in"
@@ -18,18 +20,37 @@ export async function addUser(roomId: number, newUserId: number, addingUserId: n
         );
     };
 
-    const currentRooms: number[]|null = await (await getAll(`SELECT rooms FROM users WHERE githubID=$i`, {"$i": newUserId}))["rooms"].split(",");
-    let newRooms: string;
+    try {
+        const currentRooms: number[]|null = await (await getAll(`SELECT rooms FROM users WHERE githubID=$i`, {"$i": newUserId}))["rooms"].split(",");
+        let newRooms: string;
 
-    if (currentRooms == null) {
-        newRooms = `${roomId}`;
-    } else {
-        currentRooms.push(roomId);
-        newRooms = currentRooms.join(",");
+        console.log(currentRooms);
+
+        if (currentRooms == null) {
+            newRooms = `${roomId}`;
+        } else {
+            currentRooms.push(roomId);
+            newRooms = currentRooms.join(",");
+        };
+
+        console.log(newRooms);
+        
+        changeDB(`UPDATE users SET rooms=${newRooms} WHERE githubID=$u`, { "$u": addingUserId });
+
+        return NextResponse.json(
+            {},
+            { status: 200 }
+        );
+    } catch (e) {
+        let newRooms: string = `${roomId}`;
+        changeDB(`UPDATE users SET rooms=${newRooms} WHERE githubID=$u`, { "$u": addingUserId });
+
+        return NextResponse.json(
+            {},
+            { status: 200 }
+        );
     };
     
-    changeDB(`UPDATE users SET rooms=${newRooms} WHERE githubID=$u`, { "$u": addingUserId });
-
     return NextResponse.json(
         {},
         { status: 200 }
@@ -56,5 +77,5 @@ export async function PUT(req: NextRequest) {
     const roomId = body["room"];
     const user = body["userId"];
 
-    return addUser(roomId, user, userId);
+    return addUser(roomId, user, userId, false);
 };

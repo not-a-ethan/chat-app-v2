@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
 
     const roomId = await (await getAll(`SELECT seq FROM sqlite_sequence WHERE name='rooms'`, {}))["0"]["seq"];
 
-    addUser(roomId, userId, userId);
+    addUser(roomId, userId, userId, true);
 
     updateActvitiy(userId);
 
