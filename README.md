@@ -10,6 +10,8 @@ The project is similer to Discord. It has the following features:
 
 - Accounts
     - Create
+    - Edit pfp
+    - Edit name
 - Rooms
     - Create
     - Add Member
@@ -18,10 +20,6 @@ The project is similer to Discord. It has the following features:
 
 It will soon have the following features:
 
-- Accounts
-    - Edit username
-    - Edit PFP
-    - Change name
 - Rooms
     - Remove member
     - Change name
