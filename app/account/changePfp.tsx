@@ -37,10 +37,26 @@ export function ChangePfp(props: any) {
         reader.readAsDataURL(newPfp);
     };
 
+    function handleDelete(e: any) {
+        fetch("../api/account/pfp", {
+            method: "DELETE"
+        }).catch(e => {
+            console.error(e);
+
+            addToast({
+                color: "danger",
+                title: "Something went wrong deleting your pfp",
+                description: "More info in developer console"
+            });
+        });
+    };
+
     return (
         <>
             <Form onSubmit={handleChange}>
                 <Input label="New Pfp" type="file" name="newpfp" id="newpfp" />
+
+                <Button type="button" color="danger" onPress={handleDelete}>Delete</Button>
 
                 <Button type="submit">Change</Button>
             </Form>
