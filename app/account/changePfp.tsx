@@ -17,10 +17,21 @@ export function ChangePfp(props: any) {
 
         const reader = new FileReader();
         reader.onload = function(e) {
-            // Data URL
+            // Data URI
             const image = e.target?.result;
             
-
+            fetch("../api/account/pfp", {
+                method: "PUT",
+                body: JSON.stringify({
+                    "pfp": image
+                })
+            }).catch(e => {
+                addToast({
+                    color: "danger",
+                    title: "Something went wrong changeing your pfp",
+                    description: "More info in developer console"
+                })
+            });
         };
 
         reader.readAsDataURL(newPfp);
