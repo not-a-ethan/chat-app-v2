@@ -25,19 +25,19 @@
       "static/chunks/main-app-df08b4b613f43768.js",
       "static/chunks/app/error-23c03f47ce24ffbe.js"
     ],
-    "/api/account/pfp/route": [
-      "static/chunks/webpack-78a52d6ffeba3922.js",
-      "static/chunks/4bd1b696-9911af18dede28aa.js",
-      "static/chunks/964-55363799a5dbea7b.js",
-      "static/chunks/main-app-df08b4b613f43768.js",
-      "static/chunks/app/api/account/pfp/route-36d98cd26f122633.js"
-    ],
     "/api/account/name/route": [
       "static/chunks/webpack-78a52d6ffeba3922.js",
       "static/chunks/4bd1b696-9911af18dede28aa.js",
       "static/chunks/964-55363799a5dbea7b.js",
       "static/chunks/main-app-df08b4b613f43768.js",
       "static/chunks/app/api/account/name/route-36d98cd26f122633.js"
+    ],
+    "/api/account/pfp/route": [
+      "static/chunks/webpack-78a52d6ffeba3922.js",
+      "static/chunks/4bd1b696-9911af18dede28aa.js",
+      "static/chunks/964-55363799a5dbea7b.js",
+      "static/chunks/main-app-df08b4b613f43768.js",
+      "static/chunks/app/api/account/pfp/route-36d98cd26f122633.js"
     ],
     "/api/auth/[...nextauth]/route": [
       "static/chunks/webpack-78a52d6ffeba3922.js",

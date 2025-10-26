@@ -1,7 +1,7 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/api/account/pfp/route": "app/api/account/pfp/route.js",
   "/api/account/name/route": "app/api/account/name/route.js",
+  "/api/account/pfp/route": "app/api/account/pfp/route.js",
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
   "/api/message/route": "app/api/message/route.js",
   "/api/rooms/server/route": "app/api/rooms/server/route.js",
