@@ -38,6 +38,10 @@ export function ChangePfp() {
     };
 
     function handleDelete(e: any) {
+        if (!e) {
+            return;
+        }
+        
         fetch("../api/account/pfp", {
             method: "DELETE"
         }).catch(e => {

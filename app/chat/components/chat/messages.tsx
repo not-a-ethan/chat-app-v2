@@ -22,6 +22,10 @@ export function Message(props: any) {
     };
 
     function react(e: any) {
+        if (!e) {
+            return;
+        }
+        
         const type = e.target.id;
     };
 

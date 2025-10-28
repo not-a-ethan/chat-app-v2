@@ -47,6 +47,10 @@ export function ListRooms(props: any) {
     };
 
     function handleClick(e: any) {
+        if (!e) {
+            return;
+        }
+        
         const id = e.target.id;
 
         setRoom(id);
