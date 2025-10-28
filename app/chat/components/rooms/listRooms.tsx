@@ -41,16 +41,16 @@ export function ListRooms(props: any) {
 
     const rooms: DatabaseRooms[] = json["rooms"];
 
+    console.log(rooms);
+
     if (rooms.length === 0) {
         // Cant display rooms that do not exist
         return (<></>);
+    } else if (rooms[0] === null) {
+        rooms.shift();
     };
 
     function handleClick(e: any) {
-        if (!e) {
-            return;
-        }
-        
         const id = e.target.id;
 
         setRoom(id);
