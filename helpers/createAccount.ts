@@ -21,13 +21,13 @@ export async function createAccount(id: number, username: string): Promise<boole
         };
 
         const time = Date.now();
-        const result = sql`INSERT INTO users (githubID, name, lastActivity) VALUES (${sql(newUsername)}, ${sql(id)}, ${time});`;
+        const result = sql`INSERT INTO users (githubID, name, lastActivity) VALUES (${newUsername}, ${id}, ${time});`;
         
         return true;
     };
 
     const time = Date.now();
-    const result = sql`INSERT INTO users (githubID, name, lastActivity) VALUES (${sql(id)}, ${sql(username)}, ${time});`;
+    const result = sql`INSERT INTO users (githubID, name, lastActivity) VALUES (${id}, ${username}, ${time});`;
 
     return true;
 };

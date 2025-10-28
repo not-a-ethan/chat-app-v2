@@ -50,9 +50,12 @@ export async function POST(req: NextRequest) {
         );
     };
 
-    sql`INSERT INTO rooms (name, owner) VALUES (${sql(name)}, ${userId})`;
+    await sql`INSERT INTO rooms (name, owner) VALUES (${name}, ${userId})`;
 
-    const roomId = await (sql`SELECT seq FROM sqlite_sequence WHERE name='rooms'`)["0"]["seq"];
+    //const roomId = await (sql`SELECT seq FROM sqlite_sequence WHERE name='rooms'`)["0"]["seq"];
+    const roomId: number = await (await sql`SELECT id FROM rooms;`)[0]["id"];
+
+    console.log(roomId)
 
     addUser(roomId, userId, userId, true);
 
