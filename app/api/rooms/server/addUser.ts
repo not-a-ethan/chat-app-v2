@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { getToken } from "next-auth/jwt";
 
-import { changeDB, getAll } from "@/app/database/db";
+import { sql } from "@/app/database/db";
 import { getRooms } from "../user/getRooms";
 import { updateActvitiy } from "@/helpers/updateActivity";
 
@@ -19,7 +19,7 @@ export async function addUser(roomId: number, newUserId: number, addingUserId: n
     };
 
     try {
-        const currentRooms: number[]|null = await (await getAll(`SELECT rooms FROM users WHERE githubID=$i`, {"$i": newUserId}))[0]["rooms"].split(",");
+        const currentRooms: number[]|null = await (sql`SELECT rooms FROM users WHERE githubID=${sql(newUserId)}`)[0]["rooms"].split(",");
         let newRooms: string;
 
         if (currentRooms == null) {
@@ -30,7 +30,7 @@ export async function addUser(roomId: number, newUserId: number, addingUserId: n
         };
 
         
-        changeDB(`UPDATE users SET rooms='${newRooms}' WHERE githubID=$u`, { "$u": addingUserId });
+        sql`UPDATE users SET rooms='${newRooms}' WHERE githubID=${sql(addingUserId)}`;
 
         return NextResponse.json(
             {},
@@ -38,7 +38,7 @@ export async function addUser(roomId: number, newUserId: number, addingUserId: n
         );
     } catch (e) {
         let newRooms: string = `${roomId}`;
-        changeDB(`UPDATE users SET rooms=${newRooms} WHERE githubID=$u`, { "$u": addingUserId });
+        sql`UPDATE users SET rooms=${newRooms} WHERE githubID=${addingUserId}`;
 
         return NextResponse.json(
             {},

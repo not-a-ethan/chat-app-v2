@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { getToken } from "next-auth/jwt";
 
-import { getAll, changeDB } from "@/app/database/db";
+import { sql } from "@/app/database/db";
 import { updateActvitiy } from "@/helpers/updateActivity";
 
 export async function PUT(req: NextRequest) {
@@ -33,7 +33,7 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    const nameExists = await getAll(`SELECT * FROM users WHERE name=$n`, { "$n": newName });
+    const nameExists = await sql`SELECT * FROM users WHERE name=${sql(newName)}`;
     
     if (nameExists.length > 0) {
         return NextResponse.json(
@@ -44,9 +44,8 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    const query = `UPDATE users SET name=$n WHERE githubID=${userId}`;
-    changeDB(query, { "$n": newName });
-
+    sql`UPDATE users SET name=${sql(newName)} WHERE githubID=${userId}`;
+    
     return NextResponse.json(
         {},
         { status: 200 }

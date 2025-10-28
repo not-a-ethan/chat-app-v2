@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { getToken } from "next-auth/jwt";
 
-import { changeDB, getAll } from "@/app/database/db";
+import { sql } from "@/app/database/db";
 import { updateActvitiy } from "@/helpers/updateActivity";
 import { addUser } from "./addUser";
 
@@ -50,10 +50,9 @@ export async function POST(req: NextRequest) {
         );
     };
 
-    const query = `INSERT INTO rooms (name, owner) VALUES ($n, ${userId})`;
-    changeDB(query, { "$n": name });
+    sql`INSERT INTO rooms (name, owner) VALUES (${sql(name)}, ${userId})`;
 
-    const roomId = await (await getAll(`SELECT seq FROM sqlite_sequence WHERE name='rooms'`, {}))["0"]["seq"];
+    const roomId = await (sql`SELECT seq FROM sqlite_sequence WHERE name='rooms'`)["0"]["seq"];
 
     addUser(roomId, userId, userId, true);
 

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { getToken } from "next-auth/jwt";
 
-import { getAll } from "@/app/database/db";
+import { sql } from "@/app/database/db";
 import { updateActvitiy } from "@/helpers/updateActivity";
 
 import { DatabaseUsers } from "@/types";
@@ -56,8 +56,7 @@ export async function GET(req: NextRequest) {
     // Selects all users that were active in the past 5 min, in said room
     const now = Date.now();
     //const query = `SELECT * FROM users WHERE rooms LIKE CONCAT('%,', $room, ',%') AND lastActivity > ${now-300000}`;
-    const query = `SELECT * FROM users WHERE lastActivity > ${now-300000};`
-    const people: DatabaseUsers[] = await getAll(query, {});
+    const people: DatabaseUsers[] = sql`SELECT * FROM users WHERE lastActivity > ${now-300000};`
 
     const peopleInRoom: DatabaseUsers[] = [];
 

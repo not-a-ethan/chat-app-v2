@@ -3,7 +3,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 import { getRooms } from "../rooms/user/getRooms";
-import { changeDB, getAll } from "@/app/database/db";
+import { sql } from "@/app/database/db";
 import { updateActvitiy } from "@/helpers/updateActivity";
 
 export async function PUT(req: NextRequest) {
@@ -28,7 +28,7 @@ export async function PUT(req: NextRequest) {
 
     const rooms: number[] = await getRooms(userId);
 
-    const currentMessageData = await getAll(`SELECT * from messages WHERE id=$i`, { "$i": messageId });
+    const currentMessageData = sql`SELECT * from messages WHERE id=${sql(messageId)}`;
     const currentRoomNum = currentMessageData["roomId"];
     const owner = currentMessageData["user"];
 
@@ -50,8 +50,7 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    const query = `UPDATE messages SET content=$c WHERE id=$i`;
-    changeDB(query, { "$i": messageId, "$c": newContent });
+    sql`UPDATE messages SET content=${sql(newContent)} WHERE id=${sql(messageId)}`;
 
     return NextResponse.json(
         {},

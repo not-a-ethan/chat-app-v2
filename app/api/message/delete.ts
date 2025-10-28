@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { getToken } from "next-auth/jwt";
 
-import { getAll, changeDB } from "@/app/database/db";
+import { sql } from "@/app/database/db";
 import { getRooms } from "../rooms/user/getRooms";
 import { updateActvitiy } from "@/helpers/updateActivity";
 
@@ -34,7 +34,7 @@ export async function DELETE(req: NextRequest) {
         );
     };
 
-    const messageData = (await getAll(`SELECT * FROM messages WHERE id=$i`, { "$i": messageId }))[0];
+    const messageData = (sql`SELECT * FROM messages WHERE id=${sql(messageId)}`)[0];
 
     if (messageData["id"] != userId) {
         return NextResponse.json(
@@ -56,8 +56,7 @@ export async function DELETE(req: NextRequest) {
         );
     };
 
-    const query = `DELETE FROM messages WHERE user=${userId} AND room=$r AND id=$i`;
-    changeDB(query, { "$r": messageData["roomId"], "$i": messageId });
+    sql`DELETE FROM messages WHERE user=${userId} AND room=${messageData["roomId"]} AND id=${messageId}`;
 
     return NextResponse.json(
         {},

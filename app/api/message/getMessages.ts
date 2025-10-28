@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { getToken } from "next-auth/jwt";
 
-import { getAll } from "@/app/database/db";
+import { sql } from "@/app/database/db";
 
 import { DatabaseMessages, DatabaseUsers } from "@/types";
 import { updateActvitiy } from "@/helpers/updateActivity";
@@ -35,7 +35,7 @@ export async function GET(req: NextRequest) {
         );
     };
     
-    const sqlRooms = await getAll(`SELECT * FROM users WHERE githubID=${userId}`, {});
+    const sqlRooms = sql`SELECT * FROM users WHERE githubID=${userId}`;
     const rooms: string[] = sqlRooms[0]["rooms"].split(",");
 
     if (!rooms.includes(roomId.toString())) {
@@ -47,7 +47,7 @@ export async function GET(req: NextRequest) {
         );
     };
 
-    const messages: DatabaseMessages[] = await getAll(`SELECT * FROM messages WHERE roomId=$i ORDER BY id DESC LIMIT 50`, { "$i": roomId });
+    const messages: DatabaseMessages[] = sql`SELECT * FROM messages WHERE roomId=${sql(roomId)} ORDER BY id DESC LIMIT 50`;
 
     interface usersType {
         [index: string]: any
@@ -60,7 +60,7 @@ export async function GET(req: NextRequest) {
             continue;
         };
 
-        const thisUserData: DatabaseUsers[] = await getAll(`SELECT * FROM users WHERE githubId=${messages[i]["user"]}`, {});
+        const thisUserData: DatabaseUsers[] = sql`SELECT * FROM users WHERE githubId=${messages[i]["user"]}`;
 
         users[messages[i]["user"]] = thisUserData;
     };

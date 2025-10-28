@@ -1,3 +1,6 @@
+/*
+SQLite stuff:
+
 import sqlite3 from 'sqlite3';
 const sqlite = sqlite3.verbose();
 const db: any = new sqlite.Database('./app/database/database.db');
@@ -27,3 +30,17 @@ export function changeDB(query: string, parms: any): boolean {
     
     return true;
 };
+*/
+
+import postgres from "postgres";
+
+export const sql: any = postgres({
+  host: process.env.pgHost,
+  port: Number(process.env.pgPort),
+  database: process.env.pgName,
+  user: process.env.pgUser,
+  password: process.env.pgPassword,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
