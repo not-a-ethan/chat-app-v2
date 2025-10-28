@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { getToken } from "next-auth/jwt";
 
-import { changeDB } from "@/app/database/db";
+import { sql } from "@/app/database/db";
 import { updateActvitiy } from "@/helpers/updateActivity";
 
 export async function DELETE(req: NextRequest) {
@@ -21,8 +21,7 @@ export async function DELETE(req: NextRequest) {
 
     updateActvitiy(userId);
 
-    const query = `UPDATE users SET pfp=NULL WHERE githubID=${userId}`;
-    changeDB(query, {});
+    sql`UPDATE users SET pfp=NULL WHERE githubID=${userId}`;
 
     return NextResponse.json(
         {},

@@ -1,4 +1,4 @@
-import { changeDB } from "@/app/database/db";
+import { sql } from "@/app/database/db";
 import { accountExists } from "./accountExists";
 import { AccountExists } from "@/types";
 
@@ -21,15 +21,13 @@ export async function createAccount(id: number, username: string): Promise<boole
         };
 
         const time = Date.now();
-        const query = `INSERT INTO users (githubID, name, lastActivity) VALUES ($u, $i, ${time});`;
-        const result = changeDB(query, {"$u": newUsername, "$i": id});
+        const result = sql`INSERT INTO users (githubID, name, lastActivity) VALUES (${sql(newUsername)}, ${sql(id)}, ${time});`;
         
         return true;
     };
 
     const time = Date.now();
-    const query = `INSERT INTO users (githubID, name, lastActivity) VALUES ($i, $u, ${time});`;
-    const result = changeDB(query, {"$u": username, "$i": id});
+    const result = sql`INSERT INTO users (githubID, name, lastActivity) VALUES (${sql(id)}, ${sql(username)}, ${time});`;
 
     return true;
 };

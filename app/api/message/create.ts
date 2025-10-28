@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { getToken } from "next-auth/jwt";
 
-import { changeDB } from "@/app/database/db";
+import { sql } from "@/app/database/db";
 import { updateActvitiy } from "@/helpers/updateActivity";
 import { getRooms } from "../rooms/user/getRooms";
 
@@ -55,8 +55,7 @@ export async function POST(req: NextRequest) {
         );
     };
 
-    const query = `INSERT INTO messages (roomId, user, content) VALUES ($r, ${userId}, $c)`;
-    changeDB(query, { "$r": roomId, "$c": messageContent });
+    sql`INSERT INTO messages (roomId, user, content) VALUES (${sql(roomId)}, ${userId}, ${sql(messageContent)})`;
 
     return NextResponse.json(
         {},

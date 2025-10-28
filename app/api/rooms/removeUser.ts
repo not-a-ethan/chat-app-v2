@@ -1,4 +1,4 @@
-import { changeDB } from "@/app/database/db";
+import { sql } from "@/app/database/db";
 import { getRooms } from "./user/getRooms";
 
 export async function removeUser(roomId: number, userId: number): Promise<boolean> {
@@ -11,7 +11,7 @@ export async function removeUser(roomId: number, userId: number): Promise<boolea
     const index = rooms.indexOf(roomId);
     rooms.splice(index, 1);
 
-    changeDB(`UPDATE users SET rooms=${rooms} WHERE githubID=${userId}`, {});
+    sql`UPDATE users SET rooms=${rooms} WHERE githubID=${userId}`;
 
     return true;
 };

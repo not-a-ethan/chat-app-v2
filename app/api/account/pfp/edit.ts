@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { getToken } from "next-auth/jwt";
 
-import { changeDB } from "@/app/database/db";
+import { sql } from "@/app/database/db";
 import { updateActvitiy } from "@/helpers/updateActivity";
 
 export async function PUT(req: NextRequest) {
@@ -33,8 +33,7 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    const query = `UPDATE users SET pfp=$p WHERE githubID=${userId};`;
-    changeDB(query, { "$p": newPfp });
+    sql`UPDATE users SET pfp=${sql(newPfp)} WHERE githubID=${userId};`;
 
     return NextResponse.json(
         {},
