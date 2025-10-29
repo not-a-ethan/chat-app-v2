@@ -33,7 +33,7 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    const nameExists = await sql`SELECT * FROM users WHERE name=${sql(newName)}`;
+    const nameExists = await sql`SELECT * FROM users WHERE name=${newName}`;
     
     if (nameExists.length > 0) {
         return NextResponse.json(
@@ -44,7 +44,7 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    sql`UPDATE users SET name=${sql(newName)} WHERE githubID=${userId}`;
+    sql`UPDATE users SET name=${newName} WHERE githubID=${userId}`;
     
     return NextResponse.json(
         {},

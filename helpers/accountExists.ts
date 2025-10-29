@@ -2,9 +2,9 @@ import { sql } from "@/app/database/db";
 import { AccountExists } from "@/types";
 
 export async function accountExists(id: number, username: string): Promise<AccountExists> {
-    const usernameResults = sql`SELECT * FROM users WHERE name=${sql(username)}`;
-    const idResults = sql`SELECT * FROM users WHERE githubID=${sql(id)}`;
-    const both = sql`SELECT * FROM users WHERE name=${sql(username)} AND githubID=${sql(id)}`;
+    const usernameResults = sql`SELECT * FROM users WHERE name=${username}`;
+    const idResults = sql`SELECT * FROM users WHERE githubID=${id}`;
+    const both = sql`SELECT * FROM users WHERE name=${username} AND githubID=${id}`;
 
     return {
         exists: !(both.length === 0),

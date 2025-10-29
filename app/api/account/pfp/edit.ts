@@ -33,7 +33,7 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    sql`UPDATE users SET pfp=${sql(newPfp)} WHERE githubID=${userId};`;
+    sql`UPDATE users SET pfp=${newPfp} WHERE githubID=${userId};`;
 
     return NextResponse.json(
         {},

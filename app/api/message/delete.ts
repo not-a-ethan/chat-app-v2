@@ -34,7 +34,7 @@ export async function DELETE(req: NextRequest) {
         );
     };
 
-    const messageData = (sql`SELECT * FROM messages WHERE id=${sql(messageId)}`)[0];
+    const messageData = (sql`SELECT * FROM messages WHERE id=${messageId}`)[0];
 
     if (messageData["id"] != userId) {
         return NextResponse.json(

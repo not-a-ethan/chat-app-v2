@@ -47,7 +47,7 @@ export async function GET(req: NextRequest) {
         );
     };
 
-    const messages: DatabaseMessages[] = sql`SELECT * FROM messages WHERE roomId=${sql(roomId)} ORDER BY id DESC LIMIT 50`;
+    const messages: DatabaseMessages[] = sql`SELECT * FROM messages WHERE roomId=${roomId} ORDER BY id DESC LIMIT 50`;
 
     interface usersType {
         [index: string]: any
