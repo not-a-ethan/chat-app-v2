@@ -46,7 +46,7 @@ export function ActiveUsers(props: any) {
             items={people}
         >
             {people.map((person) => (
-                <ListboxItem key={person.githubId} textValue={person.name}>
+                <ListboxItem key={person.githubid} textValue={person.name}>
                     <div className="flex gap-2 items-center">
                     <Avatar alt={person.name} className="shrink-0" size="sm" src={person.pfp || ""} />
                     <div className="flex flex-col">

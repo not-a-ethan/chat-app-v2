@@ -9,6 +9,6 @@ export async function accountExists(id: number, username: string): Promise<Accou
     return {
         exists: !(both.length === 0),
         idExists: !(idResults.length === 0),
-        usernameExists: !(usernameResults.length === 0)
+        usernameexists: !(usernameResults.length === 0)
     };
 };

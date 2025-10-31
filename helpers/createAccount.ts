@@ -9,7 +9,7 @@ export async function createAccount(id: number, username: string): Promise<boole
         return false;
     } else if (doesItExist["idExists"]) {
         return false
-    } else if (doesItExist["usernameExists"]) {
+    } else if (doesItExist["usernameexists"]) {
         let newUsername = username + Math.floor(Math.random() * 1000).toString();
 
         while (true) {
