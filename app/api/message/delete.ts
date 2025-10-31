@@ -34,7 +34,7 @@ export async function DELETE(req: NextRequest) {
         );
     };
 
-    const messageData = (sql`SELECT * FROM messages WHERE id=${messageId}`)[0];
+    const messageData = (await sql`SELECT * FROM messages WHERE id=${messageId}`)[0];
 
     if (messageData["id"] != userId) {
         return NextResponse.json(
@@ -56,7 +56,7 @@ export async function DELETE(req: NextRequest) {
         );
     };
 
-    sql`DELETE FROM messages WHERE user=${userId} AND room=${messageData["roomId"]} AND id=${messageId}`;
+    await sql`DELETE FROM messages WHERE userid=${userId} AND room=${messageData["roomId"]} AND id=${messageId}`;
 
     return NextResponse.json(
         {},

@@ -6,14 +6,14 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
 
 export interface AccountExists {
   exists: boolean,
-  usernameExists: boolean,
+  usernameexists: boolean,
   idExists: boolean
 };
 
 export interface DatabaseMessages {
   id: number,
-  roomId: number,
-  user: number,
+  roomid: number,
+  userid: number,
   content: string
 };
 
@@ -24,9 +24,9 @@ export interface DatabaseRooms {
 };
 
 export interface DatabaseUsers {
-  githubId: number,
+  githubid: number,
   name: string,
   pfp: string|null,
-  lastActivity: number,
+  lastactivity: number,
   rooms: string
 };

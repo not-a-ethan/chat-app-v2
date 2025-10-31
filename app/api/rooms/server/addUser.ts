@@ -19,7 +19,7 @@ export async function addUser(roomId: number, newUserId: number, addingUserId: n
     };
 
     try {
-        const currentRoomsSQL: string|null = await (await sql`SELECT rooms FROM users WHERE githubID=${newUserId}`)[0]["rooms"];
+        const currentRoomsSQL: string|null = await (await sql`SELECT rooms FROM users WHERE githubid=${newUserId}`)[0]["rooms"];
         let newRooms: string;
 
         if (currentRoomsSQL == null) {
@@ -30,7 +30,7 @@ export async function addUser(roomId: number, newUserId: number, addingUserId: n
             newRooms = currentRooms.join(",");
         };
 
-        await sql`UPDATE users SET rooms='${newRooms}' WHERE githubid=${addingUserId}`;
+        await sql`UPDATE users SET rooms=${newRooms} WHERE githubid=${addingUserId}`;
 
         return NextResponse.json(
             {},

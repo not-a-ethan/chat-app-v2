@@ -56,7 +56,7 @@ export async function GET(req: NextRequest) {
     // Selects all users that were active in the past 5 min, in said room
     const now: number = Math.floor(Date.now() / 1000);
     //const query = `SELECT * FROM users WHERE rooms LIKE CONCAT('%,', $room, ',%') AND lastActivity > ${now-300000}`;
-    const people: DatabaseUsers[] = sql`SELECT * FROM users WHERE lastActivity > ${now-300000};`
+    const people: DatabaseUsers[] = await sql`SELECT * FROM users WHERE lastActivity > ${now-300000};`
 
     const peopleInRoom: DatabaseUsers[] = [];
 

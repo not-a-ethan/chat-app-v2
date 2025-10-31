@@ -44,7 +44,7 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    sql`UPDATE users SET name=${newName} WHERE githubID=${userId}`;
+    await sql`UPDATE users SET name=${newName} WHERE githubid=${userId}`;
     
     return NextResponse.json(
         {},

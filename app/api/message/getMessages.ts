@@ -35,7 +35,7 @@ export async function GET(req: NextRequest) {
         );
     };
     
-    const sqlRooms = sql`SELECT * FROM users WHERE githubID=${userId}`;
+    const sqlRooms = await sql`SELECT * FROM users WHERE githubid=${userId}`;
     const rooms: string[] = sqlRooms[0]["rooms"].split(",");
 
     if (!rooms.includes(roomId.toString())) {
@@ -47,7 +47,7 @@ export async function GET(req: NextRequest) {
         );
     };
 
-    const messages: DatabaseMessages[] = sql`SELECT * FROM messages WHERE roomId=${roomId} ORDER BY id DESC LIMIT 50`;
+    const messages: DatabaseMessages[] = await sql`SELECT * FROM messages WHERE roomid=${roomId} ORDER BY id DESC LIMIT 50;`;
 
     interface usersType {
         [index: string]: any
@@ -56,13 +56,13 @@ export async function GET(req: NextRequest) {
     const users: usersType = {};
 
     for (let i = 0; i < messages.length; i++) {
-        if (users[messages[i]["user"]]) {
+        if (users[messages[i]["userid"]]) {
             continue;
         };
 
-        const thisUserData: DatabaseUsers[] = sql`SELECT * FROM users WHERE githubId=${messages[i]["user"]}`;
+        const thisUserData: DatabaseUsers[] = await sql`SELECT * FROM users WHERE githubid=${messages[i]["userid"]}`;
 
-        users[messages[i]["user"]] = thisUserData;
+        users[messages[i]["userid"]] = thisUserData;
     };
 
     return NextResponse.json(

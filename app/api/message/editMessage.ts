@@ -28,7 +28,7 @@ export async function PUT(req: NextRequest) {
 
     const rooms: number[] = await getRooms(userId);
 
-    const currentMessageData = sql`SELECT * from messages WHERE id=${messageId}`;
+    const currentMessageData = await sql`SELECT * from messages WHERE id=${messageId}`;
     const currentRoomNum = currentMessageData["roomId"];
     const owner = currentMessageData["user"];
 
@@ -50,7 +50,7 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    sql`UPDATE messages SET content=${newContent} WHERE id=${messageId}`;
+    await sql`UPDATE messages SET content=${newContent} WHERE id=${messageId}`;
 
     return NextResponse.json(
         {},

@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
 
     //const roomId = await (sql`SELECT seq FROM sqlite_sequence WHERE name='rooms'`)["0"]["seq"];
     const roomIdSQL: any = await sql`SELECT id FROM rooms;`;
-    const roomId: number = roomIdSQL[roomIdSQL.length - 1]["id"];
+    const roomId: number = await roomIdSQL[roomIdSQL.length - 1]["id"];
 
     addUser(roomId, userId, userId, true);
 

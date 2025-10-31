@@ -29,12 +29,12 @@ CREATE TABLE "rooms" (
 
 ```sql
 CREATE TABLE "users" (
-	"githubID"	INTEGER NOT NULL UNIQUE,
+	"githubid"	INTEGER NOT NULL UNIQUE,
 	"name"	TEXT NOT NULL,
 	"pfp"	BLOB,
 	"lastActivity"	INTEGER NOT NULL,
 	"rooms"	TEXT,
-	PRIMARY KEY("githubID")
+	PRIMARY KEY("githubid")
 )
 ```
 

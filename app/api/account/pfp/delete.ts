@@ -21,7 +21,7 @@ export async function DELETE(req: NextRequest) {
 
     updateActvitiy(userId);
 
-    sql`UPDATE users SET pfp=NULL WHERE githubID=${userId}`;
+    await sql`UPDATE users SET pfp=NULL WHERE githubid=${userId}`;
 
     return NextResponse.json(
         {},

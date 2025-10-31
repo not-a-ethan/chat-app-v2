@@ -7,7 +7,7 @@ import { DatabaseRooms } from "@/types";
 import { updateActvitiy } from "@/helpers/updateActivity";
 
 export async function getRooms(userId: number): Promise<number[]> {
-    const roomSQL = sql`SELECT rooms FROM users WHERE githubID=${userId}`;
+    const roomSQL = await sql`SELECT rooms FROM users WHERE githubid=${userId}`;
     let rooms: string[]|null;
 
     try {
@@ -49,7 +49,7 @@ export async function GET(req: NextRequest) {
     const roomsData: DatabaseRooms[] = [];
 
     for (let i = 0; i < rooms.length; i++) {
-        const thisRoom: DatabaseRooms[] = sql`SELECT * FROM rooms WHERE id=${rooms[i]}`;
+        const thisRoom: DatabaseRooms[] = await sql`SELECT * FROM rooms WHERE id=${rooms[i]}`;
         roomsData.push(thisRoom[0]);
     };
 

@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
         );
     };
 
-    sql`INSERT INTO messages (roomId, user, content) VALUES (${roomId}, ${userId}, ${messageContent})`;
+    await sql`INSERT INTO messages (roomid, userid, content) VALUES (${roomId}, ${userId}, ${messageContent});`;
 
     return NextResponse.json(
         {},
