@@ -8,6 +8,10 @@ ___
 
 The project is similer to Discord. It has the following features:
 
+### Demo
+
+![](Demo.mp4)
+
 - Accounts
     - Create
     - Edit pfp
