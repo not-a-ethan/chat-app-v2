@@ -1,4 +1,4 @@
-cimport { defineConfig, globalIgnores } from "eslint/config";
+import { defineConfig, globalIgnores } from "eslint/config";
 import { fixupConfigRules, fixupPluginRules } from "@eslint/compat";
 import react from "eslint-plugin-react";
 import unusedImports from "eslint-plugin-unused-imports";
@@ -123,6 +123,7 @@ export default defineConfig([globalIgnores([
             }],
 
             "newlines-between": "always",
+            "semi": "off"
         }],
 
         "react/self-closing-comp": "warn",
