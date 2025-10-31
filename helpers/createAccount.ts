@@ -20,14 +20,14 @@ export async function createAccount(id: number, username: string): Promise<boole
             };
         };
 
-        const time = Date.now();
-        const result = sql`INSERT INTO users (githubID, name, lastActivity) VALUES (${newUsername}, ${id}, ${time});`;
+        const time: number = Math.floor(Date.now() / 1000);
+        const result = await sql`INSERT INTO users (githubid, name, lastactivity) VALUES (${newUsername}, ${id}, ${time});`;
         
         return true;
     };
 
-    const time = Date.now();
-    const result = sql`INSERT INTO users (githubID, name, lastActivity) VALUES (${id}, ${username}, ${time});`;
+    const time: number = Math.floor(Date.now() / 1000);
+    const result = await sql`INSERT INTO users (githubid, name, lastactivity) VALUES (${id}, ${username}, ${time});`;
 
     return true;
 };

@@ -19,13 +19,13 @@ export async function addUser(roomId: number, newUserId: number, addingUserId: n
     };
 
     try {
-        const currentRooms: number[]|null = await (sql`SELECT rooms FROM users WHERE githubID=${newUserId}`)[0]["rooms"].split(",");
+        const currentRooms: string[]|null = await (await sql`SELECT rooms FROM users WHERE githubID=${newUserId}`)[0]["rooms"].split(",");
         let newRooms: string;
 
         if (currentRooms == null) {
             newRooms = `${roomId}`;
         } else {
-            currentRooms.push(roomId);
+            currentRooms.push(roomId.toString());
             newRooms = currentRooms.join(",");
         };
 

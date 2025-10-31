@@ -17,7 +17,7 @@ export const authOptions: AuthOptions = {
             const id: number = Number(account?.providerAccountId);
             const username: string = profile?.login;
 
-            createAccount(id, username);
+            await createAccount(id, username);
             
             return true;
         }
