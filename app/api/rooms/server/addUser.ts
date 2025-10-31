@@ -7,7 +7,7 @@ import { getRooms } from "../user/getRooms";
 import { updateActvitiy } from "@/helpers/updateActivity";
 
 export async function addUser(roomId: number, newUserId: number, addingUserId: number, createRoom: boolean) {
-    const adderRooms = await getRooms(newUserId);
+    const adderRooms = await getRooms(addingUserId);
 
     if (!adderRooms.includes(roomId) && !createRoom) {
         return NextResponse.json(
@@ -30,7 +30,7 @@ export async function addUser(roomId: number, newUserId: number, addingUserId: n
             newRooms = currentRooms.join(",");
         };
 
-        await sql`UPDATE users SET rooms=${newRooms} WHERE githubid=${addingUserId}`;
+        await sql`UPDATE users SET rooms=${newRooms} WHERE githubid=${newUserId}`;
 
         return NextResponse.json(
             {},
@@ -38,7 +38,7 @@ export async function addUser(roomId: number, newUserId: number, addingUserId: n
         );
     } catch (e) {
         let newRooms: string = `${roomId}`;
-        await sql`UPDATE users SET rooms=${newRooms} WHERE githubid=${addingUserId}`;
+        await sql`UPDATE users SET rooms=${newRooms} WHERE githubid=${newUserId}`;
 
         return NextResponse.json(
             {},
