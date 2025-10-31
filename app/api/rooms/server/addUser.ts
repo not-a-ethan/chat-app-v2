@@ -12,25 +12,25 @@ export async function addUser(roomId: number, newUserId: number, addingUserId: n
     if (!adderRooms.includes(roomId) && !createRoom) {
         return NextResponse.json(
             {
-                "error": "You can not add peopel to a room you are not in"
+                "error": "You can not add people to a room you are not in"
             },
             { status: 403 }
         );
     };
 
     try {
-        const currentRooms: string[]|null = await (await sql`SELECT rooms FROM users WHERE githubID=${newUserId}`)[0]["rooms"].split(",");
+        const currentRoomsSQL: string|null = await (await sql`SELECT rooms FROM users WHERE githubID=${newUserId}`)[0]["rooms"];
         let newRooms: string;
 
-        if (currentRooms == null) {
+        if (currentRoomsSQL == null) {
             newRooms = `${roomId}`;
         } else {
+            const currentRooms = currentRoomsSQL.split(",");
             currentRooms.push(roomId.toString());
             newRooms = currentRooms.join(",");
         };
 
-        
-        sql`UPDATE users SET rooms='${newRooms}' WHERE githubID=${addingUserId}`;
+        await sql`UPDATE users SET rooms='${newRooms}' WHERE githubid=${addingUserId}`;
 
         return NextResponse.json(
             {},
@@ -38,7 +38,7 @@ export async function addUser(roomId: number, newUserId: number, addingUserId: n
         );
     } catch (e) {
         let newRooms: string = `${roomId}`;
-        sql`UPDATE users SET rooms=${newRooms} WHERE githubID=${addingUserId}`;
+        await sql`UPDATE users SET rooms=${newRooms} WHERE githubid=${addingUserId}`;
 
         return NextResponse.json(
             {},
