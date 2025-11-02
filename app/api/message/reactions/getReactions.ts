@@ -8,31 +8,13 @@ import { getRooms } from "../../rooms/user/getRooms";
 import { getMessageInfo } from "@/helpers/messageInfo";
 import { DatabaseMessages, DatabaseReactions, MessageReactions } from "@/types";
 
-export async function GET(req: NextRequest) {
-    const token = await getToken({ req });
-    
-    if (!token) {
-        return NextResponse.json(
-            {
-                "error": "Not authenticated"
-            },
-            { status: 403 }
-        );
-    };
-
-    const userId: number = Number(token.sub);
-
-    updateActvitiy(userId);
-
-    const body = await req.json();
-    const messageId: number = body["messageId"];
-
+export async function getReactions(userId: number, messageId: number) {
     if (!messageId || messageId <= 0) {
-        return NextResponse.json(
+        return JSON.stringify(
             {
-                "error": "You need a valid message Id"
-            },
-            { status: 400 }
+                "error": "You need a valid message Id",
+                "status": 400
+            }
         );
     };
 
@@ -40,22 +22,22 @@ export async function GET(req: NextRequest) {
     const messageData: DatabaseMessages|null = await getMessageInfo(messageId);
 
     if (messageData === null) {
-        return NextResponse.json(
+        return JSON.stringify(
             {
-                "error": "Something went wrong getting message data"
-            },
-            { status: 500 }
+                "error": "Something went wrong getting message data",
+                "status": 500
+            }
         );
     };
 
     const messageRoomId: number = messageData["roomid"];
 
     if (!userRooms.includes(messageRoomId.toString())) {
-        return NextResponse.json(
+        return JSON.stringify(
             {
-                "error": "You are not in the messages room"
-            },
-            { status: 403 }
+                "error": "You are not in the messages room",
+                "status": 403 
+            }
         );
     };
 
@@ -75,9 +57,47 @@ export async function GET(req: NextRequest) {
         reactions[reactionType as keyof typeof reactions].push(thisReaction["userid"]);
     };
 
+    return JSON.stringify(
+        {
+            "reactions": reactions,
+            "status": 200
+        }
+    );
+};
+
+export async function GET(req: NextRequest) {
+    const token = await getToken({ req });
+    
+    if (!token) {
+        return NextResponse.json(
+            {
+                "error": "Not authenticated"
+            },
+            { status: 403 }
+        );
+    };
+
+    const userId: number = Number(token.sub);
+
+    updateActvitiy(userId);
+
+    const body = await req.json();
+    const messageId: number = body["messageId"];
+
+    const res = await JSON.parse(await getReactions(userId, messageId));
+
+    if (res["status"] !== 200) {
+        return NextResponse.json(
+            {
+                "error": res["error"]
+            },
+            { status: res["status"] }
+        );
+    };
+
     return NextResponse.json(
         {
-            "reactions": reactions
+            "reactions": res["reactions"]
         },
         { status: 200 }
     );

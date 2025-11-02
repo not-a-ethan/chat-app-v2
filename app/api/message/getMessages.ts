@@ -6,6 +6,7 @@ import { sql } from "@/app/database/db";
 
 import { DatabaseMessages, DatabaseUsers } from "@/types";
 import { updateActvitiy } from "@/helpers/updateActivity";
+import { getReactions } from "./reactions/getReactions";
 
 export async function GET(req: NextRequest) {
     const token = await getToken({ req });
@@ -65,10 +66,26 @@ export async function GET(req: NextRequest) {
         users[messages[i]["userid"]] = thisUserData;
     };
 
+    const messagesWithReactions: any[] = messages;
+
+    for (let i = 0; i < messagesWithReactions.length; i++) {
+        const messageId = messagesWithReactions[i]["id"];
+        const reactions = await JSON.parse(await getReactions(userId, messageId));
+
+        if (reactions["status"] !== 200) {
+            // Something went wrong
+
+            messagesWithReactions[i]["reactions"] = { "1": [], "2": [], "3": [], "4": [], "5": [] };
+            continue;
+        };
+        
+        messagesWithReactions[i]["reactions"] = reactions["reactions"]
+    };
+
     return NextResponse.json(
         {
             messages: messages,
-            users  : users
+            users: users
         },
         { status: 200 }
     );
