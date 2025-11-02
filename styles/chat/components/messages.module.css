@@ -1,0 +1,7 @@
+.messageHeader > * {
+    display: inline-block;
+}
+
+.messageHeader > span:last-child {
+    margin-left: 5px;
+}

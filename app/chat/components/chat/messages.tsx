@@ -7,6 +7,8 @@ import { addToast } from "@heroui/toast";
 
 import { getAPI } from "@/helpers/getAPI";
 
+import styles from "../../../../styles/chat/components/messages.module.css";
+
 export function Message(props: any) {
     const roomId = props.roomId;
     const { json, jsonLoading, jsonError } = getAPI(`../api/message?roomId=${roomId}`, ["json", "jsonLoading", "jsonError"]);
@@ -78,7 +80,11 @@ export function Message(props: any) {
         <>
             {messages.map((message: any) => (
                 <Card key={message["id"]}>
-                    <Avatar src={users[message["userid"]][0]["pfp"]} /> <span>{users[message["userid"]][0]["name"]}</span>
+                    <div className={`${styles.messageHeader}`}>
+                        <Avatar src={users[message["userid"]][0]["pfp"]} />
+                        
+                        <span>{users[message["userid"]][0]["name"]}</span>
+                    </div>
 
                     <p>{message["content"]}</p>
                 </Card>
