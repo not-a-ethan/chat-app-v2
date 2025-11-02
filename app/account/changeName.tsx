@@ -3,6 +3,8 @@ import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
 import { addToast } from "@heroui/toast";
 
+import styles from "../../styles/account/changeName.module.css";
+
 export function ChangeName() {
     function handleSubmit(e: any) {
         e.preventDefault();
@@ -37,10 +39,10 @@ export function ChangeName() {
 
     return (
         <>
-              <Form onSubmit={handleSubmit}>
-                <Input type="text" label="new name" name="newName" />
+              <Form onSubmit={handleSubmit} className={`${styles.form}`}>
+                <Input type="text" label="new name" name="newName" className={`${styles.col1}`} />
 
-                <Button type="submit">Change name</Button>
+                <Button type="submit" className={`${styles.col2}`}>Change name</Button>
               </Form>
         </>
     );

@@ -8,6 +8,9 @@ export default function Account() {
         <>
             <ChangePfp />
 
+            <br />
+            <br />
+
             <ChangeName />
         </>
     );

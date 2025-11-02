@@ -3,6 +3,8 @@ import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
 import { addToast } from "@heroui/toast";
 
+import styles from "../../styles/account/changePfp.module.css";
+
 export function ChangePfp() {
     function handleChange(e: any) {
         e.preventDefault();
@@ -57,12 +59,14 @@ export function ChangePfp() {
 
     return (
         <>
-            <Form onSubmit={handleChange}>
-                <Input label="New Pfp" type="file" name="newpfp" id="newpfp" />
+            <Form onSubmit={handleChange} className={`${styles.form}`}>
+                <Input label="New Pfp" type="file" name="newpfp" id="newpfp" className={`${styles.col1}`} />
 
-                <Button type="button" color="danger" onPress={handleDelete}>Delete</Button>
+                <div className={`${styles.col2}`}>
+                    <Button type="button" color="danger" onPress={handleDelete}>Delete</Button>
 
-                <Button type="submit">Change</Button>
+                    <Button type="submit">Change</Button>
+                </div>
             </Form>
         </>
     );
