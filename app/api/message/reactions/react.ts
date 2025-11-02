@@ -8,6 +8,7 @@ import { getMessageInfo } from "@/helpers/messageInfo";
 import { sql } from "@/app/database/db";
 
 import { DatabaseMessages } from "@/types";
+import { getReactions } from "./getReactions";
 
 export async function PUT(req: NextRequest) {
     const token = await getToken({ req });
@@ -27,7 +28,7 @@ export async function PUT(req: NextRequest) {
 
     const body: any = await req.json();
     const messageId: number = body["messageId"];
-    const reactionId: number = body["reaction"]
+    const reactionId: number = body["reaction"];
     /*
     1 | thumbs up
     2 | Thumbs down
@@ -44,7 +45,7 @@ export async function PUT(req: NextRequest) {
         )
     };
 
-    if (!reactionId || !(reactionId <= 0 || reactionId >= 5)) {
+    if (!reactionId || (reactionId <= 0 || reactionId >= 5)) {
         return NextResponse.json(
             {
                 "error": "You need a valid reaction id"
@@ -76,10 +77,36 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    await sql`INSERT INTO reactions (userid, reaction, messageid) VALUES (${userId}, ${reactionId}, ${messageId});`;
+    const messageReactions = await JSON.parse(await getReactions(userId, messageId));
 
-    return NextResponse.json(
-        {},
-        { status: 200 }
-    );
+    if (messageReactions["status"] !== 200) {
+        return NextResponse.json(
+            {
+                "error": "Something went wrong getting reaction data"
+            },
+            { status: 500 }
+        );
+    };
+
+    if (messageReactions["reactions"][reactionId.toString()].includes(userId)) {
+        // Remove Reaction
+        await sql`DELETE FROM reactions WHERE userid=${userId} AND reaction=${reactionId} AND messageid=${messageId};`;
+
+        return NextResponse.json(
+            {
+                "type": "delete"
+            },
+            { status: 200 }
+        );
+    } else {
+        // Adds reaction
+        await sql`INSERT INTO reactions (userid, reaction, messageid) VALUES (${userId}, ${reactionId}, ${messageId});`;
+
+        return NextResponse.json(
+            {
+                "type": "add"
+            },
+            { status: 200 }
+        );
+    };
 };

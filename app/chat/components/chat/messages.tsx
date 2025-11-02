@@ -28,7 +28,17 @@ export function Message(props: any) {
             return;
         }
         
-        const type = e.target.id;
+        const info: string[] = e.target.id.split(",");
+        const type: number = Number(info[0]);
+        const messageId: number = Number(info[1]);
+
+        fetch(`../api/message/reactions`, {
+            method: "PUT",
+            body: JSON.stringify({
+                messageId: messageId,
+                reaction: type
+            })
+        })
     };
 
     if (jsonLoading) {
@@ -91,25 +101,25 @@ export function Message(props: any) {
                     {message["reactionsExists"] ? (
                             <>
                                 <div className={`${styles.reactions}`}>
-                                    <Button id="1" onPress={react} isIconOnly>👍 {message["reactions"]["1"].length}</Button>
+                                    <Button id={`1,${message.id}`} onPress={react} isIconOnly>👍 {message["reactions"]["1"].length}</Button>
 
-                                    <Button id="2" onPress={react} isIconOnly>👎 {message["reactions"]["2"].length}</Button>
+                                    <Button id={`2,${message.id}`} onPress={react} isIconOnly>👎 {message["reactions"]["2"].length}</Button>
 
-                                    <Button id="3" onPress={react} isIconOnly>♥️ {message["reactions"]["3"].length}</Button>
+                                    <Button id={`3,${message.id}`} onPress={react} isIconOnly>♥️ {message["reactions"]["3"].length}</Button>
 
-                                    <Button id="4" onPress={react} isIconOnly>😭 {message["reactions"]["4"].length}</Button>
+                                    <Button id={`4,${message.id}`} onPress={react} isIconOnly>😭 {message["reactions"]["4"].length}</Button>
                                 </div>
                             </>
                         ) : (
                             <>
                                 <div className={`${styles.reactions} ${styles.onHover}`}>
-                                    <Button id="1" onPress={react} isIconOnly>👍</Button>
+                                    <Button id={`1,${message.id}`} onPress={react} isIconOnly>👍</Button>
 
-                                    <Button id="2" onPress={react} isIconOnly>👎</Button>
+                                    <Button id={`2,${message.id}`} onPress={react} isIconOnly>👎</Button>
 
-                                    <Button id="3" onPress={react} isIconOnly>♥️</Button>
+                                    <Button id={`3,${message.id}`} onPress={react} isIconOnly>♥️</Button>
 
-                                    <Button id="4" onPress={react} isIconOnly>😭</Button>
+                                    <Button id={`4,${message.id}`} onPress={react} isIconOnly>😭</Button>
                                 </div>
                             </>
                     )}

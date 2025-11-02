@@ -1,4 +1,4 @@
-import { PUT } from "../editMessage";
+import { PUT } from "./react";
 import { GET } from "./getReactions";
 
 export { PUT, GET };
