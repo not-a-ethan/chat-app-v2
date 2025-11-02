@@ -1,14 +1,29 @@
+'use client';
+
+import { Button } from "@heroui/button";
+import { Avatar } from "@heroui/avatar";
+
 import { ListRooms } from "./components/rooms/listRooms";
 import { CreateRoom } from "./components/rooms/createRoom";
+
+import styles from "../../styles/chat/components/rooms.module.css";
 
 export function Rooms(props: any) {
     const room = props["room"];
     const setRoom = props.setRoom;
 
+    const pfp: string = "";
+
     return (
-        <span className={`flex flex-wrap gap-2`}>
+        <span className={`flex flex-wrap gap-2 ${styles.body}`}>
             <ListRooms roomId={room} setRoom={setRoom} />
             <CreateRoom />
+
+            <div className={`${styles.settings}`}>
+                <Button onPress={e => location.href='../account'}>
+                    <Avatar src={pfp} />
+                </Button>
+            </div>
         </span>
     );
 };

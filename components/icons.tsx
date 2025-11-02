@@ -142,3 +142,5 @@ export const SearchIcon = (props: IconSvgProps) => (
     />
   </svg>
 );
+
+// [TODO] Adding gear SVG for settings

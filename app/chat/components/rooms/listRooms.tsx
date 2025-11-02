@@ -1,5 +1,6 @@
 import { Button } from "@heroui/button";
 import { addToast } from "@heroui/toast";
+import { Avatar } from "@heroui/avatar";
 
 import { getAPI } from "@/helpers/getAPI";
 
