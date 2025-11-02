@@ -75,11 +75,18 @@ export async function GET(req: NextRequest) {
         if (reactions["status"] !== 200) {
             // Something went wrong
 
-            messagesWithReactions[i]["reactions"] = { "1": [], "2": [], "3": [], "4": [], "5": [] };
+            messagesWithReactions[i]["reactions"] = { "1": [], "2": [], "3": [], "4": [] };
             continue;
         };
+
+        let reactionsExist = false;
+
+        if (reactions["reactions"]["1"].length !== 0 || reactions["reactions"]["2"].length !== 0 || reactions["reactions"]["3"].length !== 0 || reactions["reactions"]["4"].length !== 0) {
+            reactionsExist = true;
+        };
         
-        messagesWithReactions[i]["reactions"] = reactions["reactions"]
+        messagesWithReactions[i]["reactions"] = reactions["reactions"];
+        messagesWithReactions[i]["reactionsExists"] = reactionsExist;
     };
 
     return NextResponse.json(

@@ -5,3 +5,22 @@
 .messageHeader > span:last-child {
     margin-left: 5px;
 }
+
+
+.reactions > * {
+    margin-left: 2px;
+}
+
+.onHover {
+    display: none;
+}
+
+.message:hover > .onHover {
+    display: block;
+}
+
+/*
+.onHover:hover {
+    display: block;
+}
+*/

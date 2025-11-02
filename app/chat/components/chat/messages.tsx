@@ -79,7 +79,7 @@ export function Message(props: any) {
     return (
         <>
             {messages.map((message: any) => (
-                <Card key={message["id"]}>
+                <Card key={message["id"]} className={`${styles.message}`}>
                     <div className={`${styles.messageHeader}`}>
                         <Avatar src={users[message["userid"]][0]["pfp"]} />
                         
@@ -88,9 +88,37 @@ export function Message(props: any) {
 
                     <p>{message["content"]}</p>
 
+                    {message["reactionsExists"] ? (
+                            <>
+                                <div className={`${styles.reactions}`}>
+                                    <Button id="1" onPress={react} isIconOnly>👍 {message["reactions"]["1"].length}</Button>
+
+                                    <Button id="2" onPress={react} isIconOnly>👎 {message["reactions"]["2"].length}</Button>
+
+                                    <Button id="3" onPress={react} isIconOnly>♥️ {message["reactions"]["3"].length}</Button>
+
+                                    <Button id="4" onPress={react} isIconOnly>😭 {message["reactions"]["4"].length}</Button>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <div className={`${styles.reactions} ${styles.onHover}`}>
+                                    <Button id="1" onPress={react} isIconOnly>👍</Button>
+
+                                    <Button id="2" onPress={react} isIconOnly>👎</Button>
+
+                                    <Button id="3" onPress={react} isIconOnly>♥️</Button>
+
+                                    <Button id="4" onPress={react} isIconOnly>😭</Button>
+                                </div>
+                            </>
+                    )}
+
+                    {/*
                     <div className="reactions">
-                        {/*https://stackoverflow.com/questions/2941189/how-to-overlay-one-div-over-another-div*/}
+                        https://stackoverflow.com/questions/2941189/how-to-overlay-one-div-over-another-div
                     </div>
+                    */}
                 </Card>
             ))}
         </>
