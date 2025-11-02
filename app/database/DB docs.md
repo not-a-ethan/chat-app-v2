@@ -37,7 +37,18 @@ CREATE TABLE "users" (
 	PRIMARY KEY("githubid")
 )
 ```
+## `reactions`
 
+```sql
+CREATE TABLE "reactions" (
+  "id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "reactions_id_seq"),
+  "userid" integer NOT NULL,
+  "messageid" integer NOT NULL,
+  "reaction" integer NOT NULL
+);
+```
+
+<!--
 ## Other
 
 Make sure that the auto increment IDs are working. In SQLite it needs a sepret table. If that is not automaticly created by the statments above, use the following statment:
@@ -45,3 +56,4 @@ Make sure that the auto increment IDs are working. In SQLite it needs a sepret t
 ```sql
 CREATE TABLE sqlite_sequence(name,seq)
 ```
+-->

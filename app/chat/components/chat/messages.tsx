@@ -87,6 +87,10 @@ export function Message(props: any) {
                     </div>
 
                     <p>{message["content"]}</p>
+
+                    <div className="reactions">
+                        {/*https://stackoverflow.com/questions/2941189/how-to-overlay-one-div-over-another-div*/}
+                    </div>
                 </Card>
             ))}
         </>

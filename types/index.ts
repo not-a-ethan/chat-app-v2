@@ -30,3 +30,17 @@ export interface DatabaseUsers {
   lastactivity: number,
   rooms: string
 };
+
+export interface DatabaseReactions {
+  id: number,
+  userid: number,
+  reaction: number,
+  messageid: number
+};
+
+export interface MessageReactions {
+  1: number[],
+  2: number[],
+  3: number[],
+  4: number[]
+};
