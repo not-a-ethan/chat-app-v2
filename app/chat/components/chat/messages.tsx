@@ -26,7 +26,7 @@ export function Message(props: any) {
     function react(e: any) {
         if (!e) {
             return;
-        }
+        };
         
         const info: string[] = e.target.id.split(",");
         const type: number = Number(info[0]);
@@ -38,7 +38,7 @@ export function Message(props: any) {
                 messageId: messageId,
                 reaction: type
             })
-        })
+        });
     };
 
     if (jsonLoading) {
@@ -73,7 +73,7 @@ export function Message(props: any) {
                 <p>Error</p>
             </>
         )
-    }
+    };
 
     const messages = json["messages"];
     const users = json["users"];
@@ -90,45 +90,47 @@ export function Message(props: any) {
         <>
             {messages.map((message: any) => (
                 <Card key={message["id"]} className={`${styles.message}`}>
-                    <div className={`${styles.messageHeader}`}>
-                        <Avatar src={users[message["userid"]][0]["pfp"]} />
-                        
-                        <span>{users[message["userid"]][0]["name"]}</span>
+                    <div className={`${styles.cardBody}`}>
+                        <div className={`${styles.messageHeader}`}>
+                            <Avatar src={users[message["userid"]][0]["pfp"]} />
+                            
+                            <span>{users[message["userid"]][0]["name"]}</span>
+                        </div>
+
+                        <p>{message["content"]}</p>
+
+                        {message["reactionsExists"] ? (
+                                <>
+                                    <div className={`${styles.reactions}`}>
+                                        <Button id={`1,${message.id}`} onPress={react} isIconOnly>👍 {message["reactions"]["1"].length}</Button>
+
+                                        <Button id={`2,${message.id}`} onPress={react} isIconOnly>👎 {message["reactions"]["2"].length}</Button>
+
+                                        <Button id={`3,${message.id}`} onPress={react} isIconOnly>♥️ {message["reactions"]["3"].length}</Button>
+
+                                        <Button id={`4,${message.id}`} onPress={react} isIconOnly>😭 {message["reactions"]["4"].length}</Button>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <div className={`${styles.reactions} ${styles.onHover}`}>
+                                        <Button id={`1,${message.id}`} onPress={react} isIconOnly>👍</Button>
+
+                                        <Button id={`2,${message.id}`} onPress={react} isIconOnly>👎</Button>
+
+                                        <Button id={`3,${message.id}`} onPress={react} isIconOnly>♥️</Button>
+
+                                        <Button id={`4,${message.id}`} onPress={react} isIconOnly>😭</Button>
+                                    </div>
+                                </>
+                        )}
+
+                        {/*
+                        <div className="reactions">
+                            https://stackoverflow.com/questions/2941189/how-to-overlay-one-div-over-another-div
+                        </div>
+                        */}
                     </div>
-
-                    <p>{message["content"]}</p>
-
-                    {message["reactionsExists"] ? (
-                            <>
-                                <div className={`${styles.reactions}`}>
-                                    <Button id={`1,${message.id}`} onPress={react} isIconOnly>👍 {message["reactions"]["1"].length}</Button>
-
-                                    <Button id={`2,${message.id}`} onPress={react} isIconOnly>👎 {message["reactions"]["2"].length}</Button>
-
-                                    <Button id={`3,${message.id}`} onPress={react} isIconOnly>♥️ {message["reactions"]["3"].length}</Button>
-
-                                    <Button id={`4,${message.id}`} onPress={react} isIconOnly>😭 {message["reactions"]["4"].length}</Button>
-                                </div>
-                            </>
-                        ) : (
-                            <>
-                                <div className={`${styles.reactions} ${styles.onHover}`}>
-                                    <Button id={`1,${message.id}`} onPress={react} isIconOnly>👍</Button>
-
-                                    <Button id={`2,${message.id}`} onPress={react} isIconOnly>👎</Button>
-
-                                    <Button id={`3,${message.id}`} onPress={react} isIconOnly>♥️</Button>
-
-                                    <Button id={`4,${message.id}`} onPress={react} isIconOnly>😭</Button>
-                                </div>
-                            </>
-                    )}
-
-                    {/*
-                    <div className="reactions">
-                        https://stackoverflow.com/questions/2941189/how-to-overlay-one-div-over-another-div
-                    </div>
-                    */}
                 </Card>
             ))}
         </>

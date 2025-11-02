@@ -1,3 +1,7 @@
+.cardBody {
+    margin: 5px;
+}
+
 .messageHeader > * {
     display: inline-block;
 }
@@ -15,12 +19,6 @@
     display: none;
 }
 
-.message:hover > .onHover {
+.message:hover > * > .onHover {
     display: block;
 }
-
-/*
-.onHover:hover {
-    display: block;
-}
-*/
