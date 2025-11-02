@@ -5,8 +5,9 @@ import { getToken } from "next-auth/jwt";
 import { sql } from "@/app/database/db";
 import { getRooms } from "../user/getRooms";
 import { updateActvitiy } from "@/helpers/updateActivity";
+import { getUserId } from "@/helpers/getUserId";
 
-export async function addUser(roomId: number, newUserId: number, addingUserId: number, createRoom: boolean) {
+export async function addUser(roomId: string, newUserId: number, addingUserId: number, createRoom: boolean) {
     const adderRooms = await getRooms(addingUserId);
 
     if (!adderRooms.includes(roomId) && !createRoom) {
@@ -64,8 +65,10 @@ export async function PUT(req: NextRequest) {
     updateActvitiy(userId);
 
     const body = await req.json();
-    const roomId = body["room"];
-    const user = body["userId"];
+    const roomId: number = body["room"];
+    const username: string = body["username"];
 
-    return addUser(roomId, user, userId, false);
+    const newUserId: number = await getUserId(username);
+
+    return addUser(roomId.toString(), newUserId, userId, false);
 };

@@ -6,7 +6,7 @@ import { sql } from "@/app/database/db";
 import { DatabaseRooms } from "@/types";
 import { updateActvitiy } from "@/helpers/updateActivity";
 
-export async function getRooms(userId: number): Promise<number[]> {
+export async function getRooms(userId: number): Promise<string[]> {
     const roomSQL = await sql`SELECT rooms FROM users WHERE githubid=${userId}`;
     let rooms: string[]|null;
 
@@ -23,7 +23,7 @@ export async function getRooms(userId: number): Promise<number[]> {
     const correctRoomArray = [];
 
     for (let i = 0; i < rooms.length; i++) {
-        correctRoomArray.push(Number(rooms[i]));
+        correctRoomArray.push(rooms[i]);
     };
 
     return correctRoomArray;

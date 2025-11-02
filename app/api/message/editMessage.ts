@@ -26,7 +26,7 @@ export async function PUT(req: NextRequest) {
     const messageId = body["id"];
     const newContent = body["newContent"];
 
-    const rooms: number[] = await getRooms(userId);
+    const rooms: string[] = await getRooms(userId);
 
     const currentMessageData = await sql`SELECT * from messages WHERE id=${messageId}`;
     const currentRoomNum = currentMessageData["roomId"];

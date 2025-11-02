@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
     const roomIdSQL: any = await sql`SELECT id FROM rooms;`;
     const roomId: number = await roomIdSQL[roomIdSQL.length - 1]["id"];
 
-    addUser(roomId, userId, userId, true);
+    addUser(roomId.toString(), userId, userId, true);
 
     updateActvitiy(userId);
 

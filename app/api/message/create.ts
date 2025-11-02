@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
 
     const rooms = await getRooms(userId);
     
-    if (!rooms.includes(Number(roomId))) {
+    if (!rooms.includes(roomId.toString())) {
         return NextResponse.json(
             {
                 "error": "You cant send a message in a room you are not in"
