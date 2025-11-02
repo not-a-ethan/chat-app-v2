@@ -1,0 +1,27 @@
+.body {
+    width: 70vw;
+
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+.editFields {
+    display: grid;
+}
+
+.col1 {
+    grid-column: 1;
+}
+
+.col2 {
+    grid-column: 2;
+}
+
+.row1 {
+    grid-row: 1;
+}
+
+.row2 {
+    grid-row: 2;
+}

@@ -60,7 +60,9 @@ export function ChangePfp() {
     return (
         <>
             <Form onSubmit={handleChange} className={`${styles.form}`}>
-                <Input label="New Pfp" type="file" name="newpfp" id="newpfp" className={`${styles.col1}`} />
+                <div className={`${styles.col1}`}>
+                    <Input label="New Pfp" type="file" name="newpfp" id="newpfp" />
+                </div>
 
                 <div className={`${styles.col2}`}>
                     <Button type="button" color="danger" onPress={handleDelete}>Delete</Button>

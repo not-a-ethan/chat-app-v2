@@ -2,6 +2,8 @@
     width: 10vw;
 
     display: grid;
+
+    width: fit-content;
 }
 
 .col1 {
