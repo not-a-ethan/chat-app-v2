@@ -7,6 +7,8 @@ import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
 
 import { getAPI } from "@/helpers/getAPI";
+import { LeaveRoom } from "./components/leaveRoom";
+
 import { DatabaseUsers } from "@/types";
 
 export function ActiveUsers(props: any) {
@@ -85,6 +87,10 @@ export function ActiveUsers(props: any) {
                         <div className="flex gap-2 items-center">
                             <p>Add new member</p>
                         </div>
+                    </ListboxItem>
+
+                    <ListboxItem textValue="">
+                        <LeaveRoom />
                     </ListboxItem>
                 </ListboxSection>
             </Listbox>

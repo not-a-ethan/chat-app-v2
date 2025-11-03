@@ -29,7 +29,7 @@ export async function PUT(req: NextRequest) {
     if (!removed) {
         return NextResponse.json(
             {
-                error: "User is not in that room"
+                error: "You are not in that room"
             },
             { status: 400 }
         );
