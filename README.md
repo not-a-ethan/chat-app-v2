@@ -51,6 +51,9 @@ It will soon have the following features:
 - Messages
     - Real time updating stuff
     - Textbox clears once sent button pressed
+    - Mini-games | connect 4 in messagest
+- Users
+    - Differatiate between active and in-active users in user list
 
 ___
 
