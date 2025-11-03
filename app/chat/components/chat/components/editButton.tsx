@@ -4,6 +4,7 @@ import { Form } from "@heroui/form";
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 import { Modal, ModalContent, ModalHeader, ModalBody, useDisclosure } from "@heroui/modal";
+import { addToast } from "@heroui/toast";
 
 import { EditIcon } from "@/components/icons";
 
@@ -21,10 +22,21 @@ export function EditButton(props: any) {
         const thisMessageId = e.target.id;
 
         if (!thisMessageId || thisMessageId <= 0)  {
+            addToast({
+                title: "Something went wrong",
+                description: "Could not get message information",
+                color: "danger"
+            });
+
             return;
         };
 
         if (data["newContent"] === content) {
+            addToast({
+                title: "You cant edit a message to be the same thing",
+                color: "warning"
+            });
+
             return;
         };
 

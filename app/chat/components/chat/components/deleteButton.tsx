@@ -2,6 +2,7 @@
 
 import { Button } from "@heroui/button";
 import { Modal, ModalContent, ModalHeader, ModalBody, useDisclosure } from "@heroui/modal";
+import { addToast } from "@heroui/toast";
 
 import { DeleteIcon } from "@/components/icons";
 
@@ -14,6 +15,12 @@ export function DeleteButton(props: any) {
         const id = e.target.id;
 
         if (!id || id <= 0) {
+            addToast({
+                title: "Something went wrong",
+                description: "Could not get message information",
+                color: "danger"
+            });
+
             return;
         };
 
