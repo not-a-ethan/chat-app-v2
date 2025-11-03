@@ -1,5 +1,7 @@
 'use client';
 
+import { useRef, useEffect } from "react";
+
 import { Avatar } from "@heroui/avatar";
 import { Card } from "@heroui/card";
 import { Button } from "@heroui/button";
@@ -11,6 +13,18 @@ import styles from "../../../../styles/chat/components/messages.module.css";
 
 export function Message(props: any) {
     const roomId = props.roomId;
+
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (roomId && !(roomId <= 0)) {
+            ref.current?.scrollIntoView({
+                behavior: "instant",
+                block: "end"
+            })
+        }
+    }, [roomId])
+    
     const { json, jsonLoading, jsonError } = getAPI(`../api/message?roomId=${roomId}`, ["json", "jsonLoading", "jsonError"]);
 
     if (roomId < 0) {
@@ -87,7 +101,7 @@ export function Message(props: any) {
     };
 
     return (
-        <>
+        <div className={`${styles.messages}`} id="messages">
             {messages.map((message: any) => (
                 <Card key={message["id"]} className={`${styles.message}`}>
                     <div className={`${styles.cardBody}`}>
@@ -133,6 +147,7 @@ export function Message(props: any) {
                     </div>
                 </Card>
             ))}
-        </>
+            <div ref={ref} />
+        </div>
     );
 };

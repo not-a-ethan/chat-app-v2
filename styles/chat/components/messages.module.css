@@ -1,3 +1,20 @@
+.messages {
+    overflow-y: scroll;
+
+    height: 90vh;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.messages::-webkit-scrollbar {
+    display: none;
+}
+
+.messages > * {
+    margin-top: 15px;
+}
+
 .cardBody {
     margin: 5px;
 }
