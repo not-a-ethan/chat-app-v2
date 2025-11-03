@@ -5,6 +5,7 @@ import { Avatar } from "@heroui/avatar";
 
 import { ListRooms } from "./components/rooms/listRooms";
 import { CreateRoom } from "./components/rooms/createRoom";
+import { ThemeSwitch } from "@/components/theme-switch";
 
 import styles from "../../styles/chat/components/rooms.module.css";
 
@@ -20,6 +21,7 @@ export function Rooms(props: any) {
             <CreateRoom />
 
             <div className={`${styles.settings}`}>
+                <ThemeSwitch />
                 <Button onPress={e => location.href='../account'}>
                     <Avatar src={pfp} />
                 </Button>

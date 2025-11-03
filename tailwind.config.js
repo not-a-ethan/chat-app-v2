@@ -21,10 +21,11 @@ const config = {
       themes: {
         light: {
           colors: {
-            "primary": "#389092",
-            "secondary": "#5FCFC3",
-            "content1": "#141E28",
-            "background": "#FDD001"
+            primary: "#389092",
+            secondary: "#141E28",
+            content1: "#F79336",
+            background: "#FDD001",
+            default: "#5FCFC3"
           }
         },
         dark: {
