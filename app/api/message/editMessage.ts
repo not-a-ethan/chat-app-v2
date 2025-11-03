@@ -28,9 +28,9 @@ export async function PUT(req: NextRequest) {
 
     const rooms: string[] = await getRooms(userId);
 
-    const currentMessageData = await sql`SELECT * from messages WHERE id=${messageId}`;
-    const currentRoomNum = currentMessageData["roomId"];
-    const owner = currentMessageData["user"];
+    const currentMessageData = await (await sql`SELECT * from messages WHERE id=${messageId}`)[0];
+    const currentRoomNum = currentMessageData["roomid"];
+    const owner = currentMessageData["userid"];
 
     if (owner != userId) {
         return NextResponse.json(
@@ -41,7 +41,7 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    if (!rooms.includes(currentRoomNum)) {
+    if (!rooms.includes(currentRoomNum.toString())) {
         return NextResponse.json(
             {
                 "error": "You are no longer in that room"
