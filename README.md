@@ -23,7 +23,16 @@ View the [Demo Video](Demo.mp4)
     - Create
 
 Most recent changes: 
-
+- Account
+    - Edit pfp
+    - Edit Name
+    - Add Member (UI)
+- Messages
+    - Edit
+    - Delete
+    - React
+        - Add
+        - Remove
 
 It will soon have the following features:
 
@@ -32,10 +41,6 @@ It will soon have the following features:
     - Change name
     - Delete
     - Change Owner
-- Messages
-    - Edit
-    - React
-    - Delete
 
 ___
 
@@ -46,7 +51,7 @@ ___
 - Next.js
 - HeroUI
 - Nextauth
-- SQLite
+- PostgreSQL
 
 ### Env Varibles
 
