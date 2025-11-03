@@ -12,6 +12,8 @@ The project is similer to Discord. It has the following features:
 
 View the [Demo Video](Demo.mp4)
 
+## Features
+
 - Accounts
     - Create
     - Edit pfp
@@ -43,6 +45,12 @@ It will soon have the following features:
     - Change name
     - Delete
     - Change Owner
+- Misc
+    - Home page
+    - Modals auto close after submission
+- Messages
+    - Real time updating stuff
+    - Textbox clears once sent button pressed
 
 ___
 
