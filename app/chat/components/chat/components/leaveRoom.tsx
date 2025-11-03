@@ -10,7 +10,7 @@ export function LeaveRoom(props: any) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     function leave(e: any) {
-        const id = e.target.id;
+        const id = Number(e.target.id);
 
         if (!id || id <= 0) {
             addToast({
@@ -32,7 +32,7 @@ export function LeaveRoom(props: any) {
 
     return (
         <>
-            <Button onPress={onOpen} id={roomId}>Leave Room</Button>
+            <Button onPress={onOpen}>Leave Room</Button>
 
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
@@ -43,7 +43,7 @@ export function LeaveRoom(props: any) {
                             <ModalBody>
                                 <h2>You can not rejoin the room unless somebody adds you back</h2>
                                 
-                                <Button onPaste={leave} color="danger">Yes I am sure I want to leave</Button>
+                                <Button onPress={leave} color="danger" id={roomId}>Yes I am sure I want to leave</Button>
                             </ModalBody>
                         </>
                     )}

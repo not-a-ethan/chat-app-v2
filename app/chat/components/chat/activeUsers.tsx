@@ -90,7 +90,7 @@ export function ActiveUsers(props: any) {
                     </ListboxItem>
 
                     <ListboxItem textValue="">
-                        <LeaveRoom />
+                        <LeaveRoom room={roomID} />
                     </ListboxItem>
                 </ListboxSection>
             </Listbox>
