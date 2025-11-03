@@ -33,6 +33,8 @@ Most recent changes:
     - React
         - Add
         - Remove
+- Rooms
+    - Leave
 
 It will soon have the following features:
 
