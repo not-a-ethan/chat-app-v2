@@ -36,7 +36,7 @@ export async function DELETE(req: NextRequest) {
 
     const messageData = (await sql`SELECT * FROM messages WHERE id=${messageId}`)[0];
 
-    if (messageData["id"] != userId) {
+    if (messageData["userid"] != userId) {
         return NextResponse.json(
             {
                 "error": "You do not own that message"
@@ -47,7 +47,7 @@ export async function DELETE(req: NextRequest) {
 
     const rooms = await getRooms(userId);
 
-    if (!rooms.includes(messageData["roomId"])) {
+    if (!rooms.includes(messageData["roomid"].toString())) {
         return NextResponse.json(
             {
                 "error": "You are not in that room"
@@ -56,7 +56,7 @@ export async function DELETE(req: NextRequest) {
         );
     };
 
-    await sql`DELETE FROM messages WHERE userid=${userId} AND room=${messageData["roomId"]} AND id=${messageId}`;
+    await sql`DELETE FROM messages WHERE userid=${userId} AND roomid=${messageData["roomid"]} AND id=${messageId}`;
 
     return NextResponse.json(
         {},

@@ -10,6 +10,7 @@ import { addToast } from "@heroui/toast";
 import { getAPI } from "@/helpers/getAPI";
 
 import { EditIcon, DeleteIcon } from "@/components/icons";
+import { DeleteButton } from "./components/deleteButton";
 
 import styles from "../../../../styles/chat/components/messages.module.css";
 
@@ -103,6 +104,10 @@ export function Message(props: any) {
         );
     };
 
+    function edit(e: any) {
+        return;
+    };
+
     return (
         <div className={`${styles.messages}`} id="messages">
             {messages.map((message: any) => (
@@ -114,9 +119,7 @@ export function Message(props: any) {
                                     <EditIcon />
                                 </Button>
 
-                                <Button isIconOnly color="danger">
-                                    <DeleteIcon />
-                                </Button>
+                                <DeleteButton id={message["id"]} />
                             </div>
                         </>
                     ) : <></>}
