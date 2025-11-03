@@ -65,4 +65,10 @@ NEXTAUTH_URL=<URL OF APPLICATION INCLUDING PROTOCAL>
 
 githubClientId=GITHUB AUTH ID>
 githubClientSecret=<GITHUB AUTH SECRET>
+
+pgHost=<postgresql hostname>
+pgUser=<postgresql username>
+pgName=<postgresql database name>
+pgPassword=<postgresql password>
+pgPort=<postgresql port>
 ```
