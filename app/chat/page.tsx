@@ -24,7 +24,7 @@ export default function Page() {
         };
 
         if (status === "unauthenticated") {
-            router.replace("/api/auth/signin");
+            router.replace("../api/auth/signin");
             return( <p>Acess Denied, you need to be loged in to view this page</p>);
         };
 

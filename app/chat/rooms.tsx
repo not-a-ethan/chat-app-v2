@@ -1,11 +1,12 @@
 'use client';
 
 import { Button } from "@heroui/button";
-import { Avatar } from "@heroui/avatar";
 
 import { ListRooms } from "./components/rooms/listRooms";
 import { CreateRoom } from "./components/rooms/createRoom";
 import { ThemeSwitch } from "@/components/theme-switch";
+
+import { GearIcon } from "@/components/icons";
 
 import styles from "../../styles/chat/components/rooms.module.css";
 
@@ -23,7 +24,7 @@ export function Rooms(props: any) {
             <div className={`${styles.settings}`}>
                 <ThemeSwitch />
                 <Button onPress={e => location.href='../account'}>
-                    <Avatar src={pfp} />
+                    <GearIcon />
                 </Button>
             </div>
         </span>
