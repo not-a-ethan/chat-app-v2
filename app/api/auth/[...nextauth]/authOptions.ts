@@ -20,6 +20,15 @@ export const authOptions: AuthOptions = {
             await createAccount(id, username);
             
             return true;
+        },
+        async session({ session, token, user }) {
+            const userId = {
+                "userId": token.sub
+            };
+
+            const newSession = {...session, ...userId};
+
+            return newSession;
         }
     }
 };

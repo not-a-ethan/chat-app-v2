@@ -13,7 +13,7 @@ import { ActiveUsers } from "./components/chat/activeUsers";
 import styles from "../../styles/chat/page.module.css";
 
 export default function Page() {
-    const { data: session, status } = useSession();
+    const { data: session, status }: any = useSession();
     const router = useRouter();
 
     const [room, setRoom] = useState(0);
@@ -28,10 +28,12 @@ export default function Page() {
             return( <p>Acess Denied, you need to be loged in to view this page</p>);
         };
 
+        const userId = session?.userId;
+
         return (
             <div className={`${styles.page}`}>
                 <div className={`${styles.main}`}>
-                    <Chat roomId={room} className={`${styles.chat}`} />
+                    <Chat roomId={room} className={`${styles.chat}`} userId={userId} />
 
                     <div className={`${styles.members}`}>
                         <ActiveUsers room={room} />

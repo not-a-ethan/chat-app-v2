@@ -9,10 +9,13 @@ import { addToast } from "@heroui/toast";
 
 import { getAPI } from "@/helpers/getAPI";
 
+import { EditIcon, DeleteIcon } from "@/components/icons";
+
 import styles from "../../../../styles/chat/components/messages.module.css";
 
 export function Message(props: any) {
     const roomId = props.roomId;
+    const userId = props.userId;
 
     const ref = useRef<HTMLDivElement>(null);
 
@@ -104,6 +107,20 @@ export function Message(props: any) {
         <div className={`${styles.messages}`} id="messages">
             {messages.map((message: any) => (
                 <Card key={message["id"]} className={`${styles.message}`}>
+                    {message["userid"] == userId ? (
+                        <>
+                            <div className={`${styles.authorActions}`}>
+                                <Button isIconOnly>
+                                    <EditIcon />
+                                </Button>
+
+                                <Button isIconOnly color="danger">
+                                    <DeleteIcon />
+                                </Button>
+                            </div>
+                        </>
+                    ) : <></>}
+
                     <div className={`${styles.cardBody}`}>
                         <div className={`${styles.messageHeader}`}>
                             <Avatar src={users[message["userid"]][0]["pfp"]} />
@@ -138,12 +155,6 @@ export function Message(props: any) {
                                     </div>
                                 </>
                         )}
-
-                        {/*
-                        <div className="reactions">
-                            https://stackoverflow.com/questions/2941189/how-to-overlay-one-div-over-another-div
-                        </div>
-                        */}
                     </div>
                 </Card>
             ))}
