@@ -45,7 +45,7 @@ export function DeleteButton(props: any) {
                             <ModalHeader>Are you sure you want to delete the message?</ModalHeader>
 
                             <ModalBody>
-                                <Button color="danger" onPress={deleteMessage} id={messageId}>Yes I am sure I want to delete</Button>
+                                <Button color="danger" onPressStart={onclose} onPress={onclose} id={messageId}>Yes I am sure I want to delete</Button>
                             </ModalBody>
                         </>
                     )}

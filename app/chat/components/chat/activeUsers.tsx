@@ -107,7 +107,7 @@ export function ActiveUsers(props: any) {
                                 <Form onSubmit={addUser}>
                                     <Input label="Username" name="username" />
 
-                                    <Button type="submit">Add User</Button>
+                                    <Button onPress={onclose} type="submit">Add User</Button>
                                 </Form>
                             </ModalBody>
                         </>

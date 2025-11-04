@@ -43,7 +43,7 @@ export function LeaveRoom(props: any) {
                             <ModalBody>
                                 <h2>You can not rejoin the room unless somebody adds you back</h2>
                                 
-                                <Button onPress={leave} color="danger" id={roomId}>Yes I am sure I want to leave</Button>
+                                <Button onPressStart={onclose} onPress={leave} color="danger" id={roomId}>Yes I am sure I want to leave</Button>
                             </ModalBody>
                         </>
                     )}

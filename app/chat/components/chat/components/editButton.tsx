@@ -65,7 +65,7 @@ export function EditButton(props: any) {
                                 <Form onSubmit={editMessage} id={messageId}>
                                     <Input type="text" defaultValue={content} name="newContent" />
 
-                                    <Button type="submit">Edit message</Button>
+                                    <Button onPress={onclose} type="submit">Edit message</Button>
                                 </Form>
                             </ModalBody>
                         </>
