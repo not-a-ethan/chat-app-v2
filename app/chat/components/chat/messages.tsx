@@ -93,8 +93,8 @@ export function Message(props: any) {
         )
     };
 
-    const messages = json["messages"];
-    const users = json["users"];
+    let messages = json["messages"];
+    let users = json["users"];
 
     if (messages.length === 0) {
         return (
@@ -103,6 +103,26 @@ export function Message(props: any) {
             </>
         );
     };
+
+    function updateMessages() {
+        fetch(`../api/message?roomId=${roomId}`)
+        .then(res => res.json())
+        .then(json => {
+            users = json["users"];
+            messages = json["messages"];
+        })
+        .catch((e) => {
+            console.error(e);
+            
+            addToast({
+                title: "Something went wrong",
+                description: "Something went wrong getting new messages. More info in developer console",
+                color: "danger"
+            });
+        });
+    };
+
+    setTimeout(updateMessages, 1500);
 
     return (
         <div className={`${styles.messages}`} id="messages">
