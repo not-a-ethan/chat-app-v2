@@ -47,7 +47,7 @@ It will soon have the following features:
     - Change Owner
 - Misc
     - Home page
-    - Modals auto close after submission
+    - ~~Modals auto close after submission~~
     - Semantic HTML
 - Messages
     - Real time updating stuff
