@@ -33,11 +33,19 @@ export function SendMessage(props: any) {
                 description: "More info in developer console"
             });
         });
+
+        const input: any|null = document.getElementById("input");
+
+        if (input == null || !input) {
+            return;
+        };
+        
+        input.value = "";
     };
 
     return (
         <Form onSubmit={(handleSubmit)} className={`${styles.form}`}>
-            <Input placeholder="What do you want to send to the internet?" type="text" name="content" className={`${styles.input}`} />
+            <Input placeholder="What do you want to send to the internet?" type="text" name="content" className={`${styles.input}`} id="input" />
             <Button type="submit" color="default" className={`${styles.button}`}>Send</Button>
         </Form>
     );
