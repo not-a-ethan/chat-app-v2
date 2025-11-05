@@ -50,7 +50,7 @@ It will soon have the following features:
     - ~~Modals auto close after submission~~
     - Semantic HTML
 - Messages
-    - Real time updating stuff
+    - ~~Real time updating stuff~~
     - ~~Textbox clears once sent button pressed~~
     - Mini-games | connect 4 in messagest
 - Users
