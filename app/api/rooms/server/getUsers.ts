@@ -53,10 +53,7 @@ export async function GET(req: NextRequest) {
         );
     };
 
-    // Selects all users that were active in the past 5 min, in said room
-    const now: number = Math.floor(Date.now() / 1000);
-    //const query = `SELECT * FROM users WHERE rooms LIKE CONCAT('%,', $room, ',%') AND lastActivity > ${now-300000}`;
-    const people: DatabaseUsers[] = await sql`SELECT * FROM users WHERE lastActivity > ${now-300000};`
+    const people: DatabaseUsers[] = await sql`SELECT * FROM users WHERE rooms LIKE ${`%${roomId}%`};`;
 
     const peopleInRoom: DatabaseUsers[] = [];
 
@@ -65,7 +62,8 @@ export async function GET(req: NextRequest) {
             if (!people[i]["rooms"]) {
                return NextResponse.json(
                     {
-                        "people": []
+                        "active": [],
+                        "other": []
                     },
                     { status: 200 }
                 );
@@ -79,16 +77,22 @@ export async function GET(req: NextRequest) {
         } catch (e) {
             return NextResponse.json(
                 {
-                    "people": []
+                    "active": [],
+                    "other": []
                 },
                 { status: 200 }
             );
         };
     };
 
+    const now: number = Math.floor(Date.now() / 1000);
+    const active = peopleInRoom.filter((user: DatabaseUsers) => user.lastactivity >= (now - 300));
+    const other = peopleInRoom.filter((user: DatabaseUsers) => user.lastactivity < (now - 300));
+
     return NextResponse.json(
         {
-            "people": peopleInRoom
+            "active": active,
+            "other": other
         },
         { status: 200 }
     );

@@ -59,7 +59,8 @@ export function ActiveUsers(props: any) {
         })
     };
 
-    const people: DatabaseUsers[] = json["people"];
+    const active: DatabaseUsers[] = json["active"];
+    const other: DatabaseUsers[] = json["other"];
 
     return (
         <>
@@ -67,10 +68,23 @@ export function ActiveUsers(props: any) {
                     base: "max-w-xs",
                     list: "max-h-[300px] overflow-scroll",
                 }}
-                items={people}
+                items={active}
             >
                 <ListboxSection>
-                    {people.map((person) => (
+                    {active.map((person) => (
+                        <ListboxItem key={person.githubid} textValue={person.name}>
+                            <div className="flex gap-2 items-center">
+                            <Avatar alt={person.name} className="shrink-0" size="sm" src={person.pfp || ""} />
+                            <div className="flex flex-col">
+                                <span className="text-small">{person.name}</span>
+                            </div>
+                            </div>
+                        </ListboxItem>
+                    ))}
+                </ListboxSection>
+
+                <ListboxSection title="Inactive">
+                    {other.map((person) => (
                         <ListboxItem key={person.githubid} textValue={person.name}>
                             <div className="flex gap-2 items-center">
                             <Avatar alt={person.name} className="shrink-0" size="sm" src={person.pfp || ""} />
