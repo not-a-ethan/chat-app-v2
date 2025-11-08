@@ -17,6 +17,7 @@ export default function Page() {
     const router = useRouter();
 
     const [room, setRoom] = useState(0);
+    const [roomName, setRoomName] = useState("");
 
     try {
         if (status === "loading") {
@@ -36,12 +37,12 @@ export default function Page() {
                     <Chat roomId={room} className={`${styles.chat}`} userId={userId} />
 
                     <div className={`${styles.members}`}>
-                        <ActiveUsers room={room} />
+                        <ActiveUsers room={room} roomName={roomName} />
                     </div>
                 </div>
                 
                 <div className={`${styles.bottom}`}>
-                    <Rooms room={room} setRoom={setRoom} className={`${styles.rooms}`} />
+                    <Rooms room={room} setRoom={setRoom} setRoomName={setRoomName} className={`${styles.rooms}`} />
 
                     <div className={`${styles.managment}`}></div>
                 </div>

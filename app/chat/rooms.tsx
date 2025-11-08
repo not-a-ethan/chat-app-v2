@@ -13,12 +13,13 @@ import styles from "../../styles/chat/components/rooms.module.css";
 export function Rooms(props: any) {
     const room = props["room"];
     const setRoom = props.setRoom;
+    const setRoomName = props.setRoomName;
 
     const pfp: string = "";
 
     return (
         <span className={`flex flex-wrap gap-2 ${styles.body}`}>
-            <ListRooms roomId={room} setRoom={setRoom} />
+            <ListRooms roomId={room} setRoom={setRoom} setRoomName={setRoomName} />
             <CreateRoom />
 
             <div className={`${styles.settings}`}>

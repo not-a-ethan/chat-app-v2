@@ -42,7 +42,7 @@ It will soon have the following features:
 
 - Rooms
     - Remove member
-    - Change name
+    - ~~Change name~~
     - Delete
     - Change Owner
 - Misc

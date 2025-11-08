@@ -8,11 +8,16 @@ import { Button } from "@heroui/button";
 
 import { getAPI } from "@/helpers/getAPI";
 import { LeaveRoom } from "./components/leaveRoom";
+import { RenameRoom } from "./components/roomActions/renameRoom";
 
 import { DatabaseUsers } from "@/types";
 
+import styles from "../../../../styles/chat/components/activeMembers.module.css";
+
 export function ActiveUsers(props: any) {
     const roomID = props.room;
+    const currentName = props.roomName;
+
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const { json, jsonError, jsonLoading } = getAPI(`../api/rooms/server?roomId=${roomID}`, ["json", "jsonError", "jsonLoading"]);
@@ -64,10 +69,7 @@ export function ActiveUsers(props: any) {
 
     return (
         <section>
-            <Listbox classNames={{
-                    base: "max-w-xs",
-                    list: "max-h-[300px] overflow-scroll",
-                }}
+            <Listbox classNames={{base: "max-w-xs",list: `overflow-scroll`}}
                 items={active}
             >
                 <ListboxSection>
@@ -97,7 +99,7 @@ export function ActiveUsers(props: any) {
                         ))}
                     </ListboxSection>
                 )}
-                
+
                 <ListboxSection title="Actions">
                     <ListboxItem textValue="Add New Member" onPress={onOpen}>
                         <div className="flex gap-2 items-center">
@@ -107,6 +109,10 @@ export function ActiveUsers(props: any) {
 
                     <ListboxItem textValue="">
                         <LeaveRoom room={roomID} />
+                    </ListboxItem>
+
+                    <ListboxItem textValue="">
+                        <RenameRoom roomId={roomID} currentName={currentName} />
                     </ListboxItem>
                 </ListboxSection>
             </Listbox>

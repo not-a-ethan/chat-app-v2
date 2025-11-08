@@ -10,6 +10,7 @@ import { DatabaseRooms } from "@/types";
 export function ListRooms(props: any) {
     const currentRoom: string = props["roomId"];
     const setRoom = props.setRoom;
+    const setRoomName = props.setRoomName;
 
     const { json, jsonError, jsonLoading } = getAPI("../api/rooms/user", ["json", "jsonError", "jsonLoading"]);
 
@@ -52,6 +53,16 @@ export function ListRooms(props: any) {
         const id = e.target.id;
 
         setRoom(id);
+
+        console.log(json)
+
+        for (let i = 0; i < json["rooms"].length; i++) {
+            const currentRoomThing: DatabaseRooms = json["rooms"][i];
+
+            if (currentRoomThing.id == id) {
+                setRoomName(currentRoomThing["name"]);
+            };
+        };
     };
 
     return (

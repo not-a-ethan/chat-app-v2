@@ -9,12 +9,12 @@
     display: grid;
     gap: 2%;
 
-    width: 90%;
+    width: 88%;
     height: 93%;
 }
 
 .chat {
-    width: 90%;
+    width: 88%;
     height: max-content;
 
     grid-column: 1;
@@ -24,7 +24,9 @@
 }
 
 .members {
-    width: 10%;
+    width: 12%;
+
+    height: 90vh;
 
     grid-column: 2;
 
@@ -45,7 +47,7 @@
 }
 
 .rooms {
-    width: 90%;
+    width: 88%;
 
     grid-column: 1;
 
@@ -54,7 +56,7 @@
 }
 
 .managment {
-    width: 10%;
+    width: 12%;
 
     grid-column: 2;
 
