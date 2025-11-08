@@ -1,3 +1,4 @@
 import { PUT } from "./rename";
+import { DELETE } from "./deleteRoom";
 
-export { PUT };
+export { PUT, DELETE };
