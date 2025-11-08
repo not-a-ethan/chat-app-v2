@@ -83,18 +83,20 @@ export function ActiveUsers(props: any) {
                     ))}
                 </ListboxSection>
 
-                <ListboxSection title="Inactive">
-                    {other.map((person) => (
-                        <ListboxItem key={person.githubid} textValue={person.name}>
-                            <div className="flex gap-2 items-center">
-                            <Avatar alt={person.name} className="shrink-0" size="sm" src={person.pfp || ""} />
-                            <div className="flex flex-col">
-                                <span className="text-small">{person.name}</span>
-                            </div>
-                            </div>
-                        </ListboxItem>
-                    ))}
-                </ListboxSection>
+                {other.length === 0 ? <></> : (
+                    <ListboxSection title="Inactive">
+                        {other.map((person) => (
+                            <ListboxItem key={person.githubid} textValue={person.name}>
+                                <div className="flex gap-2 items-center">
+                                <Avatar alt={person.name} className="shrink-0" size="sm" src={person.pfp || ""} />
+                                <div className="flex flex-col">
+                                    <span className="text-small">{person.name}</span>
+                                </div>
+                                </div>
+                            </ListboxItem>
+                        ))}
+                    </ListboxSection>
+                )}
                 
                 <ListboxSection title="Actions">
                     <ListboxItem textValue="Add New Member" onPress={onOpen}>
