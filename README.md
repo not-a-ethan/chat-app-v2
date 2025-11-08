@@ -48,7 +48,7 @@ It will soon have the following features:
 - Misc
     - Home page
     - ~~Modals auto close after submission~~
-    - Semantic HTML
+    - ~~Semantic HTML~~
 - Messages
     - ~~Real time updating stuff~~
     - ~~Textbox clears once sent button pressed~~
