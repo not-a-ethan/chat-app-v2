@@ -6,9 +6,9 @@ export function Chat(props: any) {
     const userId = props["userId"];
 
     return (
-        <>
+        <main>
             <Message roomId={roomId} userId={userId} />
             <SendMessage roomId={roomId} />
-        </>
+        </main>
     );
 };

@@ -125,7 +125,7 @@ export function Message(props: any) {
     setTimeout(updateMessages, 1500);
 
     return (
-        <div className={`${styles.messages}`} id="messages">
+        <section className={`${styles.messages}`} id="messages">
             {messages.map((message: any) => (
                 <Card key={message["id"]} className={`${styles.message}`}>
                     {message["userid"] == userId ? (
@@ -176,6 +176,6 @@ export function Message(props: any) {
                 </Card>
             ))}
             <div ref={ref} />
-        </div>
+        </section>
     );
 };

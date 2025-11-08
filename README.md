@@ -65,6 +65,7 @@ ___
 - Next.js
 - HeroUI
 - Nextauth
+    - Github integration
 - PostgreSQL
 
 ### Env Varibles

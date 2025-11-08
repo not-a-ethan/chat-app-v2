@@ -8,7 +8,7 @@ import styles from "../../styles/account/page.module.css";
 
 export default function Account() {
     return (
-        <div className={`${styles.body}`}>
+        <main className={`${styles.body}`}>
             <Header />
 
             <p>On this page you can edit your account settings</p>
@@ -24,6 +24,6 @@ export default function Account() {
                     <ChangeName />
                 </div>
             </div>
-        </div>
+        </main>
     );
 };

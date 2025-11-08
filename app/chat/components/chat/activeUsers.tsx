@@ -63,7 +63,7 @@ export function ActiveUsers(props: any) {
     const other: DatabaseUsers[] = json["other"];
 
     return (
-        <>
+        <section>
             <Listbox classNames={{
                     base: "max-w-xs",
                     list: "max-h-[300px] overflow-scroll",
@@ -128,6 +128,6 @@ export function ActiveUsers(props: any) {
                     )}
                 </ModalContent>
             </Modal>
-        </>
+        </section>
     );
 };

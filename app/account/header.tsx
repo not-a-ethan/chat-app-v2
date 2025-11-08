@@ -22,12 +22,12 @@ export function Header() {
     };
 
     return (
-        <div className={`${styles.grid}`}>
+        <header className={`${styles.grid}`}>
             <h1 className={`${styles.col1} ${styles.welcome}`}>Hello, {json["data"]["name"]}!</h1>
 
             <div className={`${styles.col2}`}>
                 <Avatar src={json["data"]["pfp"]} alt="Profile Picture" size="lg" />
             </div>
-        </div>
+        </header>
     );
 };
