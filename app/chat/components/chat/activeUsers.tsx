@@ -10,6 +10,7 @@ import { DeleteRoom } from "./components/roomActions/deleteRoom";
 
 import { DatabaseUsers } from "@/types";
 import { AddMember } from "./components/messageActions/addUser";
+import { RemoveUser } from "./components/roomActions/removeUser";
 
 export function ActiveUsers(props: any) {
     const roomID = props.room;
@@ -95,6 +96,10 @@ export function ActiveUsers(props: any) {
 
                             <ListboxItem textValue="">
                                 <DeleteRoom roomId={roomID} />
+                            </ListboxItem>
+
+                            <ListboxItem textValue="">
+                                <RemoveUser roomId={roomID} people={active.concat(other)} />
                             </ListboxItem>
                         </>
                     ) : <></>}

@@ -129,7 +129,7 @@ export function Message(props: any) {
         <section className={`${styles.messages}`} id="messages">
             {messages.map((message: any) => (
                 <Card key={message["id"]} className={`${styles.message}`}>
-                    {(message["userid"] == userId || roomOwner) ? (
+                    {(message["userid"] == userId) ? (
                         <>
                             <div className={`${styles.authorActions}`}>
                                 <EditButton id={message["id"]} content={message["content"]} />
@@ -137,7 +137,13 @@ export function Message(props: any) {
                                 <DeleteButton id={message["id"]} />
                             </div>
                         </>
-                    ) : <></>}
+                    ) : (roomOwner ? (
+                        <>
+                            <div className={`${styles.authorActions}`}>
+                                <DeleteButton id={message["id"]} />
+                            </div>
+                        </>
+                    ) : <></>)}
 
                     <div className={`${styles.cardBody}`}>
                         <div className={`${styles.messageHeader}`}>

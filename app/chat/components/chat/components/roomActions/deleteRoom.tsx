@@ -1,7 +1,5 @@
 'use client';
 
-import { useRouter } from "next/navigation";
-
 import { Form } from "@heroui/form";
 import { Button } from "@heroui/button";
 import { Modal, ModalContent, ModalHeader, ModalBody, useDisclosure } from "@heroui/modal";
@@ -10,14 +8,12 @@ import { addToast } from "@heroui/toast";
 export function DeleteRoom(props: any) {
     const roomId: number = Number(props.roomId);
 
-    const router = useRouter();
-
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     function handleSubmit(e: any) {
         e.preventDefault();
 
-        fetch(`../api/rooms/server/modify`, {
+        fetch(`../api/rooms/server/owner`, {
             method: "DELETE",
             body: JSON.stringify({
                 "roomId": roomId

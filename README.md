@@ -39,9 +39,9 @@ Most recent changes:
     - Leave
 
 It will soon have the following features:
-
+roomId
 - Rooms
-    - Remove member
+    - ~~Remove member~~
     - ~~Change name~~
     - ~~Delete~~
     - Change Owner

@@ -18,7 +18,7 @@ export function RenameRoom(props: any) {
         const formData = Object.fromEntries(new FormData(e.currentTarget));
         const newName: string = formData["newName"].toString();
 
-        fetch(`../api/rooms/server/modify`, {
+        fetch(`../api/rooms/server/owner`, {
             method: "PUT",
             body: JSON.stringify({
                 "id": roomId,
