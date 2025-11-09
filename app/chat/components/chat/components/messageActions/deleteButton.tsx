@@ -8,7 +8,7 @@ import { DeleteIcon } from "@/components/icons";
 
 export function DeleteButton(props: any) {
     const messageId = props.id;
-    
+        
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
     function deleteMessage(e: any) {

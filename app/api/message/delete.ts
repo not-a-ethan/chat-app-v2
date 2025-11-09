@@ -39,12 +39,6 @@ export async function DELETE(req: NextRequest) {
     const messageData: DatabaseMessages = await (await sql`SELECT * FROM messages WHERE id=${messageId}`)[0];
     const roomOwnership = await getOwnership(messageData["userid"]);
 
-    
-    console.log(47);
-    console.log(roomOwnership);
-    console.log("\n");
-    
-
     if (messageData["userid"] != userId || !roomOwnership.includes(messageData["roomid"])) {
         return NextResponse.json(
             {
