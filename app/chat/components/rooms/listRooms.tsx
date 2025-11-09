@@ -58,6 +58,8 @@ export function ListRooms(props: any) {
 
         if (ownershipRooms.includes(Number(id))) {
             setRoomOwner(true);
+        } else {
+            setRoomOwner(false);
         };
 
         for (let i = 0; i < json["rooms"].length; i++) {
