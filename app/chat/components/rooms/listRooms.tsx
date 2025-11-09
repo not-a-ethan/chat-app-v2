@@ -54,6 +54,8 @@ export function ListRooms(props: any) {
     function handleClick(e: any) {
         const id = e.target.id;
 
+        setRoom(id);
+
         if (ownershipRooms.includes(Number(id))) {
             setRoomOwner(true);
         };

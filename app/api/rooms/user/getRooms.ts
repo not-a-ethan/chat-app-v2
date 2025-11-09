@@ -5,6 +5,7 @@ import { getToken } from "next-auth/jwt";
 import { sql } from "@/app/database/db";
 import { DatabaseRooms } from "@/types";
 import { updateActvitiy } from "@/helpers/updateActivity";
+import { getOwnership } from "@/helpers/roomOwnership";
 
 export async function getRooms(userId: number): Promise<string[]> {
     const roomSQL = await sql`SELECT rooms FROM users WHERE githubid=${userId}`;
@@ -54,13 +55,7 @@ export async function GET(req: NextRequest) {
         roomsData.push(thisRoom[0]);
     };
 
-    // Get rooms that user owns
-    const results: DatabaseRooms[] = await sql`SELECT * FROM rooms WHERE owner=${userId};`;
-    const ids: number[] = [];
-
-    for (let i = 0; i < results.length; i++) {
-        ids.push(results[i]["id"]);
-    };
+    const ids: number[] = await getOwnership(userId);
 
     return NextResponse.json(
         {

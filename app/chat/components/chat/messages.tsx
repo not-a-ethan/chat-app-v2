@@ -17,6 +17,7 @@ import styles from "../../../../styles/chat/components/messages.module.css";
 export function Message(props: any) {
     const roomId = props.roomId;
     const userId = props.userId;
+    const roomOwner = props.roomOwner;
 
     const ref = useRef<HTMLDivElement>(null);
 
@@ -128,7 +129,7 @@ export function Message(props: any) {
         <section className={`${styles.messages}`} id="messages">
             {messages.map((message: any) => (
                 <Card key={message["id"]} className={`${styles.message}`}>
-                    {message["userid"] == userId ? (
+                    {(message["userid"] == userId || roomOwner) ? (
                         <>
                             <div className={`${styles.authorActions}`}>
                                 <EditButton id={message["id"]} content={message["content"]} />

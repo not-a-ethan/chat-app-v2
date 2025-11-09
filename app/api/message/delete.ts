@@ -5,6 +5,8 @@ import { getToken } from "next-auth/jwt";
 import { sql } from "@/app/database/db";
 import { getRooms } from "../rooms/user/getRooms";
 import { updateActvitiy } from "@/helpers/updateActivity";
+import { getOwnership } from "@/helpers/roomOwnership";
+import { DatabaseMessages } from "@/types";
 
 export async function DELETE(req: NextRequest) {
     const token = await getToken({ req });
@@ -34,12 +36,19 @@ export async function DELETE(req: NextRequest) {
         );
     };
 
-    const messageData = (await sql`SELECT * FROM messages WHERE id=${messageId}`)[0];
+    const messageData: DatabaseMessages = await (await sql`SELECT * FROM messages WHERE id=${messageId}`)[0];
+    const roomOwnership = await getOwnership(messageData["userid"]);
 
-    if (messageData["userid"] != userId) {
+    
+    console.log(47);
+    console.log(roomOwnership);
+    console.log("\n");
+    
+
+    if (messageData["userid"] != userId || !roomOwnership.includes(messageData["roomid"])) {
         return NextResponse.json(
             {
-                "error": "You do not own that message"
+                "error": "You do not own that message nor are you the room owner."
             },
             { status: 403 }
         );

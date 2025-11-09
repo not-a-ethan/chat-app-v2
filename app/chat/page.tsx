@@ -35,7 +35,7 @@ export default function Page() {
         return (
             <div className={`${styles.page}`}>
                 <div className={`${styles.main}`}>
-                    <Chat roomId={room} className={`${styles.chat}`} userId={userId} />
+                    <Chat roomId={room} className={`${styles.chat}`} userId={userId} roomOwner={roomOwner} />
 
                     <div className={`${styles.members}`}>
                         <ActiveUsers room={room} roomName={roomName} owners={roomOwner} />
