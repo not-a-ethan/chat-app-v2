@@ -9,8 +9,8 @@ import { addToast } from "@heroui/toast";
 
 import { getAPI } from "@/helpers/getAPI";
 
-import { EditButton } from "./components/editButton";
-import { DeleteButton } from "./components/deleteButton";
+import { EditButton } from "./components/messageActions/editButton";
+import { DeleteButton } from "./components/messageActions/deleteButton";
 
 import styles from "../../../../styles/chat/components/messages.module.css";
 

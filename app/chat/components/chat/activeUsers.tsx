@@ -7,17 +7,17 @@ import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
 
 import { getAPI } from "@/helpers/getAPI";
-import { LeaveRoom } from "./components/leaveRoom";
+
+import { LeaveRoom } from "./components/roomActions/leaveRoom";
 import { RenameRoom } from "./components/roomActions/renameRoom";
 import { DeleteRoom } from "./components/roomActions/deleteRoom";
 
 import { DatabaseUsers } from "@/types";
+import { AddMember } from "./components/messageActions/addUser";
 
 export function ActiveUsers(props: any) {
     const roomID = props.room;
     const currentName = props.roomName;
-
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const { json, jsonError, jsonLoading } = getAPI(`../api/rooms/server?roomId=${roomID}`, ["json", "jsonError", "jsonLoading"]);
 
@@ -47,30 +47,12 @@ export function ActiveUsers(props: any) {
         };
     };
 
-    function addUser(e: any) {
-        e.preventDefault();
-
-        const data = Object.fromEntries(new FormData(e.currentTarget));
-
-        const username: string = data["username"].toString();
-
-        fetch("../api/rooms/server", {
-            method: "PUT",
-            body: JSON.stringify({
-                "room": roomID,
-                "username": username
-            })
-        })
-    };
-
     const active: DatabaseUsers[] = json["active"];
     const other: DatabaseUsers[] = json["other"];
 
     return (
         <section>
-            <Listbox classNames={{base: "max-w-xs",list: `overflow-scroll`}}
-                items={active}
-            >
+            <Listbox classNames={{base: "max-w-xs",list: `overflow-scroll`}} selectionMode="none">
                 <ListboxSection>
                     {active.map((person) => (
                         <ListboxItem key={person.githubid} textValue={person.name}>
@@ -100,10 +82,8 @@ export function ActiveUsers(props: any) {
                 )}
 
                 <ListboxSection title="Actions">
-                    <ListboxItem textValue="Add New Member" onPress={onOpen}>
-                        <div className="flex gap-2 items-center">
-                            <p>Add new member</p>
-                        </div>
+                    <ListboxItem>
+                        <AddMember roomID={roomID} />
                     </ListboxItem>
 
                     <ListboxItem textValue="">
@@ -119,26 +99,6 @@ export function ActiveUsers(props: any) {
                     </ListboxItem>
                 </ListboxSection>
             </Listbox>
-
-            <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-                <ModalContent>
-                    {(onclose) => (
-                        <>
-                            <ModalHeader>
-                                <h2>Add user</h2>
-                            </ModalHeader>
-
-                            <ModalBody>
-                                <Form onSubmit={addUser}>
-                                    <Input label="Username" name="username" />
-
-                                    <Button onPress={onclose} type="submit">Add User</Button>
-                                </Form>
-                            </ModalBody>
-                        </>
-                    )}
-                </ModalContent>
-            </Modal>
         </section>
     );
 };
