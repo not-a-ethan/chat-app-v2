@@ -1,10 +1,6 @@
 import { Avatar } from "@heroui/avatar";
 import { Listbox, ListboxSection, ListboxItem } from "@heroui/listbox";
 import { addToast } from "@heroui/toast";
-import { Modal, ModalContent, ModalHeader, ModalBody, useDisclosure } from "@heroui/modal";
-import { Form } from "@heroui/form";
-import { Input } from "@heroui/input";
-import { Button } from "@heroui/button";
 
 import { getAPI } from "@/helpers/getAPI";
 
@@ -18,6 +14,7 @@ import { AddMember } from "./components/messageActions/addUser";
 export function ActiveUsers(props: any) {
     const roomID = props.room;
     const currentName = props.roomName;
+    const owners: number[] = props.owners;
 
     const { json, jsonError, jsonLoading } = getAPI(`../api/rooms/server?roomId=${roomID}`, ["json", "jsonError", "jsonLoading"]);
 
@@ -82,21 +79,25 @@ export function ActiveUsers(props: any) {
                 )}
 
                 <ListboxSection title="Actions">
-                    <ListboxItem>
-                        <AddMember roomID={roomID} />
-                    </ListboxItem>
-
                     <ListboxItem textValue="">
                         <LeaveRoom room={roomID} />
                     </ListboxItem>
 
-                    <ListboxItem textValue="">
-                        <RenameRoom roomId={roomID} currentName={currentName} />
+                    <ListboxItem>
+                        <AddMember roomID={roomID} />
                     </ListboxItem>
 
-                    <ListboxItem textValue="">
-                        <DeleteRoom roomId={roomID} />
-                    </ListboxItem>
+                    {owners ? (
+                        <>
+                            <ListboxItem textValue="">
+                                <RenameRoom roomId={roomID} currentName={currentName} />
+                            </ListboxItem>
+
+                            <ListboxItem textValue="">
+                                <DeleteRoom roomId={roomID} />
+                            </ListboxItem>
+                        </>
+                    ) : <></>}
                 </ListboxSection>
             </Listbox>
         </section>

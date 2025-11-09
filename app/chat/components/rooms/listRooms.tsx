@@ -11,6 +11,7 @@ export function ListRooms(props: any) {
     const currentRoom: string = props["roomId"];
     const setRoom = props.setRoom;
     const setRoomName = props.setRoomName;
+    const setRoomOwner = props.setRoomOwner;
 
     const { json, jsonError, jsonLoading } = getAPI("../api/rooms/user", ["json", "jsonError", "jsonLoading"]);
 
@@ -41,6 +42,7 @@ export function ListRooms(props: any) {
     };
 
     const rooms: DatabaseRooms[] = json["rooms"];
+    const ownershipRooms = json["owner"];
 
     if (!rooms || rooms.length === 0) {
         // Cant display rooms that do not exist
@@ -52,7 +54,9 @@ export function ListRooms(props: any) {
     function handleClick(e: any) {
         const id = e.target.id;
 
-        setRoom(id);
+        if (ownershipRooms.includes(Number(id))) {
+            setRoomOwner(true);
+        };
 
         for (let i = 0; i < json["rooms"].length; i++) {
             const currentRoomThing: DatabaseRooms = json["rooms"][i];

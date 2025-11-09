@@ -45,6 +45,7 @@ export async function GET(req: NextRequest) {
 
     updateActvitiy(userId);
 
+    // Get rooms
     const rooms = await getRooms(userId);
     const roomsData: DatabaseRooms[] = [];
 
@@ -53,9 +54,18 @@ export async function GET(req: NextRequest) {
         roomsData.push(thisRoom[0]);
     };
 
+    // Get rooms that user owns
+    const results: DatabaseRooms[] = await sql`SELECT * FROM rooms WHERE owner=${userId};`;
+    const ids: number[] = [];
+
+    for (let i = 0; i < results.length; i++) {
+        ids.push(results[i]["id"]);
+    };
+
     return NextResponse.json(
         {
-            "rooms": roomsData
+            "rooms": roomsData,
+            "owner": ids
         },
         { status: 200 }
     );
