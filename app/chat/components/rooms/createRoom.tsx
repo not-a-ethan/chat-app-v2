@@ -46,7 +46,7 @@ export function CreateRoom() {
                             <ModalHeader>New Room</ModalHeader>
 
                             <ModalBody>
-                                <Form onSubmit={onclose}>
+                                <Form onSubmit={apiNewRoom}>
                                     <Input type="text" label="Room name" name="roomName" />
 
                                     <Button onPress={onclose} type="submit">Create room</Button>

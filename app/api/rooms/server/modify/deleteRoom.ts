@@ -5,7 +5,8 @@ import { getToken } from "next-auth/jwt";
 import { sql } from "@/app/database/db";
 import { updateActvitiy } from "@/helpers/updateActivity";
 import { getRoomInfo } from "@/helpers/roomInfo";
-import { DatabaseRooms } from "@/types";
+import { DatabaseRooms, DatabaseUsers } from "@/types";
+import { removeUser } from "../../removeUser";
 
 export async function DELETE(req: NextRequest) {
     const token = await getToken({ req });
@@ -53,6 +54,12 @@ export async function DELETE(req: NextRequest) {
             },
             { status: 403 }
         );
+    };
+
+    const people: DatabaseUsers[] = await sql`SELECT * FROM users WHERE rooms LIKE ${`%${roomId}%`};`;
+
+    for (let i = 0; i < people.length; i++) {
+        await removeUser(roomId, userId);
     };
 
     const messageRes = await sql`DELETE FROM messages WHERE roomid=${roomId};`;

@@ -1,13 +1,16 @@
 'use client';
 
+import { useRouter } from "next/navigation";
+
 import { Form } from "@heroui/form";
 import { Button } from "@heroui/button";
 import { Modal, ModalContent, ModalHeader, ModalBody, useDisclosure } from "@heroui/modal";
-import { ListboxItem } from "@heroui/listbox";
 import { addToast } from "@heroui/toast";
 
 export function DeleteRoom(props: any) {
     const roomId: number = Number(props.roomId);
+
+    const router = useRouter();
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -19,6 +22,9 @@ export function DeleteRoom(props: any) {
             body: JSON.stringify({
                 "roomId": roomId
             })
+        })
+        .then(a => {
+            location.reload();
         })
         .catch(e => {
             console.error(e);

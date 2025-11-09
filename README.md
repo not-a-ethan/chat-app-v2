@@ -43,7 +43,7 @@ It will soon have the following features:
 - Rooms
     - Remove member
     - ~~Change name~~
-    - Delete
+    - ~~Delete~~
     - Change Owner
 - Misc
     - Home page
