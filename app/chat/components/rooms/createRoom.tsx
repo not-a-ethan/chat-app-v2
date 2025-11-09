@@ -25,7 +25,6 @@ export function CreateRoom() {
 
         addToast({
             title: "Creating room",
-            color: "primary",
             promise: fetch("../api/rooms/server", {
                 method: "POST",
                 body: JSON.stringify({

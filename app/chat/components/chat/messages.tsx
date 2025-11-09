@@ -57,6 +57,15 @@ export function Message(props: any) {
                 messageId: messageId,
                 reaction: type
             })
+        })
+        .catch(e => {
+            console.error(e);
+
+            addToast({
+                color: "danger",
+                title: "Something went wrong reacting to message",
+                description: "More info in developer console"
+            });
         });
     };
 

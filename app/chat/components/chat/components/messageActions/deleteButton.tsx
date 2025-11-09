@@ -29,6 +29,15 @@ export function DeleteButton(props: any) {
             body: JSON.stringify({
                 "messageId": id
             })
+        })
+        .catch(e => {
+            console.error(e);
+
+            addToast({
+                color: "danger",
+                title: "Something went wrong deleting message",
+                description: "More info in develoepr console"
+            });
         });
     };
 

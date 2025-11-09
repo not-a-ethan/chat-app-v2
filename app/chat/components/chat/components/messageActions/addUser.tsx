@@ -2,6 +2,7 @@ import { Form } from "@heroui/form";
 import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
 import { Modal, ModalContent, ModalHeader, ModalBody, useDisclosure } from "@heroui/modal";
+import { addToast } from "@heroui/toast";
 
 export function AddMember(props: any) {
     const roomID = props.roomID;
@@ -22,6 +23,15 @@ export function AddMember(props: any) {
                 "username": username
             })
         })
+        .catch(e => {
+            console.error(e);
+
+            addToast({
+                color: "danger",
+                title: "Something went wrong adding user to room",
+                description: "More info in developer console"
+            });
+        });
     };
 
     return (

@@ -46,6 +46,15 @@ export function EditButton(props: any) {
                 "id": thisMessageId,
                 "newContent": data["newContent"]
             })
+        })
+        .catch(e => {
+            console.error(e);
+
+            addToast({
+                color: "danger",
+                title: "Something went wrong editing message",
+                description: "More info in developer console"
+            });
         });
     };
 

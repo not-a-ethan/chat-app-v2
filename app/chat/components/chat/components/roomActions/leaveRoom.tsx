@@ -27,6 +27,15 @@ export function LeaveRoom(props: any) {
             body: JSON.stringify({
                 "roomId": id
             })
+        })
+        .catch(e => {
+            console.error(e);
+
+            addToast({
+                color: "danger",
+                title: "Something went wrong leaving room",
+                description: "More info in developer console"
+            });
         });
     };
 
