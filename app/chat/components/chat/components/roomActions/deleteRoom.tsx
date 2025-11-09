@@ -2,27 +2,22 @@
 
 import { Form } from "@heroui/form";
 import { Button } from "@heroui/button";
-import { Input } from "@heroui/input";
 import { Modal, ModalContent, ModalHeader, ModalBody, useDisclosure } from "@heroui/modal";
+import { ListboxItem } from "@heroui/listbox";
 import { addToast } from "@heroui/toast";
 
-export function RenameRoom(props: any) {
+export function DeleteRoom(props: any) {
     const roomId: number = Number(props.roomId);
-    const currentName: string = props.currentName;
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     function handleSubmit(e: any) {
         e.preventDefault();
 
-        const formData = Object.fromEntries(new FormData(e.currentTarget));
-        const newName: string = formData["newName"].toString();
-
         fetch(`../api/rooms/server/modify`, {
-            method: "PUT",
+            method: "DELETE",
             body: JSON.stringify({
-                "id": roomId,
-                "newName": newName
+                "roomId": roomId
             })
         })
         .catch(e => {
@@ -30,7 +25,7 @@ export function RenameRoom(props: any) {
 
             addToast({
                 color: "danger",
-                title: "Something went wrong renaming room",
+                title: "Something went wrong deleting room",
                 description: "More info in developer console"
             });
         });
@@ -38,19 +33,19 @@ export function RenameRoom(props: any) {
 
     return (
         <>
-            <Button onPress={onOpen}>Rename Room</Button>
+            <Button color="danger" onPress={onOpen}>Delete room</Button>
 
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onclose) => (
                         <>
-                            <ModalHeader>Rename room</ModalHeader>
+                            <ModalHeader>Delete room</ModalHeader>
 
                             <ModalBody>
                                 <Form onSubmit={handleSubmit}>
-                                    <Input defaultValue={currentName} type="text" name="newName" />
-
-                                    <Button onPress={onclose} type="submit">Change name</Button>
+                                    <Button color="danger" type="submit" onPress={onclose}>
+                                        Are you absoluty sure you want to delete this room?<br />THIS CAN NOT BE UNDONE
+                                    </Button>
                                 </Form>
                             </ModalBody>
                         </>
@@ -58,5 +53,5 @@ export function RenameRoom(props: any) {
                 </ModalContent>
             </Modal>
         </>
-    );
+    )
 };

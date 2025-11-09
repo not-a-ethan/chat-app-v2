@@ -54,8 +54,6 @@ export function ListRooms(props: any) {
 
         setRoom(id);
 
-        console.log(json)
-
         for (let i = 0; i < json["rooms"].length; i++) {
             const currentRoomThing: DatabaseRooms = json["rooms"][i];
 

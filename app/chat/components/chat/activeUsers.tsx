@@ -9,10 +9,9 @@ import { Button } from "@heroui/button";
 import { getAPI } from "@/helpers/getAPI";
 import { LeaveRoom } from "./components/leaveRoom";
 import { RenameRoom } from "./components/roomActions/renameRoom";
+import { DeleteRoom } from "./components/roomActions/deleteRoom";
 
 import { DatabaseUsers } from "@/types";
-
-import styles from "../../../../styles/chat/components/activeMembers.module.css";
 
 export function ActiveUsers(props: any) {
     const roomID = props.room;
@@ -113,6 +112,10 @@ export function ActiveUsers(props: any) {
 
                     <ListboxItem textValue="">
                         <RenameRoom roomId={roomID} currentName={currentName} />
+                    </ListboxItem>
+
+                    <ListboxItem textValue="">
+                        <DeleteRoom roomId={roomID} />
                     </ListboxItem>
                 </ListboxSection>
             </Listbox>
