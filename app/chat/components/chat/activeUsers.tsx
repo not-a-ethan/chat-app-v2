@@ -40,7 +40,7 @@ export function ActiveUsers(props: any) {
             addToast({
                 color: "danger",
                 title: "Something went wrong geting active users",
-                description: "Mroe info in developer console"
+                description: "More info in developer console"
             });
         };
     };
@@ -80,9 +80,13 @@ export function ActiveUsers(props: any) {
                 )}
 
                 <ListboxSection title="Actions">
-                    <ListboxItem textValue="">
-                        <LeaveRoom room={roomID} />
-                    </ListboxItem>
+                    {!owners ? (
+                        <>
+                            <ListboxItem textValue="">
+                                <LeaveRoom room={roomID} />
+                            </ListboxItem>
+                        </>
+                    ) : <></>}
 
                     <ListboxItem>
                         <AddMember roomID={roomID} />

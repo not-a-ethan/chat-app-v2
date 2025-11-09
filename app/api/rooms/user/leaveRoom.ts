@@ -4,6 +4,7 @@ import { getToken } from "next-auth/jwt";
 
 import { removeUser } from "../removeUser";
 import { updateActvitiy } from "@/helpers/updateActivity";
+import { getOwnership } from "@/helpers/roomOwnership";
 
 export async function PUT(req: NextRequest) {
     const token = await getToken({ req });
@@ -23,6 +24,17 @@ export async function PUT(req: NextRequest) {
 
     const body = await req.json();
     const roomId = body["roomId"];
+
+    const roomOwner: number[] = await getOwnership(userId)
+
+    if (roomOwner.includes(roomId)) {
+        return NextResponse.json(
+            {
+                "error": "You can not leave a room you own. You must change the ownership then leave"
+            },
+            { status: 403 }
+        );
+    };
 
     const removed = removeUser(roomId, userId);
 
