@@ -44,7 +44,7 @@ roomId
     - ~~Remove member~~
     - ~~Change name~~
     - ~~Delete~~
-    - Change Owner
+    - ~~Change Owner~~
 - Misc
     - Home page
     - ~~Modals auto close after submission~~
@@ -52,7 +52,7 @@ roomId
 - Messages
     - ~~Real time updating stuff~~
     - ~~Textbox clears once sent button pressed~~
-    - Mini-games | connect 4 in messagest
+    - Mini-games | connect 4 in messages
 - ~~Users~~
     - ~~Differatiate between active and in-active users in user list~~
 

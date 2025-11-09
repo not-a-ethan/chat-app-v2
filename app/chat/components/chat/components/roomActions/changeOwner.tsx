@@ -7,7 +7,7 @@ import { Modal, ModalContent, ModalHeader, ModalBody, useDisclosure } from "@her
 import { addToast } from "@heroui/toast";
 import { DatabaseUsers } from "@/types";
 
-export function RemoveUser(props: any) {
+export function ChangeOwner(props: any) {
     const roomId = props.roomId;
     const people: DatabaseUsers[] = props.people;
 
@@ -15,16 +15,16 @@ export function RemoveUser(props: any) {
 
     function handleSubmit(e: any) {
         e.preventDefault();
-        
+
         const data = Object.fromEntries(new FormData(e.currentTarget));
 
-        const userId = data["user"].toString();
+        const userId: number = Number(data["user"].toString());
 
-        fetch(`../api/rooms/server/ownerActions/users`, {
-            method: "DELETE",
+        fetch(`../api/rooms/server/ownerActions`, {
+            method: "POST",
             body: JSON.stringify({
-                "userId": userId,
-                "roomId": roomId
+                "roomId": roomId,
+                "userId": userId
             })
         })
         .catch(e => {
@@ -32,7 +32,7 @@ export function RemoveUser(props: any) {
 
             addToast({
                 color: "danger",
-                title: "Something went wrong kicking user",
+                title: "Something went wrong changing owner",
                 description: "More info in developer console"
             });
         });
@@ -40,31 +40,31 @@ export function RemoveUser(props: any) {
 
     return (
         <>
-            <Button onPress={onOpen} color="danger">Remove user</Button>
+            <Button color="danger" onPress={onOpen}>Change Owner</Button>
 
-              <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onclose) => (
                         <>
-                            <ModalHeader>Remove User</ModalHeader>
+                            <ModalHeader>Change Room Owner</ModalHeader>
 
                             <ModalBody>
-                                <p>This will kick a user from the room</p>
+                                <p>This will change who owns the room. You will still be in the room unless you leave or the new owner kicks you</p>
 
                                 <Form onSubmit={handleSubmit}>
-                                    <Select name="user" label="User to kick">
+                                    <Select name="user" label="User to give ownership">
                                         {people.map((person: DatabaseUsers) => (
                                             <SelectItem key={person.githubid}>{person.name}</SelectItem>
                                         ))}
                                     </Select>
 
-                                    <Button color="danger" onPress={onclose} type="submit">Remove User</Button>
+                                    <Button color="danger" onPress={onclose} type="submit">Change Owner</Button>
                                 </Form>
                             </ModalBody>
                         </>
-                    )}
-                </ModalContent>
-              </Modal>
+                    )}    
+                </ModalContent>    
+            </Modal>  
         </>
     );
 };

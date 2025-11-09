@@ -8,9 +8,11 @@ import { LeaveRoom } from "./components/roomActions/leaveRoom";
 import { RenameRoom } from "./components/roomActions/renameRoom";
 import { DeleteRoom } from "./components/roomActions/deleteRoom";
 
-import { DatabaseUsers } from "@/types";
 import { AddMember } from "./components/messageActions/addUser";
 import { RemoveUser } from "./components/roomActions/removeUser";
+import { ChangeOwner } from "./components/roomActions/changeOwner";
+
+import { DatabaseUsers } from "@/types";
 
 export function ActiveUsers(props: any) {
     const roomID = props.room;
@@ -104,6 +106,10 @@ export function ActiveUsers(props: any) {
 
                             <ListboxItem textValue="">
                                 <RemoveUser roomId={roomID} people={active.concat(other)} />
+                            </ListboxItem>
+
+                            <ListboxItem textValue="">
+                                <ChangeOwner roomId={roomID} people={active.concat(other)} />
                             </ListboxItem>
                         </>
                     ) : <></>}
