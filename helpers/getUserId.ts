@@ -5,7 +5,16 @@ export async function getUserId(username: string): Promise<number> {
         return -1;
     };
 
-    const result = await sql`SELECT githubid FROM users WHERE name=${username}`;
+    let result;
+
+    try {
+        result = await sql`SELECT githubid FROM users WHERE name=${username}`;
+    } catch (e) {
+        console.error(e);
+
+        return -1;
+    };
+    
 
     const id = result[0]["githubid"];
 

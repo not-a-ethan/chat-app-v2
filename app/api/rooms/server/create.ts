@@ -50,10 +50,34 @@ export async function POST(req: NextRequest) {
         );
     };
 
-    await sql`INSERT INTO rooms (name, owner) VALUES (${name}, ${userId})`;
+    try {
+        await sql`INSERT INTO rooms (name, owner) VALUES (${name}, ${userId})`;
+    } catch (e) {
+        console.error(e);
 
-    //const roomId = await (sql`SELECT seq FROM sqlite_sequence WHERE name='rooms'`)["0"]["seq"];
-    const roomIdSQL: any = await sql`SELECT id FROM rooms;`;
+        return NextResponse.json(
+            {
+                "error": "Something went wrong creating room"
+            },
+            { status: 500 }
+        );
+    };
+
+    let roomIdSQL: any;
+
+    try {
+        roomIdSQL = await sql`SELECT id FROM rooms;`;
+    } catch (e) {
+        console.error(e);
+
+        return NextResponse.json(
+            {
+                "error": "Something went wrong adding owner to room"
+            },
+            { status: 500 }
+        );
+    };
+
     const roomId: number = await roomIdSQL[roomIdSQL.length - 1]["id"];
 
     addUser(roomId.toString(), userId, userId, true);

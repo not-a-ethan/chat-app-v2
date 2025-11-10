@@ -3,7 +3,16 @@ import { sql } from "@/app/database/db";
 import { DatabaseRooms } from "@/types";
 
 export async function getOwnership(userId: number): Promise<number[]> {
-    const results: DatabaseRooms[] = await sql`SELECT * FROM rooms WHERE owner=${userId};`;
+    let results: DatabaseRooms[] = [];
+
+    try {
+        results = await sql`SELECT * FROM rooms WHERE owner=${userId};`;
+    } catch (e) {
+        console.error(e);
+
+        return [];
+    };
+    
     const ids: number[] = [];
 
     for (let i = 0; i < results.length; i++) {

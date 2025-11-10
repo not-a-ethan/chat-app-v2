@@ -8,7 +8,16 @@ import { updateActvitiy } from "@/helpers/updateActivity";
 import { getOwnership } from "@/helpers/roomOwnership";
 
 export async function getRooms(userId: number): Promise<string[]> {
-    const roomSQL = await sql`SELECT rooms FROM users WHERE githubid=${userId}`;
+    let roomSQL;
+
+    try{
+        roomSQL = await sql`SELECT rooms FROM users WHERE githubid=${userId}`;
+    } catch (e) {
+        console.error(e);
+
+        return [];
+    };
+
     let rooms: string[]|null;
 
     try {
@@ -51,7 +60,21 @@ export async function GET(req: NextRequest) {
     const roomsData: DatabaseRooms[] = [];
 
     for (let i = 0; i < rooms.length; i++) {
-        const thisRoom: DatabaseRooms[] = await sql`SELECT * FROM rooms WHERE id=${rooms[i]}`;
+        let thisRoom: DatabaseRooms[];
+        
+        try {
+            thisRoom = await sql`SELECT * FROM rooms WHERE id=${rooms[i]}`;
+        } catch (e) {
+            console.error(e);
+
+            return NextResponse.json(
+                {
+                    "error": "Something went wrong getting room data"
+                },
+                { status: 500 }
+            );
+        };
+
         roomsData.push(thisRoom[0]);
     };
 

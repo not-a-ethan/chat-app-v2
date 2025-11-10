@@ -53,7 +53,20 @@ export async function GET(req: NextRequest) {
         );
     };
 
-    const people: DatabaseUsers[] = await sql`SELECT * FROM users WHERE rooms LIKE ${`%${roomId}%`};`;
+    let people: DatabaseUsers[];
+
+    try {
+        people = await sql`SELECT * FROM users WHERE rooms LIKE ${`%${roomId}%`};`;
+    } catch (e) {
+        console.error(e);
+
+        return NextResponse.json(
+            {
+                "error": "Something went wrong getting user data"
+            },
+            { status: 500 }
+        );
+    };
 
     const peopleInRoom: DatabaseUsers[] = [];
 

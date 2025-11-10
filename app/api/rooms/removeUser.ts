@@ -11,7 +11,13 @@ export async function removeUser(roomId: number, userId: number): Promise<boolea
     const index = rooms.indexOf(roomId.toString());
     rooms.splice(index, 1);
 
-    await sql`UPDATE users SET rooms=${rooms} WHERE githubid=${userId};`;
+    try {
+        await sql`UPDATE users SET rooms=${rooms} WHERE githubid=${userId};`;
+    } catch (e) {
+        console.error(e);
+
+        return false;
+    };
 
     return true;
 };

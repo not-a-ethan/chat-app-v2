@@ -21,13 +21,27 @@ export async function createAccount(id: number, username: string): Promise<boole
         };
 
         const time: number = Math.floor(Date.now() / 1000);
-        const result = await sql`INSERT INTO users (githubid, name, lastactivity) VALUES (${newUsername}, ${id}, ${time});`;
-        
+
+        try {
+            await sql`INSERT INTO users (githubid, name, lastactivity) VALUES (${newUsername}, ${id}, ${time});`;
+        } catch (e) {
+            console.error(e);
+
+            return false;
+        };
+
         return true;
     };
 
     const time: number = Math.floor(Date.now() / 1000);
-    const result = await sql`INSERT INTO users (githubid, name, lastactivity) VALUES (${id}, ${username}, ${time});`;
+
+    try {
+        await sql`INSERT INTO users (githubid, name, lastactivity) VALUES (${id}, ${username}, ${time});`;
+    } catch (e) {
+        console.error(e);
+
+        return false;
+    };
 
     return true;
 };

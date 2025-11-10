@@ -14,7 +14,19 @@ export async function getRoomInfo(roomId: number, userId: number): Promise<Datab
         return null;
     };
 
-    const result: DatabaseRooms[] = await sql`SELECT * FROM rooms WHERE id=${roomId};`;
+    let result: DatabaseRooms[] = [];
+
+    try {
+        result = await sql`SELECT * FROM rooms WHERE id=${roomId};`;
+    } catch (e) {
+        console.error(e);
+
+        return {
+            "id": -1,
+            "name": "",
+            "owner": -1
+        };
+    };
 
     return result[0];
 };
