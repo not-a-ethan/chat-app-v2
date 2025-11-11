@@ -20,40 +20,45 @@ View the [Demo Video](Demo%203.mp4)
     - Edit name
 - Rooms
     - Create
-    - Add Member
+    - Add Member (UI)
+    - Lave
 - Messages
     - Create
-
-Most recent changes: 
-- Account
-    - Edit pfp
-    - Edit Name
-    - Add Member (UI)
-- Messages
-    - Edit
     - Delete
     - React
-        - Add
-        - Remove
-- Rooms
-    - Leave
+      - Add
+      - Remove
 
-It will soon have the following features:
-- ~~Rooms~~
-    - ~~Remove member~~
-    - ~~Change name~~
-    - ~~Delete~~
-    - ~~Change Owner~~
+Most recent changes: 
+
+- Rooms
+    - Remove member
+    - Change name
+    - Delete
+    - Change Owner
 - Misc
     - Home page
-    - ~~Modals auto close after submission~~
-    - ~~Semantic HTML~~
+    - Modals auto close after submission
+    - Semantic HTML
 - Messages
-    - ~~Real time updating stuff~~
-    - ~~Textbox clears once sent button pressed~~
+    - Real time updating stuff
+    - Textbox clears once sent button pressed
     - Mini-games | connect 4 in messages
-- ~~Users~~
-    - ~~Differatiate between active and in-active users in user list~~
+- Users
+    - Differatiate between active and in-active users in user list
+
+It will soon have the following features:
+
+- Accounts
+  - Change linked GH account
+- Misc
+  - Home page
+  - Error handling for sql on backend
+  - Optimise backend stuff
+    - DRY
+    - API route (data validation and stuff)
+
+Moderators and related features
 
 ___
 
