@@ -55,8 +55,19 @@ export async function POST(req: NextRequest) {
         );
     };
 
-    await sql`INSERT INTO messages (roomid, userid, content) VALUES (${roomId}, ${userId}, ${messageContent});`;
+    try {
+        await sql`INSERT INTO messages (roomid, userid, content) VALUES (${roomId}, ${userId}, ${messageContent});`;
+    } catch (e) {
+        console.error(e);
 
+        return NextResponse.json(
+            {
+                "error": "Something went wrong creating message"
+            },
+            { status: 500 }
+        );
+    };
+    
     return NextResponse.json(
         {},
         { status: 200 }

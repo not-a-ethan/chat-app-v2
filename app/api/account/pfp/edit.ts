@@ -33,7 +33,18 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    await sql`UPDATE users SET pfp=${newPfp} WHERE githubid=${userId};`;
+    try {
+        await sql`UPDATE users SET pfp=${newPfp} WHERE githubid=${userId};`;
+    } catch (e) {
+        console.error(e);
+
+        return NextResponse.json(
+            {
+                "error": "Something went wrong editing pfp"
+            },
+            { status: 500 }
+        );
+    };
 
     return NextResponse.json(
         {},

@@ -4,6 +4,7 @@ import { getToken } from "next-auth/jwt";
 
 import { sql } from "@/app/database/db";
 import { updateActvitiy } from "@/helpers/updateActivity";
+import { DatabaseUsers } from "@/types";
 
 export async function PUT(req: NextRequest) {
     const token = await getToken({ req });
@@ -33,7 +34,20 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    const nameExists = await sql`SELECT * FROM users WHERE name=${newName}`;
+    let nameExists: DatabaseUsers[];
+
+    try {
+        nameExists = await sql`SELECT * FROM users WHERE name=${newName}`;
+    } catch (e) {
+        console.error(e);
+
+        return NextResponse.json(
+            {
+                "error": "Something went wrong getting users"
+            },
+            { status: 500 }
+        );
+    };
     
     if (nameExists.length > 0) {
         return NextResponse.json(
@@ -44,7 +58,18 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    await sql`UPDATE users SET name=${newName} WHERE githubid=${userId}`;
+    try {
+        await sql`UPDATE users SET name=${newName} WHERE githubid=${userId}`;
+    } catch(e) {
+        console.error(e);
+
+        return NextResponse.json(
+            {
+                "error": "Something went wrong changing name"
+            },
+            { status: 500 }
+        );
+    };
     
     return NextResponse.json(
         {},

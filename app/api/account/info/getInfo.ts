@@ -4,6 +4,7 @@ import { getToken } from "next-auth/jwt";
 
 import { updateActvitiy } from "@/helpers/updateActivity";
 import { sql } from "@/app/database/db";
+import { DatabaseUsers } from "@/types";
 
 export async function GET(req: NextRequest) {
     const token = await getToken({ req });
@@ -21,7 +22,20 @@ export async function GET(req: NextRequest) {
 
     updateActvitiy(userId);
 
-    const result = (await sql`SELECT * FROM users WHERE githubid=${userId}`)[0];
+    let result: DatabaseUsers;
+
+    try {
+        result = (await sql`SELECT * FROM users WHERE githubid=${userId};`)[0];
+    } catch (e) {
+        console.error(e);
+
+        return NextResponse.json(
+            {
+                "error": "Something went wrong getting user data"
+            },
+            { status: 500 }
+        );
+    };
 
     return NextResponse.json(
         {
