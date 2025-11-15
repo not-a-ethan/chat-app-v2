@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getToken } from "next-auth/jwt";
 
 import { sql } from "@/app/database/db";
-import { updateActvitiy } from "@/helpers/updateActivity";
 import { getRoomInfo } from "@/helpers/roomInfo";
-import { DatabaseRooms } from "@/types";
+import { apiAuthCheck } from "@/helpers/apiAuthCheck";
+
+import { DatabaseRooms, ApiAuth } from "@/types";
 
 export async function PUT(req: NextRequest) {
-    const token = await getToken({ req });
+    const authStatus = await apiAuthCheck(req);
         
-    if (!token) {
+    if (!authStatus["auth"]) {
         return NextResponse.json(
             {
                 "error": "Not authenticated"
@@ -18,10 +18,6 @@ export async function PUT(req: NextRequest) {
             { status: 403 }
         );
     };
-
-    const userId: number = Number(token.sub);
-
-    updateActvitiy(userId);
 
     const body = await req.json();
     const roomId = Number(body["id"]);
@@ -45,7 +41,7 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    const roomInfo: DatabaseRooms|null = await getRoomInfo(roomId, userId);
+    const roomInfo: DatabaseRooms|null = await getRoomInfo(roomId, authStatus["userId"]);
 
     if (roomInfo == null) {
         return NextResponse.json(
@@ -56,7 +52,7 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    if (roomInfo["owner"] != userId) {
+    if (roomInfo["owner"] != authStatus["userId"]) {
         return NextResponse.json(
             {
                 "error": "You do not own that room"

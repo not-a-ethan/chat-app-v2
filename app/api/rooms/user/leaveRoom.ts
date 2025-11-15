@@ -2,14 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { getToken } from "next-auth/jwt";
 
-import { removeUser } from "../removeUser";
-import { updateActvitiy } from "@/helpers/updateActivity";
+import { removeUser } from "../../../../helpers/removeUser";
 import { getOwnership } from "@/helpers/roomOwnership";
+import { apiAuthCheck } from "@/helpers/apiAuthCheck";
+
+import { ApiAuth } from "@/types";
 
 export async function PUT(req: NextRequest) {
-    const token = await getToken({ req });
+    const authStatus: ApiAuth = await apiAuthCheck(req);
 
-    if (!token) {
+    if (!authStatus["auth"]) {
         return NextResponse.json(
             {
                 "error": "Not authenticated"
@@ -18,14 +20,10 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    const userId: number = Number(token.sub);
-
-    updateActvitiy(userId);
-
     const body = await req.json();
     const roomId = body["roomId"];
 
-    const roomOwner: number[] = await getOwnership(userId)
+    const roomOwner: number[] = await getOwnership(authStatus["userId"])
 
     if (roomOwner.includes(roomId)) {
         return NextResponse.json(
@@ -36,7 +34,7 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    const removed = removeUser(roomId, userId);
+    const removed = removeUser(roomId, authStatus["userId"]);
 
     if (!removed) {
         return NextResponse.json(

@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getToken } from "next-auth/jwt";
-
-import { updateActvitiy } from "@/helpers/updateActivity";
 import { sql } from "@/app/database/db";
 import { getRooms } from "../../user/getRooms";
 import { getOwnership } from "@/helpers/roomOwnership";
+import { apiAuthCheck } from "@/helpers/apiAuthCheck";
+
+import { ApiAuth } from "@/types";
 
 export async function POST(req: NextRequest) {
-    const token = await getToken({ req });
+    const authStatus: ApiAuth = await apiAuthCheck(req);
         
-    if (!token) {
+    if (!authStatus["auth"]) {
         return NextResponse.json(
             {
                 "error": "Not authenticated"
@@ -18,10 +18,6 @@ export async function POST(req: NextRequest) {
             { status: 403 }
         );
     };
-
-    const userId: number = Number(token.sub);
-
-    updateActvitiy(userId);
 
     const body = await req.json();
     const roomId: number = Number(body["roomId"]);
@@ -45,7 +41,7 @@ export async function POST(req: NextRequest) {
         );
     };
 
-    if (newOwner == userId) {
+    if (newOwner == authStatus["userId"]) {
         return NextResponse.json(
             {
                 "error": "You are already the owner"
@@ -54,7 +50,7 @@ export async function POST(req: NextRequest) {
         );
     };
 
-    const roomOwnerships: number[] = await getOwnership(userId);
+    const roomOwnerships: number[] = await getOwnership(authStatus["userId"]);
 
     if (!roomOwnerships.includes(roomId)) {
         return NextResponse.json(

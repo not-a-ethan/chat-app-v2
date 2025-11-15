@@ -44,3 +44,8 @@ export interface MessageReactions {
   3: number[],
   4: number[]
 };
+
+export interface ApiAuth {
+  auth: boolean,
+  userId: number
+};

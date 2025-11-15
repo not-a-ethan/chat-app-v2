@@ -1,17 +1,15 @@
 import { NextResponse, NextRequest } from "next/server";
 
-import { getToken } from "next-auth/jwt";
-
 import { getRooms } from "../rooms/user/getRooms";
 import { sql } from "@/app/database/db";
-import { updateActvitiy } from "@/helpers/updateActivity";
-import { getOwnership } from "@/helpers/roomOwnership";
-import { DatabaseMessages } from "@/types";
+import { apiAuthCheck } from "@/helpers/apiAuthCheck";
+
+import { DatabaseMessages, ApiAuth } from "@/types";
 
 export async function PUT(req: NextRequest) {
-    const token = await getToken({ req });
+    const authStatus: ApiAuth = await apiAuthCheck(req);
     
-    if (!token) {
+    if (!authStatus["auth"]) {
         return NextResponse.json(
             {
                 "error": "Not authenticated"
@@ -19,10 +17,6 @@ export async function PUT(req: NextRequest) {
             { status: 403 }
         );
     };
-
-    const userId: number = Number(token.sub);
-
-    updateActvitiy(userId);
 
     const body = await req.json();
     const messageId = body["id"];
@@ -46,7 +40,7 @@ export async function PUT(req: NextRequest) {
     const currentRoomNum = currentMessageData["roomid"];
     const owner = currentMessageData["userid"];
 
-    if (owner != userId) {
+    if (owner != authStatus["userId"]) {
         return NextResponse.json(
             {
                 "error": "You do not own that message."
@@ -55,7 +49,7 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    const rooms: string[] = await getRooms(userId);
+    const rooms: string[] = await getRooms(authStatus["userId"]);
 
     if (!rooms.includes(currentRoomNum.toString())) {
         return NextResponse.json(

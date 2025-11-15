@@ -1,17 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getToken } from "next-auth/jwt";
-
 import { sql } from "@/app/database/db";
-import { updateActvitiy } from "@/helpers/updateActivity";
 import { getRoomInfo } from "@/helpers/roomInfo";
-import { DatabaseRooms, DatabaseUsers } from "@/types";
-import { removeUser } from "../../removeUser";
+import { removeUser } from "../../../../../helpers/removeUser";
+import { apiAuthCheck } from "@/helpers/apiAuthCheck";
+
+import { DatabaseRooms, DatabaseUsers, ApiAuth } from "@/types";
 
 export async function DELETE(req: NextRequest) {
-    const token = await getToken({ req });
+    const authStatus: ApiAuth = await apiAuthCheck(req);
         
-    if (!token) {
+    if (!authStatus["auth"]) {
         return NextResponse.json(
             {
                 "error": "Not authenticated"
@@ -19,10 +18,6 @@ export async function DELETE(req: NextRequest) {
             { status: 403 }
         );
     };
-
-    const userId: number = Number(token.sub);
-
-    updateActvitiy(userId);
 
     const body = await req.json();
     const roomId = body["roomId"];
@@ -36,7 +31,7 @@ export async function DELETE(req: NextRequest) {
         );
     };
 
-    const roomInfo: DatabaseRooms|null = await getRoomInfo(roomId, userId);
+    const roomInfo: DatabaseRooms|null = await getRoomInfo(roomId, authStatus["userId"]);
 
     if (roomInfo == null) {
         return NextResponse.json(
@@ -47,7 +42,7 @@ export async function DELETE(req: NextRequest) {
         );
     };
 
-    if (roomInfo["owner"] != userId) {
+    if (roomInfo["owner"] != authStatus["userId"]) {
         return NextResponse.json(
             {
                 "error": "You cant delete a room you do not own"
@@ -72,7 +67,7 @@ export async function DELETE(req: NextRequest) {
     };
 
     for (let i = 0; i < people.length; i++) {
-        await removeUser(roomId, userId);
+        await removeUser(roomId, authStatus["userId"]);
     };
 
     try {
@@ -83,7 +78,7 @@ export async function DELETE(req: NextRequest) {
 
         return NextResponse.json(
             {
-                "error": "Something went wrong deleting room or messages"
+                "error": "Something went wrong deleting messages or room"
             },
             { status: 500 }
         );

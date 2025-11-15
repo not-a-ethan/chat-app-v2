@@ -1,17 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getToken } from "next-auth/jwt";
-
 import { sql } from "@/app/database/db";
 import { getRooms } from "../rooms/user/getRooms";
-import { updateActvitiy } from "@/helpers/updateActivity";
 import { getOwnership } from "@/helpers/roomOwnership";
-import { DatabaseMessages } from "@/types";
+import { apiAuthCheck } from "@/helpers/apiAuthCheck";
+
+import { DatabaseMessages, ApiAuth } from "@/types";
 
 export async function DELETE(req: NextRequest) {
-    const token = await getToken({ req });
+    const authStatus: ApiAuth = await apiAuthCheck(req);
     
-    if (!token) {
+    if (!authStatus) {
         return NextResponse.json(
             {
                 "error": "Not authenticated"
@@ -19,10 +18,6 @@ export async function DELETE(req: NextRequest) {
             { status: 403 }
         );
     };
-
-    const userId: number = Number(token.sub);
-    
-    updateActvitiy(userId);
 
     const body = await req.json();
     const messageId = body["messageId"];
@@ -53,7 +48,7 @@ export async function DELETE(req: NextRequest) {
     
     const roomOwnership = await getOwnership(messageData["userid"]);
 
-    if (messageData["userid"] != userId || !roomOwnership.includes(messageData["roomid"])) {
+    if (messageData["userid"] != authStatus["userId"] || !roomOwnership.includes(messageData["roomid"])) {
         return NextResponse.json(
             {
                 "error": "You do not own that message nor are you the room owner."
@@ -62,7 +57,7 @@ export async function DELETE(req: NextRequest) {
         );
     };
 
-    const rooms = await getRooms(userId);
+    const rooms = await getRooms(authStatus["userId"]);
 
     if (!rooms.includes(messageData["roomid"].toString())) {
         return NextResponse.json(
@@ -74,7 +69,7 @@ export async function DELETE(req: NextRequest) {
     };
 
     try {
-        await sql`DELETE FROM messages WHERE userid=${userId} AND roomid=${messageData["roomid"]} AND id=${messageId}`;
+        await sql`DELETE FROM messages WHERE userid=${authStatus["userId"]} AND roomid=${messageData["roomid"]} AND id=${messageId}`;
     } catch (e) {
         console.error(e);
     

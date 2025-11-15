@@ -1,17 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getToken } from "next-auth/jwt";
-
-import { updateActvitiy } from "@/helpers/updateActivity";
 import { getOwnership } from "@/helpers/roomOwnership";
+import { apiAuthCheck } from "@/helpers/apiAuthCheck";
 
 import { getRooms } from "../../../user/getRooms";
-import { removeUser } from "../../../removeUser";
+import { removeUser } from "../../../../../../helpers/removeUser";
+
+import { ApiAuth } from "@/types";
 
 export async function DELETE(req: NextRequest) {
-    const token = await getToken({ req });
+    const authStatus: ApiAuth = await apiAuthCheck(req);
     
-    if (!token) {
+    if (!authStatus["auth"]) {
         return NextResponse.json(
             {
                 "error": "Not authenticated"
@@ -20,15 +20,11 @@ export async function DELETE(req: NextRequest) {
         );
     };
 
-    const userId: number = Number(token.sub);
-
-    updateActvitiy(userId);
-
     const body = await req.json();
     const kickedUser = body["userId"];
     const roomId = Number(body["roomId"]);
 
-    if  (kickedUser == userId) {
+    if  (kickedUser == authStatus["userId"]) {
         return NextResponse.json(
             {
                 "error": "You can not kick yourself, change the owner and leave instead"
@@ -55,7 +51,7 @@ export async function DELETE(req: NextRequest) {
         );
     };
 
-    const rooms = await getOwnership(userId);
+    const rooms = await getOwnership(authStatus["userId"]);
 
     if (!rooms.includes(roomId)) {
         return NextResponse.json(

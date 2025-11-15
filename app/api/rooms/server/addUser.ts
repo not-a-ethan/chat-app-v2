@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getToken } from "next-auth/jwt";
-
 import { sql } from "@/app/database/db";
 import { getRooms } from "../user/getRooms";
-import { updateActvitiy } from "@/helpers/updateActivity";
 import { getUserId } from "@/helpers/getUserId";
+import { apiAuthCheck } from "@/helpers/apiAuthCheck";
+
+import { ApiAuth } from "@/types";
 
 export async function addUser(roomId: string, newUserId: number, addingUserId: number, createRoom: boolean) {
     const adderRooms = await getRooms(addingUserId);
@@ -61,9 +61,9 @@ export async function addUser(roomId: string, newUserId: number, addingUserId: n
 };
 
 export async function PUT(req: NextRequest) {
-    const token = await getToken({ req });
+    const authStatus: ApiAuth = await apiAuthCheck(req);
     
-    if (!token) {
+    if (!authStatus["auth"]) {
         return NextResponse.json(
             {
                 "error": "Not authenticated"
@@ -72,15 +72,11 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    const userId: number = Number(token.sub);
-
-    updateActvitiy(userId);
-
     const body = await req.json();
     const roomId: number = body["room"];
     const username: string = body["username"];
 
     const newUserId: number = await getUserId(username);
 
-    return addUser(roomId.toString(), newUserId, userId, false);
+    return addUser(roomId.toString(), newUserId, authStatus["userId"], false);
 };

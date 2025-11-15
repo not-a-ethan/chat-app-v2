@@ -4,8 +4,10 @@ import { getToken } from "next-auth/jwt";
 
 import { sql } from "@/app/database/db";
 import { DatabaseRooms } from "@/types";
-import { updateActvitiy } from "@/helpers/updateActivity";
 import { getOwnership } from "@/helpers/roomOwnership";
+import { apiAuthCheck } from "@/helpers/apiAuthCheck";
+
+import { ApiAuth } from "@/types";
 
 export async function getRooms(userId: number): Promise<string[]> {
     let roomSQL;
@@ -40,9 +42,9 @@ export async function getRooms(userId: number): Promise<string[]> {
 };            
 
 export async function GET(req: NextRequest) {
-    const token = await getToken({ req });
+    const authStatus: ApiAuth = await apiAuthCheck(req);
     
-    if (!token) {
+    if (!authStatus["auth"]) {
         return NextResponse.json(
             {
                 "error": "Not authenticated"
@@ -51,12 +53,8 @@ export async function GET(req: NextRequest) {
         );
     };
 
-    const userId: number = Number(token.sub);
-
-    updateActvitiy(userId);
-
     // Get rooms
-    const rooms = await getRooms(userId);
+    const rooms = await getRooms(authStatus["userId"]);
     const roomsData: DatabaseRooms[] = [];
 
     for (let i = 0; i < rooms.length; i++) {
@@ -78,7 +76,7 @@ export async function GET(req: NextRequest) {
         roomsData.push(thisRoom[0]);
     };
 
-    const ids: number[] = await getOwnership(userId);
+    const ids: number[] = await getOwnership(authStatus["userId"]);
 
     return NextResponse.json(
         {

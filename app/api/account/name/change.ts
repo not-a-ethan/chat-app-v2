@@ -1,15 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getToken } from "next-auth/jwt";
-
 import { sql } from "@/app/database/db";
-import { updateActvitiy } from "@/helpers/updateActivity";
-import { DatabaseUsers } from "@/types";
+import { apiAuthCheck } from "@/helpers/apiAuthCheck";
+
+import { DatabaseUsers, ApiAuth } from "@/types";
 
 export async function PUT(req: NextRequest) {
-    const token = await getToken({ req });
+    const authStatus: ApiAuth = await apiAuthCheck(req);
     
-    if (!token) {
+    if (!authStatus["auth"]) {
         return NextResponse.json(
             {
                 "error": "Not authenticated"
@@ -17,10 +16,6 @@ export async function PUT(req: NextRequest) {
             { status: 403 }
         );
     };
-
-    const userId: number = Number(token.sub);
-
-    updateActvitiy(userId);
 
     const body = await req.json();
     const newName: string = body["name"];
@@ -59,7 +54,7 @@ export async function PUT(req: NextRequest) {
     };
 
     try {
-        await sql`UPDATE users SET name=${newName} WHERE githubid=${userId}`;
+        await sql`UPDATE users SET name=${newName} WHERE githubid=${authStatus["userId"]}`;
     } catch(e) {
         console.error(e);
 

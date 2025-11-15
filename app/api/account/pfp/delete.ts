@@ -3,12 +3,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 import { sql } from "@/app/database/db";
-import { updateActvitiy } from "@/helpers/updateActivity";
+import { apiAuthCheck } from "@/helpers/apiAuthCheck";
+
+import { ApiAuth } from "@/types";
 
 export async function DELETE(req: NextRequest) {
-    const token = await getToken({ req });
+    const authStatus: ApiAuth = await apiAuthCheck(req);
     
-    if (!token) {
+    if (!authStatus["auth"]) {
         return NextResponse.json(
             {
                 "error": "Not authenticated"
@@ -17,12 +19,8 @@ export async function DELETE(req: NextRequest) {
         );
     };
 
-    const userId: number = Number(token.sub);
-
-    updateActvitiy(userId);
-
     try {
-        await sql`UPDATE users SET pfp=NULL WHERE githubid=${userId};`;
+        await sql`UPDATE users SET pfp=NULL WHERE githubid=${authStatus["userId"]};`;
     } catch (e) {
         console.error(e);
 

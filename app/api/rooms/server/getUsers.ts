@@ -3,14 +3,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 import { sql } from "@/app/database/db";
-import { updateActvitiy } from "@/helpers/updateActivity";
+import { apiAuthCheck } from "@/helpers/apiAuthCheck";
 
-import { DatabaseUsers } from "@/types";
+import { DatabaseUsers, ApiAuth } from "@/types";
 
 export async function GET(req: NextRequest) {
-    const token = await getToken({ req });
+    const authStatus: ApiAuth = await apiAuthCheck(req);
 
-    if (!token) {
+    if (!authStatus["auth"]) {
         return NextResponse.json(
             {
                 "error": "Not authenticated"
@@ -18,10 +18,6 @@ export async function GET(req: NextRequest) {
             { status: 403 }
         );
     };
-
-    const userId: number = Number(token.sub);
-
-    updateActvitiy(userId);
 
     const searchParams = req.nextUrl.searchParams;
     const roomId: string|null = searchParams!.get("roomId");

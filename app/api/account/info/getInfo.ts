@@ -1,15 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getToken } from "next-auth/jwt";
-
-import { updateActvitiy } from "@/helpers/updateActivity";
+import { apiAuthCheck } from "@/helpers/apiAuthCheck";
 import { sql } from "@/app/database/db";
-import { DatabaseUsers } from "@/types";
+import { ApiAuth, DatabaseUsers } from "@/types";
 
 export async function GET(req: NextRequest) {
-    const token = await getToken({ req });
-        
-    if (!token) {
+    const authStatus: ApiAuth = await apiAuthCheck(req);
+
+    if (!authStatus["auth"]) {
         return NextResponse.json(
             {
                 "error": "Not authenticated"
@@ -18,14 +16,10 @@ export async function GET(req: NextRequest) {
         );
     };
 
-    const userId: number = Number(token.sub);
-
-    updateActvitiy(userId);
-
     let result: DatabaseUsers;
 
     try {
-        result = (await sql`SELECT * FROM users WHERE githubid=${userId};`)[0];
+        result = (await sql`SELECT * FROM users WHERE githubid=${authStatus["userId"]};`)[0];
     } catch (e) {
         console.error(e);
 

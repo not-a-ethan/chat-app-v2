@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getToken } from "next-auth/jwt";
-
-import { updateActvitiy } from "@/helpers/updateActivity";
+import { apiAuthCheck } from "@/helpers/apiAuthCheck";
 import { sql } from "@/app/database/db";
 import { getRooms } from "../../rooms/user/getRooms";
 import { getMessageInfo } from "@/helpers/messageInfo";
-import { DatabaseMessages, DatabaseReactions, MessageReactions } from "@/types";
+
+import { DatabaseMessages, DatabaseReactions, MessageReactions, ApiAuth } from "@/types";
 
 export async function getReactions(userId: number, messageId: number) {
     if (!messageId || messageId <= 0) {
@@ -77,9 +76,9 @@ export async function getReactions(userId: number, messageId: number) {
 };
 
 export async function GET(req: NextRequest) {
-    const token = await getToken({ req });
+    const authStatus: ApiAuth = await apiAuthCheck(req);
     
-    if (!token) {
+    if (!authStatus["auth"]) {
         return NextResponse.json(
             {
                 "error": "Not authenticated"
@@ -88,14 +87,10 @@ export async function GET(req: NextRequest) {
         );
     };
 
-    const userId: number = Number(token.sub);
-
-    updateActvitiy(userId);
-
     const body = await req.json();
     const messageId: number = body["messageId"];
 
-    const res = await JSON.parse(await getReactions(userId, messageId));
+    const res = await JSON.parse(await getReactions(authStatus["userId"], messageId));
 
     if (res["status"] !== 200) {
         return NextResponse.json(

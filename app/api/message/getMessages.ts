@@ -1,17 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getToken } from "next-auth/jwt";
-
 import { sql } from "@/app/database/db";
+import { apiAuthCheck } from "@/helpers/apiAuthCheck";
 
-import { DatabaseMessages, DatabaseUsers } from "@/types";
-import { updateActvitiy } from "@/helpers/updateActivity";
 import { getReactions } from "./reactions/getReactions";
 
+import { DatabaseMessages, DatabaseUsers, ApiAuth } from "@/types";
+
 export async function GET(req: NextRequest) {
-    const token = await getToken({ req });
+    const authStatus: ApiAuth = await apiAuthCheck(req);
     
-    if (!token) {
+    if (!authStatus["auth"]) {
         return NextResponse.json(
             {
                 "error": "Not authenticated"
@@ -19,10 +18,6 @@ export async function GET(req: NextRequest) {
             { status: 403 }
         );
     };
-
-    const userId: number = Number(token.sub);
-
-    updateActvitiy(userId);
 
     const searchParams = req.nextUrl.searchParams;
     const roomId: number = Number(searchParams?.get("roomId"));
@@ -39,7 +34,7 @@ export async function GET(req: NextRequest) {
     let sqlRooms: DatabaseUsers[];
     
     try {
-        sqlRooms = await sql`SELECT * FROM users WHERE githubid=${userId}`;
+        sqlRooms = await sql`SELECT * FROM users WHERE githubid=${authStatus["userId"]}`;
     } catch (e) {
         console.error(e);
 
@@ -110,7 +105,7 @@ export async function GET(req: NextRequest) {
 
     for (let i = 0; i < messagesWithReactions.length; i++) {
         const messageId = messagesWithReactions[i]["id"];
-        const reactions = await JSON.parse(await getReactions(userId, messageId));
+        const reactions = await JSON.parse(await getReactions(authStatus["userId"], messageId));
 
         if (reactions["status"] !== 200) {
             // Something went wrong

@@ -1,19 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getToken } from "next-auth/jwt";
-
-import { updateActvitiy } from "@/helpers/updateActivity";
+import { apiAuthCheck } from "@/helpers/apiAuthCheck";
 import { getRooms } from "../../rooms/user/getRooms";
 import { getMessageInfo } from "@/helpers/messageInfo";
 import { sql } from "@/app/database/db";
 
-import { DatabaseMessages } from "@/types";
+import { DatabaseMessages, ApiAuth } from "@/types";
 import { getReactions } from "./getReactions";
 
 export async function PUT(req: NextRequest) {
-    const token = await getToken({ req });
+    const authStatus: ApiAuth = await apiAuthCheck(req);
     
-    if (!token) {
+    if (!authStatus["auth"]) {
         return NextResponse.json(
             {
                 "error": "Not authenticated"
@@ -21,10 +19,6 @@ export async function PUT(req: NextRequest) {
             { status: 403 }
         );
     };
-
-    const userId: number = Number(token.sub);
-
-    updateActvitiy(userId);
 
     const body: any = await req.json();
     const messageId: number = body["messageId"];
@@ -54,7 +48,7 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    const userRooms: string[] = await getRooms(userId);
+    const userRooms: string[] = await getRooms(authStatus["userId"]);
     const messageData: DatabaseMessages|null = await getMessageInfo(messageId);
 
     if (messageData === null) {
@@ -77,7 +71,7 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    const messageReactions = await JSON.parse(await getReactions(userId, messageId));
+    const messageReactions = await JSON.parse(await getReactions(authStatus["userId"], messageId));
 
     if (messageReactions["status"] !== 200) {
         return NextResponse.json(
@@ -88,10 +82,10 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    if (messageReactions["reactions"][reactionId.toString()].includes(userId)) {
+    if (messageReactions["reactions"][reactionId.toString()].includes(authStatus["userId"])) {
         // Remove Reaction
         try {
-            await sql`DELETE FROM reactions WHERE userid=${userId} AND reaction=${reactionId} AND messageid=${messageId};`;
+            await sql`DELETE FROM reactions WHERE userid=${authStatus["userId"]} AND reaction=${reactionId} AND messageid=${messageId};`;
         } catch (e) {
             console.error(e);
 
@@ -112,7 +106,7 @@ export async function PUT(req: NextRequest) {
     } else {
         // Adds reaction
         try {
-            await sql`INSERT INTO reactions (userid, reaction, messageid) VALUES (${userId}, ${reactionId}, ${messageId});`;
+            await sql`INSERT INTO reactions (userid, reaction, messageid) VALUES (${authStatus["userId"]}, ${reactionId}, ${messageId});`;
         } catch (e) {
             console.error(e);
 

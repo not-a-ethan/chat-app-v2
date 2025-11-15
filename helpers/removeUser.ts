@@ -1,5 +1,5 @@
 import { sql } from "@/app/database/db";
-import { getRooms } from "./user/getRooms";
+import { getRooms } from "../app/api/rooms/user/getRooms";
 
 export async function removeUser(roomId: number, userId: number): Promise<boolean> {
     const rooms: string[] = await getRooms(userId);

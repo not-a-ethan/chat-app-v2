@@ -53,7 +53,7 @@ It will soon have the following features:
   - Change linked GH account
 - Misc
   - Home page
-  - Error handling for sql on backend
+  - ~~Error handling for sql on backend~~
   - Optimise backend stuff
     - DRY
     - API route (data validation and stuff)

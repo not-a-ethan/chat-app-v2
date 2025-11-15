@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getToken } from "next-auth/jwt";
-
 import { sql } from "@/app/database/db";
-import { updateActvitiy } from "@/helpers/updateActivity";
 import { addUser } from "./addUser";
+import { apiAuthCheck } from "@/helpers/apiAuthCheck";
+
+import { ApiAuth } from "@/types";
 
 /*
 API docs:
@@ -23,9 +23,9 @@ RESPONSE:
 */
 
 export async function POST(req: NextRequest) {
-    const token = await getToken({ req });
+    const authStatus: ApiAuth = await apiAuthCheck(req);
 
-    if (!token) {
+    if (!authStatus["auth"]) {
         return NextResponse.json(
             {
                 "error": "Not authenticated"
@@ -33,10 +33,6 @@ export async function POST(req: NextRequest) {
             { status: 403 }
         );
     };
-
-    const userId: number = Number(token.sub);
-
-    updateActvitiy(userId);
 
     const body = await req.json();
     const name: string = body["name"];
@@ -51,7 +47,7 @@ export async function POST(req: NextRequest) {
     };
 
     try {
-        await sql`INSERT INTO rooms (name, owner) VALUES (${name}, ${userId})`;
+        await sql`INSERT INTO rooms (name, owner) VALUES (${name}, ${authStatus["userId"]})`;
     } catch (e) {
         console.error(e);
 
@@ -80,9 +76,7 @@ export async function POST(req: NextRequest) {
 
     const roomId: number = await roomIdSQL[roomIdSQL.length - 1]["id"];
 
-    addUser(roomId.toString(), userId, userId, true);
-
-    updateActvitiy(userId);
+    addUser(roomId.toString(), authStatus["userId"], authStatus["userId"], true);
 
     return NextResponse.json(
         {},
