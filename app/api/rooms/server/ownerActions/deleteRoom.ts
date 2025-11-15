@@ -56,14 +56,38 @@ export async function DELETE(req: NextRequest) {
         );
     };
 
-    const people: DatabaseUsers[] = await sql`SELECT * FROM users WHERE rooms LIKE ${`%${roomId}%`};`;
+    let people: DatabaseUsers[];
+
+    try {
+        people = await sql`SELECT * FROM users WHERE rooms LIKE ${`%${roomId}%`};`;
+    } catch (e) {
+        console.error(e);
+
+        return NextResponse.json(
+            {
+                "error": "Something went wrong getting user data"
+            },
+            { status: 500 }
+        );
+    };
 
     for (let i = 0; i < people.length; i++) {
         await removeUser(roomId, userId);
     };
 
-    const messageRes = await sql`DELETE FROM messages WHERE roomid=${roomId};`;
-    const roomRes = await sql`DELETE FROM rooms WHERE id=${roomId};`;
+    try {
+        await sql`DELETE FROM messages WHERE roomid=${roomId};`;
+        await sql`DELETE FROM rooms WHERE id=${roomId};`;
+    } catch (e) {
+        console.error(e);
+
+        return NextResponse.json(
+            {
+                "error": "Something went wrong deleting room or messages"
+            },
+            { status: 500 }
+        );
+    };
 
     return NextResponse.json(
         {},

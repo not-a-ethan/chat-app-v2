@@ -65,7 +65,18 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    await sql`UPDATE rooms SET name=${newName} WHERE id=${roomId};`;
+    try {
+        await sql`UPDATE rooms SET name=${newName} WHERE id=${roomId};`;
+    } catch (e) {
+        console.error(e);
+
+        return NextResponse.json(
+            {
+                "error": "Something went wrong changing room name"
+            },
+            { status: 500 }
+        );
+    };
 
     return NextResponse.json(
         {},

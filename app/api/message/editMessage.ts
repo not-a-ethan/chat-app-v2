@@ -6,6 +6,7 @@ import { getRooms } from "../rooms/user/getRooms";
 import { sql } from "@/app/database/db";
 import { updateActvitiy } from "@/helpers/updateActivity";
 import { getOwnership } from "@/helpers/roomOwnership";
+import { DatabaseMessages } from "@/types";
 
 export async function PUT(req: NextRequest) {
     const token = await getToken({ req });
@@ -27,7 +28,21 @@ export async function PUT(req: NextRequest) {
     const messageId = body["id"];
     const newContent = body["newContent"];
 
-    const currentMessageData = await (await sql`SELECT * from messages WHERE id=${messageId}`)[0];
+    let currentMessageData: DatabaseMessages;
+
+    try {
+        currentMessageData = await (await sql`SELECT * from messages WHERE id=${messageId}`)[0];
+    } catch (e) {
+        console.error(e);
+
+        return NextResponse.json(
+            {
+                "error": "Something went wrong getting message info"
+            },
+            { status: 500 }
+        );
+    };
+
     const currentRoomNum = currentMessageData["roomid"];
     const owner = currentMessageData["userid"];
 
@@ -51,7 +66,16 @@ export async function PUT(req: NextRequest) {
         );
     };
 
-    await sql`UPDATE messages SET content=${newContent} WHERE id=${messageId}`;
+    try {
+        await sql`UPDATE messages SET content=${newContent} WHERE id=${messageId}`;
+    } catch (e) {
+        return NextResponse.json(
+            {
+                "error": "Something went wrong editing the message"
+            },
+            { status: 500 }
+        );
+    };
 
     return NextResponse.json(
         {},

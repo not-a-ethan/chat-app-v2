@@ -41,7 +41,18 @@ export async function getReactions(userId: number, messageId: number) {
         );
     };
 
-    const result: DatabaseReactions[] = await sql`SELECT * FROM reactions WHERE messageid=${messageId}`;
+    let result: DatabaseReactions[];
+
+    try {
+        result = await sql`SELECT * FROM reactions WHERE messageid=${messageId}`;
+    } catch (e) {
+        return JSON.stringify(
+            {
+                "error": "Something went wrong getting reaction info",
+                "status": 500
+            }
+        );
+    };
 
     const reactions: MessageReactions = {
         1: [],

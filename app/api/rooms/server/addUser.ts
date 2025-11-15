@@ -39,7 +39,19 @@ export async function addUser(roomId: string, newUserId: number, addingUserId: n
         );
     } catch (e) {
         let newRooms: string = `${roomId}`;
-        await sql`UPDATE users SET rooms=${newRooms} WHERE githubid=${newUserId}`;
+        
+        try {
+            await sql`UPDATE users SET rooms=${newRooms} WHERE githubid=${newUserId}`;
+        } catch (e) {
+            console.error(e);
+
+            return NextResponse.json(
+                {
+                    "error": "Something went wrong adding user"
+                },
+                { status: 500 }
+            );
+        };
 
         return NextResponse.json(
             {},

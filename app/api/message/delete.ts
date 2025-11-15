@@ -36,7 +36,21 @@ export async function DELETE(req: NextRequest) {
         );
     };
 
-    const messageData: DatabaseMessages = await (await sql`SELECT * FROM messages WHERE id=${messageId}`)[0];
+    let messageData: DatabaseMessages;
+
+    try {
+        messageData = await (await sql`SELECT * FROM messages WHERE id=${messageId}`)[0];
+    } catch (e) {
+        console.error(e);
+
+        return NextResponse.json(
+            {
+                "error": "Something went wrong getting message data"
+            },
+            { status: 500 }
+        );
+    };
+    
     const roomOwnership = await getOwnership(messageData["userid"]);
 
     if (messageData["userid"] != userId || !roomOwnership.includes(messageData["roomid"])) {
@@ -59,7 +73,18 @@ export async function DELETE(req: NextRequest) {
         );
     };
 
-    await sql`DELETE FROM messages WHERE userid=${userId} AND roomid=${messageData["roomid"]} AND id=${messageId}`;
+    try {
+        await sql`DELETE FROM messages WHERE userid=${userId} AND roomid=${messageData["roomid"]} AND id=${messageId}`;
+    } catch (e) {
+        console.error(e);
+    
+        return NextResponse.json(
+            {
+                "error": "Something went wrong deleting the message"
+            },
+            { status: 500 }
+        );
+    };
 
     return NextResponse.json(
         {},

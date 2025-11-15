@@ -35,8 +35,22 @@ export async function GET(req: NextRequest) {
             { status: 400 }
         );
     };
+
+    let sqlRooms: DatabaseUsers[];
     
-    const sqlRooms = await sql`SELECT * FROM users WHERE githubid=${userId}`;
+    try {
+        sqlRooms = await sql`SELECT * FROM users WHERE githubid=${userId}`;
+    } catch (e) {
+        console.error(e);
+
+        return NextResponse.json(
+            {
+                "error": "Something went wrong getting your user data"
+            },
+            { status: 500 }
+        );
+    };
+    
     const rooms: string[] = sqlRooms[0]["rooms"].split(",");
 
     if (!rooms.includes(roomId.toString())) {
@@ -48,7 +62,20 @@ export async function GET(req: NextRequest) {
         );
     };
 
-    const messages: DatabaseMessages[] = await sql`SELECT * FROM messages WHERE roomid=${roomId} ORDER BY id ASC LIMIT 50;`;
+    let messages: DatabaseMessages[];
+
+    try {
+        messages = await sql`SELECT * FROM messages WHERE roomid=${roomId} ORDER BY id ASC LIMIT 50;`;
+    } catch (e) {
+        console.error(e);
+
+        return NextResponse.json(
+            {
+                "error": "Something went wrong getting messages"
+            },
+            { status: 500 }
+        );
+    };
 
     interface usersType {
         [index: string]: any
@@ -61,8 +88,21 @@ export async function GET(req: NextRequest) {
             continue;
         };
 
-        const thisUserData: DatabaseUsers[] = await sql`SELECT * FROM users WHERE githubid=${messages[i]["userid"]}`;
+        let thisUserData: DatabaseMessages[];
 
+        try {
+            thisUserData = await sql`SELECT * FROM users WHERE githubid=${messages[i]["userid"]}`;
+        } catch (e) {
+            console.error(e);
+
+            return NextResponse.json(
+                {
+                    "error": "Something went wrong getting message user data"
+                },
+                { status: 500 }
+            );
+        };
+        
         users[messages[i]["userid"]] = thisUserData;
     };
 

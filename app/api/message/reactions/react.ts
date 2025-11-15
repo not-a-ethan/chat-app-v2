@@ -90,7 +90,18 @@ export async function PUT(req: NextRequest) {
 
     if (messageReactions["reactions"][reactionId.toString()].includes(userId)) {
         // Remove Reaction
-        await sql`DELETE FROM reactions WHERE userid=${userId} AND reaction=${reactionId} AND messageid=${messageId};`;
+        try {
+            await sql`DELETE FROM reactions WHERE userid=${userId} AND reaction=${reactionId} AND messageid=${messageId};`;
+        } catch (e) {
+            console.error(e);
+
+            return NextResponse.json(
+                {
+                    "error": "Something went wrong removing reaction"
+                },
+                { status: 500 }
+            );
+        };
 
         return NextResponse.json(
             {
@@ -100,7 +111,18 @@ export async function PUT(req: NextRequest) {
         );
     } else {
         // Adds reaction
-        await sql`INSERT INTO reactions (userid, reaction, messageid) VALUES (${userId}, ${reactionId}, ${messageId});`;
+        try {
+            await sql`INSERT INTO reactions (userid, reaction, messageid) VALUES (${userId}, ${reactionId}, ${messageId});`;
+        } catch (e) {
+            console.error(e);
+
+            return NextResponse.json(
+                {
+                    "error": "Something went wrong adding reaction"
+                },
+                { status: 500 }
+            );
+        };
 
         return NextResponse.json(
             {

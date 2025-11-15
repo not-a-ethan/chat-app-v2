@@ -76,7 +76,18 @@ export async function POST(req: NextRequest) {
         );
     };
 
-    await sql`UPDATE rooms SET owner=${newOwner} WHERE id=${roomId};`;
+    try {
+        await sql`UPDATE rooms SET owner=${newOwner} WHERE id=${roomId};`;
+    } catch (e) {
+        console.error(e);
+
+        return NextResponse.json(
+            {
+                "error": "something went wrong changing owner"
+            },
+            { status: 500 }
+        );
+    };
 
     return NextResponse.json(
         {},
