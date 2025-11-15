@@ -1,6 +1,6 @@
 import { sql } from "@/app/database/db";
-import { accountExists } from "./accountExists";
 import { AccountExists } from "@/types";
+import { accountExists } from "./accountExists";
 
 export async function createAccount(id: number, username: string): Promise<boolean> {
     const doesItExist: AccountExists = await accountExists(id, username);

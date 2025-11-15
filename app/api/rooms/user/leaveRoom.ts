@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { removeUser } from "../../../../helpers/removeUser";
-import { getOwnership } from "@/helpers/roomOwnership";
-import { apiAuthCheck } from "@/helpers/apiAuthCheck";
+import { removeUser } from "../../../../helpers/roomStuff/removeUser";
+import { getOwnership } from "@/helpers/roomStuff/roomOwnership";
+import { apiAuthCheck } from "@/helpers/accountStuff/apiAuthCheck";
 
 import { ApiAuth } from "@/types";
 

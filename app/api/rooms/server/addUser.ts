@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getUserId } from "@/helpers/getUserId";
-import { apiAuthCheck } from "@/helpers/apiAuthCheck";
-import { addUser } from "@/helpers/addUser";
+import { getUserId } from "@/helpers/accountStuff/getUserId";
+import { apiAuthCheck } from "@/helpers/accountStuff/apiAuthCheck";
+import { addUser } from "@/helpers/roomStuff/addUser";
 
 import { ApiAuth } from "@/types";
 

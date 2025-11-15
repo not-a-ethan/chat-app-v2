@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { sql } from "@/app/database/db";
 import { DatabaseRooms } from "@/types";
-import { getOwnership } from "@/helpers/roomOwnership";
-import { apiAuthCheck } from "@/helpers/apiAuthCheck";
-import { getRooms } from "@/helpers/getRooms";
+import { getOwnership } from "@/helpers/roomStuff/roomOwnership";
+import { apiAuthCheck } from "@/helpers/accountStuff/apiAuthCheck";
+import { getRooms } from "@/helpers/roomStuff/getRooms";
 
 import { ApiAuth } from "@/types";
 

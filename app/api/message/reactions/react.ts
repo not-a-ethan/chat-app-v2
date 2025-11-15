@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { apiAuthCheck } from "@/helpers/apiAuthCheck";
-import { getMessageInfo } from "@/helpers/messageInfo";
+import { apiAuthCheck } from "@/helpers/accountStuff/apiAuthCheck";
+import { getMessageInfo } from "@/helpers/messageStuff/messageInfo";
 import { sql } from "@/app/database/db";
-import { getReactions } from "@/helpers/getReactions";
-import { getRooms } from "@/helpers/getRooms";
+import { getReactions } from "@/helpers/messageStuff/getReactions";
+import { getRooms } from "@/helpers/roomStuff/getRooms";
 
 import { DatabaseMessages, ApiAuth } from "@/types";
 

@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getOwnership } from "@/helpers/roomOwnership";
-import { apiAuthCheck } from "@/helpers/apiAuthCheck";
+import { getOwnership } from "@/helpers/roomStuff/roomOwnership";
+import { apiAuthCheck } from "@/helpers/accountStuff/apiAuthCheck";
 
-import { removeUser } from "@/helpers/removeUser";
-import { getRooms } from "@/helpers/getRooms";
+import { removeUser } from "@/helpers/roomStuff/removeUser";
+import { getRooms } from "@/helpers/roomStuff/getRooms";
 
 import { ApiAuth } from "@/types";
 

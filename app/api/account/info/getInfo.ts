@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { apiAuthCheck } from "@/helpers/apiAuthCheck";
+import { apiAuthCheck } from "@/helpers/accountStuff/apiAuthCheck";
 import { sql } from "@/app/database/db";
 import { ApiAuth, DatabaseUsers } from "@/types";
 

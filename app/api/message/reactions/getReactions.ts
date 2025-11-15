@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { apiAuthCheck } from "@/helpers/apiAuthCheck";
-import { getReactions } from "@/helpers/getReactions";
+import { apiAuthCheck } from "@/helpers/accountStuff/apiAuthCheck";
+import { getReactions } from "@/helpers/messageStuff/getReactions";
 
 import { DatabaseMessages, DatabaseReactions, MessageReactions, ApiAuth } from "@/types";
 

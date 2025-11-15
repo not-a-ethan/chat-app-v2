@@ -1,4 +1,4 @@
-import { createAccount } from "@/helpers/createAccount";
+import { createAccount } from "@/helpers/accountStuff/createAccount";
 import { type AuthOptions } from "next-auth";
 
 import GitHubProvider from "next-auth/providers/github";

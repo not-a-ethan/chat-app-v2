@@ -1,6 +1,6 @@
 import { sql } from "@/app/database/db";
 import { getMessageInfo } from "./messageInfo";
-import { getRooms } from "./getRooms";
+import { getRooms } from "../roomStuff/getRooms";
 
 import { DatabaseMessages, MessageReactions, DatabaseReactions } from "@/types";
 
