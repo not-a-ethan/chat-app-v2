@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { sql } from "@/app/database/db";
 import { apiAuthCheck } from "@/helpers/apiAuthCheck";
-
-import { getReactions } from "./reactions/getReactions";
+import { getReactions } from "@/helpers/getReactions";
 
 import { DatabaseMessages, DatabaseUsers, ApiAuth } from "@/types";
 

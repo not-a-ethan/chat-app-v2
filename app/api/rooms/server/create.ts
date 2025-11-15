@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { sql } from "@/app/database/db";
-import { addUser } from "./addUser";
+import { addUser } from "@/helpers/addUser";
 import { apiAuthCheck } from "@/helpers/apiAuthCheck";
 
 import { ApiAuth } from "@/types";

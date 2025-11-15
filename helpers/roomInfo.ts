@@ -1,5 +1,5 @@
 import { sql } from "@/app/database/db";
-import { getRooms } from "@/app/api/rooms/user/getRooms";
+import { getRooms } from "./getRooms";
 
 import { DatabaseRooms } from "@/types";
 

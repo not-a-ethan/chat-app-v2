@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getToken } from "next-auth/jwt";
-
 import { removeUser } from "../../../../helpers/removeUser";
 import { getOwnership } from "@/helpers/roomOwnership";
 import { apiAuthCheck } from "@/helpers/apiAuthCheck";

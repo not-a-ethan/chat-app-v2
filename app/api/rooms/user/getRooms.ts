@@ -1,45 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getToken } from "next-auth/jwt";
-
 import { sql } from "@/app/database/db";
 import { DatabaseRooms } from "@/types";
 import { getOwnership } from "@/helpers/roomOwnership";
 import { apiAuthCheck } from "@/helpers/apiAuthCheck";
+import { getRooms } from "@/helpers/getRooms";
 
 import { ApiAuth } from "@/types";
-
-export async function getRooms(userId: number): Promise<string[]> {
-    let roomSQL;
-
-    try{
-        roomSQL = await sql`SELECT rooms FROM users WHERE githubid=${userId}`;
-    } catch (e) {
-        console.error(e);
-
-        return [];
-    };
-
-    let rooms: string[]|null;
-
-    try {
-        rooms = roomSQL[0]["rooms"].split(",");
-    } catch (e) {
-        return [];
-    };
-    
-    if (rooms == null) {
-        return [];
-    };
-
-    const correctRoomArray = [];
-
-    for (let i = 0; i < rooms.length; i++) {
-        correctRoomArray.push(rooms[i]);
-    };
-
-    return correctRoomArray;
-};            
 
 export async function GET(req: NextRequest) {
     const authStatus: ApiAuth = await apiAuthCheck(req);

@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { sql } from "@/app/database/db";
-import { getRooms } from "../rooms/user/getRooms";
 import { getOwnership } from "@/helpers/roomOwnership";
 import { apiAuthCheck } from "@/helpers/apiAuthCheck";
+import { getRooms } from "@/helpers/getRooms";
 
 import { DatabaseMessages, ApiAuth } from "@/types";
 

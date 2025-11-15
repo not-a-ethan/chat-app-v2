@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { apiAuthCheck } from "@/helpers/apiAuthCheck";
-import { getRooms } from "../../rooms/user/getRooms";
 import { getMessageInfo } from "@/helpers/messageInfo";
 import { sql } from "@/app/database/db";
+import { getReactions } from "@/helpers/getReactions";
+import { getRooms } from "@/helpers/getRooms";
 
 import { DatabaseMessages, ApiAuth } from "@/types";
-import { getReactions } from "./getReactions";
 
 export async function PUT(req: NextRequest) {
     const authStatus: ApiAuth = await apiAuthCheck(req);

@@ -3,8 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getOwnership } from "@/helpers/roomOwnership";
 import { apiAuthCheck } from "@/helpers/apiAuthCheck";
 
-import { getRooms } from "../../../user/getRooms";
-import { removeUser } from "../../../../../../helpers/removeUser";
+import { removeUser } from "@/helpers/removeUser";
+import { getRooms } from "@/helpers/getRooms";
 
 import { ApiAuth } from "@/types";
 
