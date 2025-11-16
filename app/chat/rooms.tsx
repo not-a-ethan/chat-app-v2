@@ -15,12 +15,13 @@ export function Rooms(props: any) {
     const setRoom = props.setRoom;
     const setRoomName = props.setRoomName;
     const setRoomOwner = props.setRoomOwner;
+    const setRoomMod = props.setRoomMod;
 
     const pfp: string = "";
 
     return (
         <span className={`flex flex-wrap gap-2 ${styles.body}`}>
-            <ListRooms roomId={room} setRoom={setRoom} setRoomName={setRoomName} setRoomOwner={setRoomOwner} />
+            <ListRooms roomId={room} setRoom={setRoom} setRoomName={setRoomName} setRoomOwner={setRoomOwner} setRoomMod={setRoomMod} />
             <CreateRoom />
 
             <div className={`${styles.settings}`}>

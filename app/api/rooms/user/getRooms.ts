@@ -7,6 +7,8 @@ import { apiAuthCheck } from "@/helpers/accountStuff/apiAuthCheck";
 import { getRooms } from "@/helpers/roomStuff/getRooms";
 
 import { ApiAuth } from "@/types";
+import { getModerators } from "@/helpers/roomStuff/moderators/getModerators";
+import { getModRooms } from "@/helpers/roomStuff/moderators/getModRooms";
 
 export async function GET(req: NextRequest) {
     const authStatus: ApiAuth = await apiAuthCheck(req);
@@ -43,12 +45,14 @@ export async function GET(req: NextRequest) {
         roomsData.push(thisRoom[0]);
     };
 
-    const ids: number[] = await getOwnership(authStatus["userId"]);
+    const ownerRooms: number[] = await getOwnership(authStatus["userId"]);
+    const modRooms: string[] = await getModRooms(authStatus["userId"]);
 
     return NextResponse.json(
         {
             "rooms": roomsData,
-            "owner": ids
+            "owner": ownerRooms,
+            "mod": modRooms
         },
         { status: 200 }
     );

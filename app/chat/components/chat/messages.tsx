@@ -18,6 +18,7 @@ export function Message(props: any) {
     const roomId = props.roomId;
     const userId = props.userId;
     const roomOwner = props.roomOwner;
+    const roomMod = props.roomMod;
 
     const ref = useRef<HTMLDivElement>(null);
 
@@ -146,7 +147,7 @@ export function Message(props: any) {
                                 <DeleteButton id={message["id"]} />
                             </div>
                         </>
-                    ) : (roomOwner ? (
+                    ) : (roomOwner || roomMod ? (
                         <>
                             <div className={`${styles.authorActions}`}>
                                 <DeleteButton id={message["id"]} />

@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import { Button } from "@heroui/button";
 import { addToast } from "@heroui/toast";
 
@@ -12,6 +10,7 @@ export function ListRooms(props: any) {
     const setRoom = props.setRoom;
     const setRoomName = props.setRoomName;
     const setRoomOwner = props.setRoomOwner;
+    const setRoomMod = props.setRoomMod;
 
     const { json, jsonError, jsonLoading } = getAPI("../api/rooms/user", ["json", "jsonError", "jsonLoading"]);
 
@@ -43,6 +42,7 @@ export function ListRooms(props: any) {
 
     const rooms: DatabaseRooms[] = json["rooms"];
     const ownershipRooms = json["owner"];
+    const moderatorRooms = json["mods"];
 
     if (!rooms || rooms.length === 0) {
         // Cant display rooms that do not exist
@@ -58,8 +58,13 @@ export function ListRooms(props: any) {
 
         if (ownershipRooms.includes(Number(id))) {
             setRoomOwner(true);
+            setRoomMod(true);
+        } else if (moderatorRooms.includes(Number(id))) {
+            setRoomOwner(false);
+            setRoomMod(true);
         } else {
             setRoomOwner(false);
+            setRoomMod(false);
         };
 
         for (let i = 0; i < json["rooms"].length; i++) {

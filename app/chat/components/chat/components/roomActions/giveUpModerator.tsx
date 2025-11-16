@@ -1,0 +1,60 @@
+'use client';
+
+import { Form } from "@heroui/form";
+import { Button } from "@heroui/button";
+import { Modal, ModalContent, ModalHeader, ModalBody, useDisclosure } from "@heroui/modal";
+import { addToast } from "@heroui/toast";
+
+export function GiveUpMod(props: any) {
+    const roomId = props.roomId;
+    const userId = props.userId
+    
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+    function handleSubmit(e: any) {
+        e.preventDefault();
+
+        fetch("../api/rooms/server/moderators", {
+            method: "DELETE",
+            body: JSON.stringify({
+                "roomId": Number(roomId),
+                "modId": Number(userId)
+            })
+        })
+        .catch(e => {
+            console.error(e);
+
+            addToast({
+                color: "danger",
+                title: "Something went wrong removing your moderator",
+                description: "More info in developer console"
+            });
+        });
+    };
+
+    return (
+        <>
+          <Button color="danger" onPress={onOpen}>Give up moderator</Button>
+
+          <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+            <ModalContent>
+                {(onclose) => (
+                    <>
+                        <ModalHeader>Give up moderator</ModalHeader>
+
+                        <ModalBody>
+                            <p>Give up your ability to moderate the room. This will let you leave the room</p>
+
+                            <p>You will not be able to regain your moderation ablities unless the owner promotes you again.</p>
+
+                            <Form onSubmit={handleSubmit}>
+                                <Button color="danger" onPress={onclose}>Give up your ablility to moderate</Button>
+                            </Form>
+                        </ModalBody>
+                    </>
+                )}
+            </ModalContent>
+          </Modal>
+        </>
+    );
+};

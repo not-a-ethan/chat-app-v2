@@ -18,6 +18,7 @@ export function ActiveUsers(props: any) {
     const roomID = props.room;
     const currentName = props.roomName;
     const owners: number[] = props.owners;
+    const roomMod = props.roomMod;
 
     const { json, jsonError, jsonLoading } = getAPI(`../api/rooms/server?roomId=${roomID}`, ["json", "jsonError", "jsonLoading"]);
 
@@ -82,7 +83,7 @@ export function ActiveUsers(props: any) {
                 )}
 
                 <ListboxSection title="Actions">
-                    {!owners ? (
+                    {!owners || !roomMod ? (
                         <>
                             <ListboxItem textValue="">
                                 <LeaveRoom room={roomID} />
@@ -94,7 +95,7 @@ export function ActiveUsers(props: any) {
                         <AddMember roomID={roomID} />
                     </ListboxItem>
 
-                    {owners ? (
+                    {owners || roomMod ? (
                         <>
                             <ListboxItem textValue="">
                                 <RenameRoom roomId={roomID} currentName={currentName} />

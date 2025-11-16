@@ -8,7 +8,7 @@ import { addToast } from "@heroui/toast";
 
 import { DatabaseUsers } from "@/types";
 
-export function ChangeOwner(props: any) {
+export function AddMod(props: any) {
     const roomId = props.roomId;
     const people: DatabaseUsers[] = props.people;
 
@@ -21,11 +21,11 @@ export function ChangeOwner(props: any) {
 
         const userId: number = Number(data["user"].toString());
 
-        fetch(`../api/rooms/server/ownerActions`, {
-            method: "POST",
+        fetch("../api/rooms/server/moderators", {
+            method: "PUT",
             body: JSON.stringify({
-                "roomId": roomId,
-                "userId": userId
+                "roomId": Number(roomId),
+                "modId": Number(userId)
             })
         })
         .catch(e => {
@@ -33,7 +33,7 @@ export function ChangeOwner(props: any) {
 
             addToast({
                 color: "danger",
-                title: "Something went wrong changing owner",
+                title: "Something went wrong adding moderator",
                 description: "More info in developer console"
             });
         });
@@ -41,31 +41,31 @@ export function ChangeOwner(props: any) {
 
     return (
         <>
-            <Button color="danger" onPress={onOpen}>Change Owner</Button>
+            <Button color="warning" onPress={onOpen}>Add Moderator</Button>
 
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onclose) => (
                         <>
-                            <ModalHeader>Change Room Owner</ModalHeader>
+                            <ModalHeader>Add Moderator</ModalHeader>
 
                             <ModalBody>
-                                <p>This will change who owns the room. You will still be in the room unless you leave or the new owner kicks you</p>
+                                <p>Add moderator. They will have the power the delete any message and kick members</p>
 
                                 <Form onSubmit={handleSubmit}>
-                                    <Select name="user" label="User to give ownership">
+                                    <Select name="user" label="User to be promoted to moderator">
                                         {people.map((person: DatabaseUsers) => (
                                             <SelectItem key={person.githubid}>{person.name}</SelectItem>
                                         ))}
                                     </Select>
 
-                                    <Button color="danger" onPress={onclose} type="submit">Change Owner</Button>
+                                    <Button color="warning" onPress={onclose} type="submit">Promote to moderator</Button>
                                 </Form>
                             </ModalBody>
                         </>
-                    )}    
-                </ModalContent>    
-            </Modal>  
+                    )}
+                </ModalContent>
+            </Modal>
         </>
     );
 };

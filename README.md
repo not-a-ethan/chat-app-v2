@@ -57,6 +57,7 @@ It will soon have the following features:
   - ~~Optimise backend stuff~~
     - ~~DRY~~
     - ~~API route (data validation and stuff)~~
+  - Help Center thing
 
 Moderators and related features
 

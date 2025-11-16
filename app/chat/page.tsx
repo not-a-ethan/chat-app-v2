@@ -19,6 +19,7 @@ export default function Page() {
     const [room, setRoom] = useState(0);
     const [roomName, setRoomName] = useState("");
     const [roomOwner, setRoomOwner] = useState(false);
+    const [roomMod, setRoomMod] = useState(false);
 
     try {
         if (status === "loading") {
@@ -35,15 +36,15 @@ export default function Page() {
         return (
             <div className={`${styles.page}`}>
                 <div className={`${styles.main}`}>
-                    <Chat roomId={room} className={`${styles.chat}`} userId={userId} roomOwner={roomOwner} />
+                    <Chat roomId={room} className={`${styles.chat}`} userId={userId} roomOwner={roomOwner} roomMod={roomMod} />
 
                     <div className={`${styles.members}`}>
-                        <ActiveUsers room={room} roomName={roomName} owners={roomOwner} />
+                        <ActiveUsers room={room} roomName={roomName} owners={roomOwner} roomMod={roomMod} />
                     </div>
                 </div>
                 
                 <div className={`${styles.bottom}`}>
-                    <Rooms room={room} setRoom={setRoom} setRoomName={setRoomName} className={`${styles.rooms}`} setRoomOwner={setRoomOwner} />
+                    <Rooms room={room} setRoom={setRoom} setRoomName={setRoomName} className={`${styles.rooms}`} setRoomOwner={setRoomOwner} setRoomMod={setRoomMod} />
 
                     <div className={`${styles.managment}`}></div>
                 </div>

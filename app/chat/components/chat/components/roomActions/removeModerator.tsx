@@ -8,9 +8,9 @@ import { addToast } from "@heroui/toast";
 
 import { DatabaseUsers } from "@/types";
 
-export function ChangeOwner(props: any) {
+export function RemoveMod(props: any) {
     const roomId = props.roomId;
-    const people: DatabaseUsers[] = props.people;
+    const mods: DatabaseUsers[] = props.people;
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -21,11 +21,11 @@ export function ChangeOwner(props: any) {
 
         const userId: number = Number(data["user"].toString());
 
-        fetch(`../api/rooms/server/ownerActions`, {
-            method: "POST",
+        fetch("../api/rooms/server/moderators", {
+            method: "DELETE",
             body: JSON.stringify({
-                "roomId": roomId,
-                "userId": userId
+                "roomId": Number(roomId),
+                "modId": Number(userId)
             })
         })
         .catch(e => {
@@ -33,7 +33,7 @@ export function ChangeOwner(props: any) {
 
             addToast({
                 color: "danger",
-                title: "Something went wrong changing owner",
+                title: "Something went wrong removing moderator",
                 description: "More info in developer console"
             });
         });
@@ -41,31 +41,31 @@ export function ChangeOwner(props: any) {
 
     return (
         <>
-            <Button color="danger" onPress={onOpen}>Change Owner</Button>
+            <Button color="warning" onPress={onOpen}>Remove moderator</Button>
 
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onclose) => (
                         <>
-                            <ModalHeader>Change Room Owner</ModalHeader>
+                            <ModalHeader>Demote Moderator</ModalHeader>
 
                             <ModalBody>
-                                <p>This will change who owns the room. You will still be in the room unless you leave or the new owner kicks you</p>
+                                <p>Removing a moderator will remove their moderation abilities, but they will still be a member of the room. You can always add their moderation abilities back at a later date</p>
 
                                 <Form onSubmit={handleSubmit}>
-                                    <Select name="user" label="User to give ownership">
-                                        {people.map((person: DatabaseUsers) => (
+                                    <Select name="user" label="User to demoted from moderator">
+                                        {mods.map((person: DatabaseUsers) => (
                                             <SelectItem key={person.githubid}>{person.name}</SelectItem>
                                         ))}
                                     </Select>
 
-                                    <Button color="danger" onPress={onclose} type="submit">Change Owner</Button>
+                                    <Button color="warning" onPress={onclose}>Demote moderator</Button>
                                 </Form>
                             </ModalBody>
                         </>
-                    )}    
-                </ModalContent>    
-            </Modal>  
+                    )}
+                </ModalContent>
+            </Modal>
         </>
     );
 };
