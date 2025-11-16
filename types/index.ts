@@ -20,7 +20,8 @@ export interface DatabaseMessages {
 export interface DatabaseRooms {
   id: number,
   name: string,
-  owner: number
+  owner: number,
+  moderators: string
 };
 
 export interface DatabaseUsers {

@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
     };
 
     try {
-        await sql`INSERT INTO rooms (name, owner) VALUES (${name}, ${authStatus["userId"]})`;
+        await sql`INSERT INTO rooms (name, owner, moderators) VALUES (${name}, ${authStatus["userId"]}, ${authStatus["userId"]})`;
     } catch (e) {
         console.error(e);
 

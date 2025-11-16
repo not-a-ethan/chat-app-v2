@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { getOwnership } from "@/helpers/roomStuff/roomOwnership";
 import { apiAuthCheck } from "@/helpers/accountStuff/apiAuthCheck";
-
 import { removeUser } from "@/helpers/roomStuff/removeUser";
 import { getRooms } from "@/helpers/roomStuff/getRooms";
+import { isModerator } from "@/helpers/roomStuff/moderators/isModerator";
 
 import { ApiAuth } from "@/types";
 
@@ -52,8 +52,9 @@ export async function DELETE(req: NextRequest) {
     };
 
     const rooms = await getOwnership(authStatus["userId"]);
+    const isAModerator: boolean = await isModerator(authStatus["userId"], roomId, authStatus["userId"]);
 
-    if (!rooms.includes(roomId)) {
+    if (!rooms.includes(roomId) || !isAModerator) {
         return NextResponse.json(
             {
                 "error": "You do not own that room"

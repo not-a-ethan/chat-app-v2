@@ -24,7 +24,8 @@ export async function getRoomInfo(roomId: number, userId: number): Promise<Datab
         return {
             "id": -1,
             "name": "",
-            "owner": -1
+            "owner": -1,
+            "moderators": ""
         };
     };
 

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-
 import { sql } from "@/app/database/db";
 import { getRoomInfo } from "@/helpers/roomStuff/roomInfo";
 import { apiAuthCheck } from "@/helpers/accountStuff/apiAuthCheck";
@@ -8,7 +7,7 @@ import { apiAuthCheck } from "@/helpers/accountStuff/apiAuthCheck";
 import { DatabaseRooms, ApiAuth } from "@/types";
 
 export async function PUT(req: NextRequest) {
-    const authStatus = await apiAuthCheck(req);
+    const authStatus: ApiAuth = await apiAuthCheck(req);
         
     if (!authStatus["auth"]) {
         return NextResponse.json(

@@ -21,6 +21,7 @@ CREATE TABLE "rooms" (
 	"id"	INTEGER NOT NULL UNIQUE,
 	"name"	TEXT NOT NULL,
 	"owner"	INTEGER NOT NULL,
+	"moderators" text NOT NULL,
 	PRIMARY KEY("id" AUTOINCREMENT)
 )
 ```

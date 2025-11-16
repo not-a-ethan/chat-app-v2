@@ -4,6 +4,7 @@ import { sql } from "@/app/database/db";
 import { getOwnership } from "@/helpers/roomStuff/roomOwnership";
 import { apiAuthCheck } from "@/helpers/accountStuff/apiAuthCheck";
 import { getRooms } from "@/helpers/roomStuff/getRooms";
+import { isModerator } from "@/helpers/roomStuff/moderators/isModerator";
 
 import { DatabaseMessages, ApiAuth } from "@/types";
 
@@ -46,12 +47,13 @@ export async function DELETE(req: NextRequest) {
         );
     };
     
-    const roomOwnership = await getOwnership(messageData["userid"]);
+    const roomOwnership: number[] = await getOwnership(messageData["userid"]);
+    const roomModerator: boolean = await isModerator(authStatus["userId"], messageData["roomid"], authStatus["userId"]);
 
-    if (messageData["userid"] != authStatus["userId"] || !roomOwnership.includes(messageData["roomid"])) {
+    if (messageData["userid"] != authStatus["userId"] || !roomOwnership.includes(messageData["roomid"]) || !roomModerator) {
         return NextResponse.json(
             {
-                "error": "You do not own that message nor are you the room owner."
+                "error": "You do not own that message nor are you the room owner nor are you a room moderator."
             },
             { status: 403 }
         );
