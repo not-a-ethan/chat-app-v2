@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { sql } from "@/app/database/db";
-import { getOwnership } from "@/helpers/roomStuff/roomOwnership";
+import { isOwner } from "@/helpers/roomStuff/moderators/isOwner";
 import { apiAuthCheck } from "@/helpers/accountStuff/apiAuthCheck";
 import { getRooms } from "@/helpers/roomStuff/getRooms";
 import { isModerator } from "@/helpers/roomStuff/moderators/isModerator";
@@ -47,10 +47,10 @@ export async function DELETE(req: NextRequest) {
         );
     };
     
-    const roomOwnership: number[] = await getOwnership(messageData["userid"]);
+    const owner: boolean = await isOwner(authStatus["userId"], authStatus["userId"], messageData["roomid"]);
     const roomModerator: boolean = await isModerator(authStatus["userId"], messageData["roomid"], authStatus["userId"]);
 
-    if (messageData["userid"] != authStatus["userId"] || !roomOwnership.includes(messageData["roomid"]) || !roomModerator) {
+    if (messageData["userid"] != authStatus["userId"] && !owner && !roomModerator) {
         return NextResponse.json(
             {
                 "error": "You do not own that message nor are you the room owner nor are you a room moderator."
@@ -71,7 +71,7 @@ export async function DELETE(req: NextRequest) {
     };
 
     try {
-        await sql`DELETE FROM messages WHERE userid=${authStatus["userId"]} AND roomid=${messageData["roomid"]} AND id=${messageId}`;
+        await sql`DELETE FROM messages WHERE userid=${messageData["userid"]} AND roomid=${messageData["roomid"]} AND id=${messageId}`;
     } catch (e) {
         console.error(e);
     

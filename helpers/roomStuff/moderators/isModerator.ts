@@ -4,7 +4,7 @@ import { getModerators } from "./getModerators";
 export async function isModerator(userId: number, roomId: number, requestingUser: number): Promise<boolean> {
     const rooms: string[] = await getRooms(requestingUser);
 
-    if (!rooms.includes(requestingUser.toString())) {
+    if (!rooms.includes(roomId.toString())) {
         return false;
     };
 

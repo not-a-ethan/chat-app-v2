@@ -49,8 +49,6 @@ Most recent changes:
 
 It will soon have the following features:
 
-- Accounts
-  - Change linked GH account
 - Misc
   - Home page
   - ~~Error handling for sql on backend~~
@@ -59,7 +57,7 @@ It will soon have the following features:
     - ~~API route (data validation and stuff)~~
   - Help Center thing
 
-Moderators and related features
+~~Moderators and related features~~
 
 ___
 
