@@ -18,29 +18,48 @@ export function SendMessage(props: any) {
             return;
         };
 
-        const sendMessagePromise = fetch("/api/message", {
+        let error: boolean = false;
+
+        fetch("/api/message", {
             method: "POST",
             body: JSON.stringify({
                 "content": `${content}`,
                 "roomId": `${roomId}`
             })
-        }).catch(e => {
+        })
+        .then(res => {
+            if (res.status !== 200) {
+                error = true;
+            };
+
+            res.json();
+        })
+        .then((json: any) => {
+            if (error) {
+                addToast({
+                    color: "danger",
+                    title: "Could not send message",
+                    description: json["error"]
+                });
+            } else {
+                const input: any|null = document.getElementById("input");
+
+                if (input == null || !input) {
+                    return;
+                };
+                
+                input.value = "";
+            };
+        })
+        .catch(e => {
             console.error(e);
             
             addToast({
                 color: "danger",
-                title: "Somethign went wrong sending your message",
+                title: "Something went wrong sending your message",
                 description: "More info in developer console"
             });
         });
-
-        const input: any|null = document.getElementById("input");
-
-        if (input == null || !input) {
-            return;
-        };
-        
-        input.value = "";
     };
 
     return (

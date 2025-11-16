@@ -20,12 +20,30 @@ export function RemoveUser(props: any) {
 
         const userId = data["user"].toString();
 
+        let error: boolean = false;
+
         fetch(`../api/rooms/server/ownerActions/users`, {
             method: "DELETE",
             body: JSON.stringify({
                 "userId": userId,
                 "roomId": roomId
             })
+        })
+        .then(res => {
+            if (res.status !== 200) {
+                error = true;
+            };
+
+            res.json();
+        })
+        .then((json: any) => {
+            if (error) {
+                addToast({
+                    color: "danger",
+                    title: "Could not kick user",
+                    description: json["error"]
+                });
+            };
         })
         .catch(e => {
             console.error(e);

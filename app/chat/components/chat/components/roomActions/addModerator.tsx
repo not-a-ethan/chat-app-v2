@@ -21,6 +21,8 @@ export function AddMod(props: any) {
 
         const userId: number = Number(data["user"].toString());
 
+        let error: boolean = false;
+
         fetch("../api/rooms/server/moderators", {
             method: "PUT",
             body: JSON.stringify({
@@ -28,12 +30,27 @@ export function AddMod(props: any) {
                 "modId": Number(userId)
             })
         })
+        .then(res => {
+            if (res.status !== 200) {
+                error = true;
+            };
+
+            res.json();
+        })
+        .then((json: any) => {
+            if (error) {
+                addToast({
+                    color: "danger",
+                    title: "Could not promote user to mod"
+                });
+            };
+        })
         .catch(e => {
             console.error(e);
 
             addToast({
                 color: "danger",
-                title: "Something went wrong adding moderator",
+                title: "Something went wrong promoting user to mod",
                 description: "More info in developer console"
             });
         });

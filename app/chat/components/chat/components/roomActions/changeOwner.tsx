@@ -21,12 +21,30 @@ export function ChangeOwner(props: any) {
 
         const userId: number = Number(data["user"].toString());
 
+        let error: boolean = false;
+
         fetch(`../api/rooms/server/ownerActions`, {
             method: "POST",
             body: JSON.stringify({
                 "roomId": roomId,
                 "userId": userId
             })
+        })
+        .then(res => {
+            if (res.status !== 200) {
+                error = true;
+            };
+
+            res.json();
+        })
+        .then((json: any) => {
+            if (error) {
+                addToast({
+                    color: "danger",
+                    title: "Coiuld not change owner",
+                    description: json["error"]
+                });
+            };
         })
         .catch(e => {
             console.error(e);

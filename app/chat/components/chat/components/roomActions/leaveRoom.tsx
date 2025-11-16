@@ -22,11 +22,29 @@ export function LeaveRoom(props: any) {
             return;
         };
 
+        let error: boolean = false;
+
         fetch("../api/rooms/user", {
             method: "PUT",
             body: JSON.stringify({
                 "roomId": id
             })
+        })
+        .then(res => {
+            if (res.status !== 200) {
+                error = true;
+            };
+
+            res.json();
+        })
+        .then((json: any) => {
+            if (error) {
+                addToast({
+                    color: "danger",
+                    title: "Could not leave room",
+                    description: json["error"]
+                });
+            };
         })
         .catch(e => {
             console.error(e);

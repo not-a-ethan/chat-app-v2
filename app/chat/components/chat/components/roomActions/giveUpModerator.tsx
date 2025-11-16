@@ -13,11 +13,29 @@ export function GiveUpMod(props: any) {
     function handleSubmit(e: any) {
         e.preventDefault();
 
+        let error: boolean = false;
+
         fetch("../api/rooms/server/moderators", {
             method: "DELETE",
             body: JSON.stringify({
                 "roomId": Number(roomId),
             })
+        })
+        .then(res => {
+            if (res.status !== 200) {
+                error = true;
+            };
+
+            res.json();
+        })
+        .then((json: any) => {
+            if (error) {
+                addToast({
+                    color: "danger",
+                    title: "Could not remove you as mod",
+                    description: json["error"]
+                });
+            };
         })
         .catch(e => {
             console.error(e);

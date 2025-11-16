@@ -24,11 +24,29 @@ export function DeleteButton(props: any) {
             return;
         };
 
+        let error: boolean = false;
+
         fetch("../api/message", {
             method: "DELETE",
             body: JSON.stringify({
                 "messageId": id
             })
+        })
+        .then(res => {
+            if (res.status !== 200) {
+                error = true;
+            };
+
+            res.json();
+        })
+        .then((json: any) => {
+            if (error) {
+                addToast({
+                    color: "danger",
+                    title: "Could not delete message",
+                    description: json["error"]
+                });
+            };
         })
         .catch(e => {
             console.error(e);

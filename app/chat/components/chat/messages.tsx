@@ -52,12 +52,30 @@ export function Message(props: any) {
         const type: number = Number(info[0]);
         const messageId: number = Number(info[1]);
 
+        let error: boolean = false;
+
         fetch(`../api/message/reactions`, {
             method: "PUT",
             body: JSON.stringify({
                 messageId: messageId,
                 reaction: type
             })
+        })
+        .then(res => {
+            if (res.status !== 200) {
+                error = true;
+            };
+
+            res.json();
+        })
+        .then ((json: any) => {
+            if (error) {
+                addToast({
+                    color: "danger",
+                    title: "Could not react to message",
+                    description: json["error"]
+                });
+            };
         })
         .catch(e => {
             console.error(e);
@@ -116,13 +134,27 @@ export function Message(props: any) {
     };
 
     function updateMessages() {
+        let error: boolean = false;
+
         fetch(`../api/message?roomId=${roomId}`)
-        .then(res => res.json())
-        .then(json => {
+        .then(res => {
+            if (res.status !== 200) {
+                error = true;
+            };
+
+            res.json();
+        })
+        .then((json: any) => {
             users = json["users"];
             messages = json["messages"];
+
+            addToast({
+                color: "danger",
+                title: "Could not get new messages",
+                description: json["error"]
+            });
         })
-        .catch((e) => {
+        .catch(e => {
             console.error(e);
             
             addToast({

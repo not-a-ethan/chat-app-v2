@@ -22,15 +22,33 @@ export function ChangePfp() {
             // Data URI
             const image = e.target?.result;
             
+            let error: boolean = false;
+
             fetch("../api/account/pfp", {
                 method: "PUT",
                 body: JSON.stringify({
                     "pfp": image
                 })
-            }).catch(e => {
+            })
+            .then(res => {
+                if (res.status !== 200) {
+                    error = true;
+                };
+                res.json();
+            })
+            .then((json: any) => {
+                if (error) {
+                    addToast({
+                        color: "danger",
+                        title: "Could not change pfp",
+                        description: json["error"]
+                    });
+                };
+            })
+            .catch(e => {
                 addToast({
                     color: "danger",
-                    title: "Something went wrong changeing your pfp",
+                    title: "Something went wrong changing your pfp",
                     description: "More info in developer console"
                 })
             });
@@ -44,9 +62,28 @@ export function ChangePfp() {
             return;
         }
         
+        let error: boolean = false;
+
         fetch("../api/account/pfp", {
             method: "DELETE"
-        }).catch(e => {
+        })
+        .then(res => {
+            if (res.status !== 200) {
+                error = true;
+            };
+
+            res.json();
+        })
+        .then((json: any) => {
+            if (error) {
+                addToast({
+                    color: "danger",
+                    title: "Could not delete pfp",
+                    description: json["error"]
+                });
+            };
+        })
+        .catch(e => {
             console.error(e);
 
             addToast({

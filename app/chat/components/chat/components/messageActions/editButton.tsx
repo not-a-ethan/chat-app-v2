@@ -40,12 +40,30 @@ export function EditButton(props: any) {
             return;
         };
 
+        let error: boolean = false;
+
         fetch("../api/message", {
             method: "PUT",
             body: JSON.stringify({
                 "id": thisMessageId,
                 "newContent": data["newContent"]
             })
+        })
+        .then(res => {
+            if (res.status !== 200) {
+                error = true;
+            };
+
+            res.json();
+        })
+        .then((json: any) => {
+            if (error) {
+                addToast({
+                    color: "danger",
+                    title: "Could not edit message",
+                    description: json["error"]
+                });
+            };
         })
         .catch(e => {
             console.error(e);

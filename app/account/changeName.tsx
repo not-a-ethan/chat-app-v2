@@ -21,12 +21,30 @@ export function ChangeName() {
             return;
         };
 
+        let error: boolean = false;
+
         fetch("../api/account/name", {
             method: "PUT",
             body: JSON.stringify({
                 "name": newName
             })
-        }).catch(e => {
+        })
+        .then(res => {
+            if(res.status != 200) {
+                error = true;
+            };
+            res.json();
+        })
+        .then((json: any) => {
+            if (error) {
+                addToast({
+                    color: "danger",
+                    title: "Could not change name",
+                    description: json["error"]
+                });
+            };
+        })
+        .catch(e => {
             console.error(e);
 
             addToast({

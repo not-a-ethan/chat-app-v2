@@ -18,12 +18,28 @@ export function RenameRoom(props: any) {
         const formData = Object.fromEntries(new FormData(e.currentTarget));
         const newName: string = formData["newName"].toString();
 
+        let error: boolean = false;
+        
         fetch(`../api/rooms/server/owner`, {
             method: "PUT",
             body: JSON.stringify({
                 "id": roomId,
                 "newName": newName
             })
+        })
+        .then(res => {
+            if (res.status !== 200) {
+                error = true;
+            };
+        })
+        .then((json: any) => {
+            if (error) {
+                addToast({
+                    color: "danger",
+                    title: "Could not rename room",
+                    description: json["error"]
+                });
+            };
         })
         .catch(e => {
             console.error(e);

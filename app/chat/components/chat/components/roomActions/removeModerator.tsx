@@ -21,12 +21,30 @@ export function RemoveMod(props: any) {
 
         const userId: number = Number(data["user"].toString());
 
+        let error: boolean = false;
+        
         fetch("../api/rooms/server/moderators", {
             method: "DELETE",
             body: JSON.stringify({
                 "roomId": Number(roomId),
                 "modId": Number(userId)
             })
+        })
+        .then(res => {
+            if (res.status !== 200) {
+                error = true;
+            };
+
+            res.json();
+        })
+        .then((json: any) => {
+            if (error) {
+                addToast({
+                    color: "danger",
+                    title: "Could not demote mod",
+                    description: json["error"]
+                });
+            };
         })
         .catch(e => {
             console.error(e);

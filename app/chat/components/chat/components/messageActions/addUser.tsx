@@ -16,12 +16,28 @@ export function AddMember(props: any) {
 
         const username: string = data["username"].toString();
 
+        let error: boolean = false;
+
         fetch("../api/rooms/server", {
             method: "PUT",
             body: JSON.stringify({
                 "room": roomID,
                 "username": username
             })
+        })
+        .then(res => {
+            if (res.status !== 200) {
+                error = true;
+            };
+        })
+        .then((json: any) => {
+            if (error) {
+                addToast({
+                    color: "danger",
+                    title: "Could not add user to room",
+                    description: json["error"]
+                });
+            };
         })
         .catch(e => {
             console.error(e);
