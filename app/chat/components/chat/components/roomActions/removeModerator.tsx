@@ -59,7 +59,7 @@ export function RemoveMod(props: any) {
                                         ))}
                                     </Select>
 
-                                    <Button color="warning" onPress={onclose}>Demote moderator</Button>
+                                    <Button color="warning" type="submit" onPress={onclose}>Demote moderator</Button>
                                 </Form>
                             </ModalBody>
                         </>

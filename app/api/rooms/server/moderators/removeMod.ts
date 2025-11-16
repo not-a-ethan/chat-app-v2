@@ -34,7 +34,7 @@ export async function DELETE(req: NextRequest) {
         );
     };
 
-    if (!modsId || Number.isNaN(modsId)) {
+    if ((!modsId || Number.isNaN(modsId)) && modsId != undefined) {
         return NextResponse.json(
             {
                 "error": "You need a valid mod id"
@@ -53,9 +53,30 @@ export async function DELETE(req: NextRequest) {
     };
 
     if (await isOwner(authStatus["userId"], authStatus["userId"], roomId)) {
-        // Nothing happens
-    } else if ((await isModerator(modsId, roomId, authStatus["userId"])) && modsId == authStatus["userId"]) {
-        // Nothing happens
+        // Nothing happens as user is already the owner
+    } else if ((await isModerator(modsId, roomId, authStatus["userId"]) && modsId == authStatus["userId"]) || modsId == undefined) {
+        // Mod will remove their own moderator
+
+        const modList: string[] = await getModerators(roomId, authStatus["userId"]);
+        modList.splice(modList.indexOf(authStatus["userId"].toString()), 1);
+        
+        try {
+            await sql`UPDATE rooms SET moderators=${modList} WHERE id=${roomId};`;
+        } catch (e) {
+            console.error(e);
+
+            return NextResponse.json(
+                {
+                    "error": "Something went wrong updating mods"
+                },
+                { status: 500 }
+            );
+        };
+
+        return NextResponse.json(
+            {},
+            { status: 200 }
+        );
     } else if ((await isModerator(modsId, roomId, authStatus["userId"])) && modsId != authStatus["userId"]) {
         return NextResponse.json(
             {
@@ -74,7 +95,7 @@ export async function DELETE(req: NextRequest) {
 
     const modRooms: string[] = await getRooms(modsId);
 
-    if (!modRooms.includes(modsId.toString())) {
+    if (!modRooms.includes(roomId.toString())) {
         return NextResponse.json(
             {
                 "error": "User is not in the room"
@@ -84,10 +105,10 @@ export async function DELETE(req: NextRequest) {
     };
 
     const modList: string[] = await getModerators(roomId, authStatus["userId"]);
-    const newModList: string[] = modList.splice(modList.indexOf(modsId.toString()), 1);
+    modList.splice(modList.indexOf(modsId.toString()), 1);
 
     try {
-        await sql`UPDATE rooms SET moderators=${newModList} WHERE roomid=${roomId};`;
+        await sql`UPDATE rooms SET moderators=${modList.join(",")} WHERE id=${roomId};`;
     } catch (e) {
         console.error(e);
 

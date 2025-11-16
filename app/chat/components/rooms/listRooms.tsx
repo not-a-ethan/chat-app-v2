@@ -42,7 +42,7 @@ export function ListRooms(props: any) {
 
     const rooms: DatabaseRooms[] = json["rooms"];
     const ownershipRooms = json["owner"];
-    const moderatorRooms = json["mods"];
+    const moderatorRooms: string[] = json["mod"];
 
     if (!rooms || rooms.length === 0) {
         // Cant display rooms that do not exist
@@ -59,7 +59,7 @@ export function ListRooms(props: any) {
         if (ownershipRooms.includes(Number(id))) {
             setRoomOwner(true);
             setRoomMod(true);
-        } else if (moderatorRooms.includes(Number(id))) {
+        } else if (moderatorRooms.includes(id.toString())) {
             setRoomOwner(false);
             setRoomMod(true);
         } else {

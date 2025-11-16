@@ -4,6 +4,7 @@ import { sql } from "@/app/database/db";
 import { apiAuthCheck } from "@/helpers/accountStuff/apiAuthCheck";
 
 import { DatabaseUsers, ApiAuth } from "@/types";
+import { getModerators } from "@/helpers/roomStuff/moderators/getModerators";
 
 export async function GET(req: NextRequest) {
     const authStatus: ApiAuth = await apiAuthCheck(req);
@@ -96,10 +97,20 @@ export async function GET(req: NextRequest) {
     const active = peopleInRoom.filter((user: DatabaseUsers) => user.lastactivity >= (now - 300));
     const other = peopleInRoom.filter((user: DatabaseUsers) => user.lastactivity < (now - 300));
 
+    const modIds: string[] = await getModerators(Number(roomId), authStatus["userId"]);
+    const mods: DatabaseUsers[] = [];
+
+    for (let i = 0; i < modIds.length; i++) {
+        const thisMod: DatabaseUsers = await (await sql`SELECT * FROM users WHERE githubid=${modIds[i]}`)[0];
+
+        mods.push(thisMod);
+    };
+
     return NextResponse.json(
         {
             "active": active,
-            "other": other
+            "other": other,
+            "mods": mods
         },
         { status: 200 }
     );

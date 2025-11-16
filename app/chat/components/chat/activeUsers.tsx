@@ -12,6 +12,10 @@ import { AddMember } from "./components/messageActions/addUser";
 import { RemoveUser } from "./components/roomActions/removeUser";
 import { ChangeOwner } from "./components/roomActions/changeOwner";
 
+import { AddMod } from "./components/roomActions/addModerator";
+import { RemoveMod } from "./components/roomActions/removeModerator";
+import { GiveUpMod } from "./components/roomActions/giveUpModerator";
+
 import { DatabaseUsers } from "@/types";
 
 export function ActiveUsers(props: any) {
@@ -50,6 +54,7 @@ export function ActiveUsers(props: any) {
 
     const active: DatabaseUsers[] = json["active"];
     const other: DatabaseUsers[] = json["other"];
+    const mods: DatabaseUsers[] = json["mods"];
 
     return (
         <section>
@@ -83,7 +88,7 @@ export function ActiveUsers(props: any) {
                 )}
 
                 <ListboxSection title="Actions">
-                    {!owners || !roomMod ? (
+                    {!owners && !roomMod ? (
                         <>
                             <ListboxItem textValue="">
                                 <LeaveRoom room={roomID} />
@@ -102,15 +107,35 @@ export function ActiveUsers(props: any) {
                             </ListboxItem>
 
                             <ListboxItem textValue="">
+                                <RemoveUser roomId={roomID} people={active.concat(other)} />
+                            </ListboxItem>
+                        </>
+                    ) : <></>}
+
+                    {owners ? (
+                        <>
+                            <ListboxItem textValue="">
+                                <AddMod roomId={roomID} people={active.concat(other)} />
+                            </ListboxItem>
+
+                            <ListboxItem textValue="">
+                                <RemoveMod roomId={roomID} people={mods} />
+                            </ListboxItem>
+
+                            <ListboxItem textValue="">
                                 <DeleteRoom roomId={roomID} />
                             </ListboxItem>
 
                             <ListboxItem textValue="">
-                                <RemoveUser roomId={roomID} people={active.concat(other)} />
-                            </ListboxItem>
-
-                            <ListboxItem textValue="">
                                 <ChangeOwner roomId={roomID} people={active.concat(other)} />
+                            </ListboxItem>
+                        </>
+                    ) : <></>}
+
+                    {!owners && roomMod ? (
+                        <>
+                            <ListboxItem textValue="">
+                                <GiveUpMod roomId={roomID} />
                             </ListboxItem>
                         </>
                     ) : <></>}

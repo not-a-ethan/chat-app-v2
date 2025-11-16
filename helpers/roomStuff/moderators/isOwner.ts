@@ -9,7 +9,7 @@ export async function isOwner(userId: number, requestingUserId: number, roomId: 
         return false;
     };
 
-    const roomInfo: DatabaseRooms = await (await sql`SELECT * FROM rooms WHERE roomid=${roomId};`)[0];
+    const roomInfo: DatabaseRooms = await (await sql`SELECT * FROM rooms WHERE id=${roomId};`)[0];
 
     if (roomInfo["owner"] == userId) {
         return true;

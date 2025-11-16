@@ -7,7 +7,6 @@ import { apiAuthCheck } from "@/helpers/accountStuff/apiAuthCheck";
 import { getRooms } from "@/helpers/roomStuff/getRooms";
 
 import { ApiAuth } from "@/types";
-import { getModerators } from "@/helpers/roomStuff/moderators/getModerators";
 import { getModRooms } from "@/helpers/roomStuff/moderators/getModRooms";
 
 export async function GET(req: NextRequest) {

@@ -7,7 +7,6 @@ import { addToast } from "@heroui/toast";
 
 export function GiveUpMod(props: any) {
     const roomId = props.roomId;
-    const userId = props.userId
     
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -18,7 +17,6 @@ export function GiveUpMod(props: any) {
             method: "DELETE",
             body: JSON.stringify({
                 "roomId": Number(roomId),
-                "modId": Number(userId)
             })
         })
         .catch(e => {
@@ -48,7 +46,7 @@ export function GiveUpMod(props: any) {
                             <p>You will not be able to regain your moderation ablities unless the owner promotes you again.</p>
 
                             <Form onSubmit={handleSubmit}>
-                                <Button color="danger" onPress={onclose}>Give up your ablility to moderate</Button>
+                                <Button color="danger" type="submit" onPress={onclose}>Give up your ablility to moderate</Button>
                             </Form>
                         </ModalBody>
                     </>

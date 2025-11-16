@@ -62,7 +62,7 @@ export async function PUT(req: NextRequest) {
 
     const modRooms: string[] = await getRooms(modsId);
 
-    if (!modRooms.includes(modsId.toString())) {
+    if (!modRooms.includes(roomId.toString())) {
         return NextResponse.json(
             {
                 "error": "Mod is not in that room"
@@ -85,7 +85,7 @@ export async function PUT(req: NextRequest) {
     const newMods: string[] = roomMods.concat(modsId.toString());
 
     try {
-        await sql`UPDATE rooms SET moderators=${newMods} WHERE roomid=${roomId};`;
+        await sql`UPDATE rooms SET moderators=${newMods} WHERE id=${roomId};`;
     } catch (e) {
         console.error(e);
 

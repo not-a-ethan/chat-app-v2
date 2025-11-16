@@ -10,7 +10,7 @@ export async function getModerators(roomId: number, userId: number): Promise<str
         return [];
     };
 
-    const roomData: DatabaseRooms = await (await sql`SELECT * FROM rooms WHERE roomid=${roomId};`)[0];
+    const roomData: DatabaseRooms = await (await sql`SELECT * FROM rooms WHERE id=${roomId};`)[0];
     const mods: string[] = roomData["moderators"].split(",");
 
     return mods;

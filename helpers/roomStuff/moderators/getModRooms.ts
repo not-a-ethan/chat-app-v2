@@ -3,7 +3,7 @@ import { DatabaseRooms } from "@/types";
 
 export async function getModRooms(userId: number): Promise<string[]> {
     try {
-        const roomsData: DatabaseRooms[] = await sql`SELECT * FROM rooms WHERE moderators LIKE ${`&${userId}%`};`;
+        const roomsData: DatabaseRooms[] = await sql`SELECT * FROM rooms WHERE moderators LIKE ${`%${userId}%`};`;
 
         const modRooms: string[] = [];
 
