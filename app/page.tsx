@@ -109,6 +109,8 @@ pgPort=<postgresql port>`;
           <code>{envFile}</code>
         </div>
       </ul>
+
+      <p>Some API docs are located in the <Link href="https://github.com/not-a-ethan/chat-app-v2/tree/main/docs"><code>/docs</code></Link> folder. They are not complete and are still a work in progress.</p>
     </main>
   );
 };

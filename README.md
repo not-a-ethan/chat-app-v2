@@ -91,3 +91,5 @@ pgName=<postgresql database name>
 pgPassword=<postgresql password>
 pgPort=<postgresql port>
 ```
+
+Some API docs are located in the `/docs` folder. They are not complete and are still a work in progress.

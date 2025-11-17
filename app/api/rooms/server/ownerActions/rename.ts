@@ -34,7 +34,7 @@ export async function PUT(req: NextRequest) {
     if (!newName || newName.trim().length == 0) {
         return NextResponse.json(
             {
-                "error": "You need a valud room name"
+                "error": "You need a valid room name"
             },
             { status: 400 }
         );
