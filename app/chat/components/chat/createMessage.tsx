@@ -38,7 +38,7 @@ export function SendMessage(props: any) {
             if (error) {
                 addToast({
                     color: "danger",
-                    title: "Could not send message",
+                    title: "Could not send trasmission",
                     description: json["error"]
                 });
             } else {
@@ -56,7 +56,7 @@ export function SendMessage(props: any) {
             
             addToast({
                 color: "danger",
-                title: "Something went wrong sending your message",
+                title: "Something went wrong sending your trasmission",
                 description: "More info in developer console"
             });
         });

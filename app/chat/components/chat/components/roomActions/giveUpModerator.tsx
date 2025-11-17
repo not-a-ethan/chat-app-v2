@@ -32,7 +32,7 @@ export function GiveUpMod(props: any) {
             if (error) {
                 addToast({
                     color: "danger",
-                    title: "Could not remove you as mod",
+                    title: "Could not remove you as Space police",
                     description: json["error"]
                 });
             };
@@ -42,7 +42,7 @@ export function GiveUpMod(props: any) {
 
             addToast({
                 color: "danger",
-                title: "Something went wrong removing your moderator",
+                title: "Something went wrong removing your Space police",
                 description: "More info in developer console"
             });
         });
@@ -50,13 +50,13 @@ export function GiveUpMod(props: any) {
 
     return (
         <>
-          <Button color="danger" onPress={onOpen}>Give up moderator</Button>
+          <Button color="danger" onPress={onOpen}>Give up Space police</Button>
 
           <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
             <ModalContent>
                 {(onclose) => (
                     <>
-                        <ModalHeader>Give up moderator</ModalHeader>
+                        <ModalHeader>Give up Space police</ModalHeader>
 
                         <ModalBody>
                             <p>Give up your ability to moderate the room. This will let you leave the room</p>

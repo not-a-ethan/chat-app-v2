@@ -17,7 +17,7 @@ export function DeleteButton(props: any) {
         if (!id || id <= 0) {
             addToast({
                 title: "Something went wrong",
-                description: "Could not get message information",
+                description: "Could not get trasmission information",
                 color: "danger"
             });
 
@@ -43,7 +43,7 @@ export function DeleteButton(props: any) {
             if (error) {
                 addToast({
                     color: "danger",
-                    title: "Could not delete message",
+                    title: "Could not delete trasmission",
                     description: json["error"]
                 });
             };
@@ -53,7 +53,7 @@ export function DeleteButton(props: any) {
 
             addToast({
                 color: "danger",
-                title: "Something went wrong deleting message",
+                title: "Something went wrong deleting trasmission",
                 description: "More info in develoepr console"
             });
         });
@@ -69,7 +69,7 @@ export function DeleteButton(props: any) {
                 <ModalContent>
                     {(onclose) => (
                         <>
-                            <ModalHeader>Are you sure you want to delete the message?</ModalHeader>
+                            <ModalHeader>Are you sure you want to delete the trasmission?</ModalHeader>
 
                             <ModalBody>
                                 <Button color="danger" onPress={onclose} onPressStart={deleteMessage} id={messageId}>Yes I am sure I want to delete</Button>

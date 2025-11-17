@@ -46,7 +46,7 @@ export function ActiveUsers(props: any) {
         if (json !== true) {
             addToast({
                 color: "danger",
-                title: "Something went wrong geting active users",
+                title: "Something went wrong geting active Astronauts",
                 description: "More info in developer console"
             });
         };

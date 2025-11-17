@@ -34,7 +34,7 @@ export function DeleteRoom(props: any) {
             if (error) {
                 addToast({
                     color: "danger",
-                    title: "Could not delete room",
+                    title: "Could not delete Spaceship",
                     description: json["error"]
                 });
             };
@@ -44,7 +44,7 @@ export function DeleteRoom(props: any) {
 
             addToast({
                 color: "danger",
-                title: "Something went wrong deleting room",
+                title: "Something went wrong deleting Spaceship",
                 description: "More info in developer console"
             });
         });
@@ -63,7 +63,7 @@ export function DeleteRoom(props: any) {
                             <ModalBody>
                                 <Form onSubmit={handleSubmit}>
                                     <Button color="danger" type="submit" onPress={onclose}>
-                                        Are you absoluty sure you want to delete this room?<br />THIS CAN NOT BE UNDONE
+                                        Are you absoluty sure you want to delete this Spaceship?<br />THIS CAN NOT BE UNDONE
                                     </Button>
                                 </Form>
                             </ModalBody>

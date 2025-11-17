@@ -24,7 +24,7 @@ export function EditButton(props: any) {
         if (!thisMessageId || thisMessageId <= 0)  {
             addToast({
                 title: "Something went wrong",
-                description: "Could not get message information",
+                description: "Could not get trasmission information",
                 color: "danger"
             });
 
@@ -33,7 +33,7 @@ export function EditButton(props: any) {
 
         if (data["newContent"] === content) {
             addToast({
-                title: "You cant edit a message to be the same thing",
+                title: "You cant edit a trasmission to be the same thing",
                 color: "warning"
             });
 
@@ -60,7 +60,7 @@ export function EditButton(props: any) {
             if (error) {
                 addToast({
                     color: "danger",
-                    title: "Could not edit message",
+                    title: "Could not edit trasmission",
                     description: json["error"]
                 });
             };
@@ -70,7 +70,7 @@ export function EditButton(props: any) {
 
             addToast({
                 color: "danger",
-                title: "Something went wrong editing message",
+                title: "Something went wrong editing trasmission",
                 description: "More info in developer console"
             });
         });
@@ -86,13 +86,13 @@ export function EditButton(props: any) {
                 <ModalContent>
                     {(onclose) => (
                         <>
-                            <ModalHeader>Edit message</ModalHeader>
+                            <ModalHeader>Edit trasmission</ModalHeader>
 
                             <ModalBody>
                                 <Form onSubmit={editMessage} id={messageId}>
                                     <Input type="text" defaultValue={content} name="newContent" />
 
-                                    <Button onPress={onclose} type="submit">Edit message</Button>
+                                    <Button onPress={onclose} type="submit">Edit trasmission</Button>
                                 </Form>
                             </ModalBody>
                         </>

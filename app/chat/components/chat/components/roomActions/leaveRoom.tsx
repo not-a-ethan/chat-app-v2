@@ -15,7 +15,7 @@ export function LeaveRoom(props: any) {
         if (!id || id <= 0) {
             addToast({
                 title: "Something went wrong",
-                description: "Could not get room info",
+                description: "Could not get `Spaceship` info",
                 color: "danger"
             });
 
@@ -41,7 +41,7 @@ export function LeaveRoom(props: any) {
             if (error) {
                 addToast({
                     color: "danger",
-                    title: "Could not leave room",
+                    title: "Could not leave `Spaceship`",
                     description: json["error"]
                 });
             };
@@ -51,7 +51,7 @@ export function LeaveRoom(props: any) {
 
             addToast({
                 color: "danger",
-                title: "Something went wrong leaving room",
+                title: "Something went wrong leaving `Spaceship`",
                 description: "More info in developer console"
             });
         });
@@ -68,7 +68,7 @@ export function LeaveRoom(props: any) {
                             <ModalHeader>Are you sure you want to leave?</ModalHeader>
 
                             <ModalBody>
-                                <h2>You can not rejoin the room unless somebody adds you back</h2>
+                                <h2>You can not rejoin the `Spaceship` unless somebody adds you back</h2>
                                 
                                 <Button onPressStart={onclose} onPress={leave} color="danger" id={roomId}>Yes I am sure I want to leave</Button>
                             </ModalBody>

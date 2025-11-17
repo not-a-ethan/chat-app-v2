@@ -72,7 +72,7 @@ export function Message(props: any) {
             if (error) {
                 addToast({
                     color: "danger",
-                    title: "Could not react to message",
+                    title: "Could not react to trasmission",
                     description: json["error"]
                 });
             };
@@ -82,7 +82,7 @@ export function Message(props: any) {
 
             addToast({
                 color: "danger",
-                title: "Something went wrong reacting to message",
+                title: "Something went wrong reacting to trasmission",
                 description: "More info in developer console"
             });
         });
@@ -101,7 +101,7 @@ export function Message(props: any) {
         console.error(jsonError);
         addToast({
             color: "danger",
-            title: "Something went wrong getting the messages",
+            title: "Something went wrong getting the trasmissions",
             description: "More info in developer console"
         });
 
@@ -128,7 +128,7 @@ export function Message(props: any) {
     if (messages.length === 0) {
         return (
             <>
-                <p>There are no messages as of now, how about you start the converatation?</p>
+                <p>There are no trasmissions as of now, how about you start the converatation?</p>
             </>
         );
     };
@@ -151,7 +151,7 @@ export function Message(props: any) {
             if (error) {
                 addToast({
                     color: "danger",
-                    title: "Could not get new messages",
+                    title: "Could not get new trasmissions",
                     description: json["error"]
                 });
             }
@@ -161,7 +161,7 @@ export function Message(props: any) {
             
             addToast({
                 title: "Something went wrong",
-                description: "Something went wrong getting new messages. More info in developer console",
+                description: "Something went wrong getting new trasmissions. More info in developer console",
                 color: "danger"
             });
         });

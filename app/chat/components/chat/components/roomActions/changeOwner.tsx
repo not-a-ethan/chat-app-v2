@@ -41,7 +41,7 @@ export function ChangeOwner(props: any) {
             if (error) {
                 addToast({
                     color: "danger",
-                    title: "Coiuld not change owner",
+                    title: "Coiuld not change Space General",
                     description: json["error"]
                 });
             };
@@ -51,7 +51,7 @@ export function ChangeOwner(props: any) {
 
             addToast({
                 color: "danger",
-                title: "Something went wrong changing owner",
+                title: "Something went wrong changing Space General",
                 description: "More info in developer console"
             });
         });
@@ -65,10 +65,10 @@ export function ChangeOwner(props: any) {
                 <ModalContent>
                     {(onclose) => (
                         <>
-                            <ModalHeader>Change Room Owner</ModalHeader>
+                            <ModalHeader>Change Room Space General</ModalHeader>
 
                             <ModalBody>
-                                <p>This will change who owns the room. You will still be in the room unless you leave or the new owner kicks you</p>
+                                <p>This will change who owns the room. You will still be in the room unless you leave or the new Space General kicks you</p>
 
                                 <Form onSubmit={handleSubmit}>
                                     <Select name="user" label="User to give ownership">
@@ -77,7 +77,7 @@ export function ChangeOwner(props: any) {
                                         ))}
                                     </Select>
 
-                                    <Button color="danger" onPress={onclose} type="submit">Change Owner</Button>
+                                    <Button color="danger" onPress={onclose} type="submit">Change Space General</Button>
                                 </Form>
                             </ModalBody>
                         </>

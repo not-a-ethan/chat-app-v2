@@ -41,7 +41,7 @@ export function AddMod(props: any) {
             if (error) {
                 addToast({
                     color: "danger",
-                    title: "Could not promote user to mod"
+                    title: "Could not promote user to Space police"
                 });
             };
         })
@@ -50,7 +50,7 @@ export function AddMod(props: any) {
 
             addToast({
                 color: "danger",
-                title: "Something went wrong promoting user to mod",
+                title: "Something went wrong promoting user to Space police",
                 description: "More info in developer console"
             });
         });
@@ -70,13 +70,13 @@ export function AddMod(props: any) {
                                 <p>Add moderator. They will have the power the delete any message and kick members</p>
 
                                 <Form onSubmit={handleSubmit}>
-                                    <Select name="user" label="User to be promoted to moderator">
+                                    <Select name="user" label="User to be promoted to Space police">
                                         {people.map((person: DatabaseUsers) => (
                                             <SelectItem key={person.githubid}>{person.name}</SelectItem>
                                         ))}
                                     </Select>
 
-                                    <Button color="warning" onPress={onclose} type="submit">Promote to moderator</Button>
+                                    <Button color="warning" onPress={onclose} type="submit">Promote to Space police</Button>
                                 </Form>
                             </ModalBody>
                         </>

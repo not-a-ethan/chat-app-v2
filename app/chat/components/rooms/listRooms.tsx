@@ -28,7 +28,7 @@ export function ListRooms(props: any) {
 
         addToast({
             color: "danger",
-            title: "Some went wrong getting your rooms",
+            title: "Some went wrong getting your Spaceships",
             description: "More info in the developer console"
         });
 

@@ -41,7 +41,7 @@ export function RemoveMod(props: any) {
             if (error) {
                 addToast({
                     color: "danger",
-                    title: "Could not demote mod",
+                    title: "Could not demote Space police",
                     description: json["error"]
                 });
             };
@@ -51,7 +51,7 @@ export function RemoveMod(props: any) {
 
             addToast({
                 color: "danger",
-                title: "Something went wrong removing moderator",
+                title: "Something went wrong removing Space police",
                 description: "More info in developer console"
             });
         });
@@ -65,19 +65,19 @@ export function RemoveMod(props: any) {
                 <ModalContent>
                     {(onclose) => (
                         <>
-                            <ModalHeader>Demote Moderator</ModalHeader>
+                            <ModalHeader>Demote Space police</ModalHeader>
 
                             <ModalBody>
-                                <p>Removing a moderator will remove their moderation abilities, but they will still be a member of the room. You can always add their moderation abilities back at a later date</p>
+                                <p>Removing a Space police will remove their moderation abilities, but they will still be a member of the room. You can always add their moderation abilities back at a later date</p>
 
                                 <Form onSubmit={handleSubmit}>
-                                    <Select name="user" label="User to demoted from moderator">
+                                    <Select name="user" label="User to demoted from Space police">
                                         {mods.map((person: DatabaseUsers) => (
                                             <SelectItem key={person.githubid}>{person.name}</SelectItem>
                                         ))}
                                     </Select>
 
-                                    <Button color="warning" type="submit" onPress={onclose}>Demote moderator</Button>
+                                    <Button color="warning" type="submit" onPress={onclose}>Demote Space police</Button>
                                 </Form>
                             </ModalBody>
                         </>

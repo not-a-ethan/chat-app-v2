@@ -36,7 +36,7 @@ export function AddMember(props: any) {
             if (error) {
                 addToast({
                     color: "danger",
-                    title: "Could not add user to room",
+                    title: "Could not add Astronaut to room",
                     description: json["error"]
                 });
             };
@@ -46,7 +46,7 @@ export function AddMember(props: any) {
 
             addToast({
                 color: "danger",
-                title: "Something went wrong adding user to room",
+                title: "Something went wrong adding Astronaut to room",
                 description: "More info in developer console"
             });
         });
@@ -54,7 +54,7 @@ export function AddMember(props: any) {
 
     return (
         <>
-            <Button onPress={onOpen}>Add Member</Button>
+            <Button onPress={onOpen}>Add Astronaut</Button>
 
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
@@ -68,7 +68,7 @@ export function AddMember(props: any) {
                                 <Form onSubmit={addUser}>
                                     <Input label="Username" name="username" />
 
-                                    <Button onPress={onclose} type="submit">Add User</Button>
+                                    <Button onPress={onclose} type="submit">Add Astronaut</Button>
                                 </Form>
                             </ModalBody>
                         </>

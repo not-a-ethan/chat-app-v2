@@ -40,7 +40,7 @@ export function RemoveUser(props: any) {
             if (error) {
                 addToast({
                     color: "danger",
-                    title: "Could not kick user",
+                    title: "Could not kick Astronaut",
                     description: json["error"]
                 });
             };
@@ -50,7 +50,7 @@ export function RemoveUser(props: any) {
 
             addToast({
                 color: "danger",
-                title: "Something went wrong kicking user",
+                title: "Something went wrong kicking Astronaut",
                 description: "More info in developer console"
             });
         });
@@ -58,16 +58,16 @@ export function RemoveUser(props: any) {
 
     return (
         <>
-            <Button onPress={onOpen} color="danger">Remove user</Button>
+            <Button onPress={onOpen} color="danger">Remove Astronaut</Button>
 
               <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onclose) => (
                         <>
-                            <ModalHeader>Remove User</ModalHeader>
+                            <ModalHeader>Remove Astronaut</ModalHeader>
 
                             <ModalBody>
-                                <p>This will kick a user from the room</p>
+                                <p>This will kick a Astronaut from the room</p>
 
                                 <Form onSubmit={handleSubmit}>
                                     <Select name="user" label="User to kick">
@@ -76,7 +76,7 @@ export function RemoveUser(props: any) {
                                         ))}
                                     </Select>
 
-                                    <Button color="danger" onPress={onclose} type="submit">Remove User</Button>
+                                    <Button color="danger" onPress={onclose} type="submit">Remove Astronaut</Button>
                                 </Form>
                             </ModalBody>
                         </>

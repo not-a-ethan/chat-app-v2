@@ -17,8 +17,8 @@ export function CreateRoom() {
         if (roomName.trim().length === 0) {
             addToast({
                 color: "danger",
-                title: "All rooms need a title",
-                description: "Try creating a room with a name this time. Rooms have feeling too ya know"
+                title: "All Spaceships need a title",
+                description: "Try creating a Spaceship with a name this time. Rooms have feeling too ya know"
             });
             return;
         };
@@ -36,19 +36,19 @@ export function CreateRoom() {
 
     return (
         <>
-            <Button onPress={onOpen}>Create Room</Button>
+            <Button onPress={onOpen}>Create Spaceship</Button>
 
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onclose => (
                         <>
-                            <ModalHeader>New Room</ModalHeader>
+                            <ModalHeader>New Spaceship</ModalHeader>
 
                             <ModalBody>
                                 <Form onSubmit={apiNewRoom}>
                                     <Input type="text" label="Room name" name="roomName" />
 
-                                    <Button onPress={onclose} type="submit">Create room</Button>
+                                    <Button onPress={onclose} type="submit">Create Spaceship</Button>
                                 </Form>
                             </ModalBody>
                         </>

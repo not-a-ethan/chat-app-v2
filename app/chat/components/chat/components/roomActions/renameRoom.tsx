@@ -36,7 +36,7 @@ export function RenameRoom(props: any) {
             if (error) {
                 addToast({
                     color: "danger",
-                    title: "Could not rename room",
+                    title: "Could not rename `Spaceship`",
                     description: json["error"]
                 });
             };
@@ -46,7 +46,7 @@ export function RenameRoom(props: any) {
 
             addToast({
                 color: "danger",
-                title: "Something went wrong renaming room",
+                title: "Something went wrong renaming `Spaceship`",
                 description: "More info in developer console"
             });
         });
@@ -54,13 +54,13 @@ export function RenameRoom(props: any) {
 
     return (
         <>
-            <Button onPress={onOpen}>Rename Room</Button>
+            <Button onPress={onOpen}>Rename `Spaceship`</Button>
 
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onclose) => (
                         <>
-                            <ModalHeader>Rename room</ModalHeader>
+                            <ModalHeader>Rename `Spaceship`</ModalHeader>
 
                             <ModalBody>
                                 <Form onSubmit={handleSubmit}>
