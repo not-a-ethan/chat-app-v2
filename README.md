@@ -55,8 +55,12 @@ It will soon have the following features:
     - ~~DRY~~
     - ~~API route (data validation and stuff)~~
   - Help Center thing
-
-~~Moderators and related features~~
+- ~~Moderations~~
+  - ~~Promote mods~~
+  - ~~Demote mods~~
+  - ~~Mods giving up mod~~
+  - ~~Mods deleting messages~~
+  - ~~Mods kicking users~~
 
 ___
 
