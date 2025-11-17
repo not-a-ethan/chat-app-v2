@@ -49,7 +49,7 @@ Most recent changes:
 It will soon have the following features:
 
 - Misc
-  - Home page
+  - ~~Home page~~
   - ~~Error handling for sql on backend~~
   - ~~Optimise backend stuff~~
     - ~~DRY~~
@@ -78,7 +78,7 @@ The `.env` file should have the following items:
 NEXTAUTH_SECRET=<INFO https://next-auth.js.org/configuration/options#nextauth_secret>
 NEXTAUTH_URL=<URL OF APPLICATION INCLUDING PROTOCAL>
 
-githubClientId=GITHUB AUTH ID>
+githubClientId=<GITHUB AUTH ID>
 githubClientSecret=<GITHUB AUTH SECRET>
 
 pgHost=<postgresql hostname>

@@ -1,0 +1,53 @@
+.main {
+    text-align: center;
+}
+
+.grid {
+    display: grid;
+
+    row-gap: 10%;
+}
+
+.col1 {
+    grid-column: 1;
+}
+
+.col2 {
+    grid-column: 2;
+}
+
+.row1 {
+    grid-row: 1;
+}
+
+.row2 {
+    grid-row: 2;
+}
+
+.list {
+    list-style-position: inside;
+    list-style-type: disc;
+}
+
+.subList {
+    list-style-type: circle;
+}
+
+.subList > li {
+    margin-left: 5.5%;
+}
+
+.envFile {
+    white-space: pre-line;
+
+    background-color: gray;
+
+    border: 2px darkgray solid;
+
+    width: fit-content;
+
+    padding-left: 2%;
+    padding-right: 2%;
+
+    margin: 0 auto;
+}
