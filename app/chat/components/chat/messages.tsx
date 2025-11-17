@@ -62,11 +62,11 @@ export function Message(props: any) {
             })
         })
         .then(res => {
-            if (res.status !== 200) {
+            if (!res.ok) {
                 error = true;
             };
 
-            res.json();
+            return res.json();
         })
         .then ((json: any) => {
             if (error) {
@@ -138,21 +138,23 @@ export function Message(props: any) {
 
         fetch(`../api/message?roomId=${roomId}`)
         .then(res => {
-            if (res.status !== 200) {
+            if (!res.ok) {
                 error = true;
             };
 
-            res.json();
+            return res.json();
         })
         .then((json: any) => {
             users = json["users"];
             messages = json["messages"];
 
-            addToast({
-                color: "danger",
-                title: "Could not get new messages",
-                description: json["error"]
-            });
+            if (error) {
+                addToast({
+                    color: "danger",
+                    title: "Could not get new messages",
+                    description: json["error"]
+                });
+            }
         })
         .catch(e => {
             console.error(e);
@@ -165,7 +167,7 @@ export function Message(props: any) {
         });
     };
 
-    setTimeout(updateMessages, 1500);
+    setInterval(updateMessages, 3000);
 
     return (
         <section className={`${styles.messages}`} id="messages">

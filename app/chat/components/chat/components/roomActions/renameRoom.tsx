@@ -28,7 +28,7 @@ export function RenameRoom(props: any) {
             })
         })
         .then(res => {
-            if (res.status !== 200) {
+            if (!res.ok) {
                 error = true;
             };
         })

@@ -22,11 +22,11 @@ export function GiveUpMod(props: any) {
             })
         })
         .then(res => {
-            if (res.status !== 200) {
+            if (!res.ok) {
                 error = true;
             };
 
-            res.json();
+            return res.json();
         })
         .then((json: any) => {
             if (error) {

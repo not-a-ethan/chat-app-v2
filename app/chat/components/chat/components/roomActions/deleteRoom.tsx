@@ -24,11 +24,11 @@ export function DeleteRoom(props: any) {
         .then(res => {
             location.reload();
 
-            if (res.status !== 200) {
+            if (!res.ok) {
                 error = true;
             };
 
-            res.json();
+            return res.json();
         })
         .then((json: any) => {
             if (error) {

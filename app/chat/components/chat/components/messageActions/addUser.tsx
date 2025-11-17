@@ -26,9 +26,11 @@ export function AddMember(props: any) {
             })
         })
         .then(res => {
-            if (res.status !== 200) {
+            if (!res.ok) {
                 error = true;
             };
+
+            return res.json();
         })
         .then((json: any) => {
             if (error) {

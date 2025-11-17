@@ -31,10 +31,11 @@ export function ChangePfp() {
                 })
             })
             .then(res => {
-                if (res.status !== 200) {
+                if (!res.ok) {
                     error = true;
                 };
-                res.json();
+
+                return res.json();
             })
             .then((json: any) => {
                 if (error) {
@@ -68,11 +69,11 @@ export function ChangePfp() {
             method: "DELETE"
         })
         .then(res => {
-            if (res.status !== 200) {
+            if (!res.ok) {
                 error = true;
             };
 
-            res.json();
+            return res.json();
         })
         .then((json: any) => {
             if (error) {
