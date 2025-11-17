@@ -20,47 +20,38 @@ View the [Demo Video](Demo%203.mp4)
     - Edit name
 - Rooms
     - Create
-    - Add Member (UI)
+    - Add Member
     - Lave
+    - Remove member
+    - Change room name
+    - Delete room
+    - Change owner
+    - Members in rooms
+        - Differatiate between active and in-active users in user list
 - Messages
     - Create
     - Delete
     - React
       - Add
       - Remove
+- Misc
+    - Semantic HTML
+    - Home page
 
 Most recent changes: 
 
-- Rooms
-    - Remove member
-    - Change name
-    - Delete
-    - Change Owner
 - Misc
-    - Home page
-    - Modals auto close after submission
-    - Semantic HTML
-- Messages
-    - Real time updating stuff
-    - Textbox clears once sent button pressed
-- Users
-    - Differatiate between active and in-active users in user list
-
-It will soon have the following features:
-
-- Misc
-  - ~~Home page~~
-  - ~~Error handling for sql on backend~~
-  - ~~Optimise backend stuff~~
-    - ~~DRY~~
-    - ~~API route (data validation and stuff)~~
-  - Help Center thing
-- ~~Moderations~~
-  - ~~Promote mods~~
-  - ~~Demote mods~~
-  - ~~Mods giving up mod~~
-  - ~~Mods deleting messages~~
-  - ~~Mods kicking users~~
+  - Home page
+  - Error handling for sql on backend
+  - Optimise backend stuff
+    - DRY
+    - API route (data validation and stuff)
+- Moderations
+  - Promote mods
+  - Demote mods
+  - Mods giving up mod
+  - Mods deleting messages
+  - Mods kicking users
 
 ___
 
