@@ -10,7 +10,7 @@ The project is similer to Discord. It has the following features:
 
 ### Demo
 
-View the [Demo Video](Demo%203.mp4)
+<!-- View the [Demo Video](Demo%203.mp4) -->
 
 ## Features
 
