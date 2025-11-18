@@ -32,6 +32,7 @@ export function Providers({ children, themeProps }: ProvidersProps) {
       <NextThemesProvider {...themeProps}>
         <SessionProvider>
           {children}
+          <div className="starsSpace"></div>
           <ToastProvider />
         </SessionProvider>
       </NextThemesProvider>
