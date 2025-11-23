@@ -54,11 +54,10 @@ export async function DELETE(req: NextRequest) {
 
     if (await isOwner(authStatus["userId"], authStatus["userId"], roomId)) {
         // Nothing happens as user is already the owner
-    } else if ((await isModerator(modsId, roomId, authStatus["userId"]) && modsId == authStatus["userId"]) || modsId == undefined) {
+    } else if ((await isModerator(authStatus["userId"], roomId, authStatus["userId"]) && modsId == authStatus["userId"]) || modsId == undefined) {
         // Mod will remove their own moderator
 
         const modList: string[] = await getModerators(roomId, authStatus["userId"]);
-        console.log(61)
         modList.splice(modList.indexOf(authStatus["userId"].toString()), 1);
         
         try {
@@ -96,8 +95,6 @@ export async function DELETE(req: NextRequest) {
 
     const modRooms: string[] = await getRooms(modsId);
 
-    console.log(99)
-
     if (!modRooms.includes(roomId.toString())) {
         return NextResponse.json(
             {
@@ -108,7 +105,6 @@ export async function DELETE(req: NextRequest) {
     };
 
     const modList: string[] = await getModerators(roomId, authStatus["userId"]);
-    console.log(111)
     modList.splice(modList.indexOf(modsId.toString()), 1);
 
     try {
